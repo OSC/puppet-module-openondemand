@@ -47,6 +47,9 @@ class openondemand::apache {
   include ::apache::mod::proxy_http
   include ::apache::mod::proxy_connect
   include ::apache::mod::proxy_wstunnel
+  if $openondemand::auth_type == 'CAS' {
+    include ::apache::mod::auth_cas
+  }
   if $openondemand::auth_type == 'ldap' {
     include ::apache::mod::authnz_ldap
     include ::apache::mod::ldap

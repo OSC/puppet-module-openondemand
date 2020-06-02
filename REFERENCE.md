@@ -262,7 +262,7 @@ Default value: `undef`
 
 ##### `auth_type`
 
-Data type: `Enum['openid-connect', 'shibboleth', 'ldap', 'basic']`
+Data type: `Enum['CAS', 'openid-connect', 'shibboleth', 'ldap', 'basic']`
 
 ood_portal.yml auth_type
 
