@@ -1,4 +1,39 @@
 shared_examples 'openondemand::config' do |_facts|
+  it do
+    is_expected.not_to contain_file('/etc/ood/config/ondemand.d/ondemand.yml')
+  end
+
+  context 'with configurations defined' do
+    let(:params) do
+      {
+        'pinned_apps' => [
+          'usr/*',
+          'sys/jupyter',
+          { 'type' => 'dev', 'category' => 'system' },
+        ],
+        'pinned_apps_menu_length' => 10,
+        'pinned_apps_group_by' => 'category',
+        'dashboard_layout' => {
+          'rows' => [
+            {
+              'columns' => [
+                { 'width' => 8, 'widgets' => ['pinned_apps', 'motd'] },
+                { 'width' => 4, 'widgets' => ['xdmod_widget_job_efficiency', 'xdmod_widget_jobs'] },
+              ],
+            },
+          ],
+        },
+      }
+    end
+
+    it { is_expected.to compile.with_all_deps }
+    it 'has valid config' do
+      content = catalogue.resource('file', '/etc/ood/config/ondemand.d/ondemand.yml').send(:parameters)[:content]
+      data = YAML.safe_load(content)
+      expect(data).to eq(params)
+    end
+  end
+
   context 'hook.env' do
     let(:params) { { pun_pre_hook_root_cmd: '/dne/hook.sh' } }
 

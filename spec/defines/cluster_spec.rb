@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'openondemand::cluster' do
-  on_supported_os.each do |os, facts|
+  on_supported_os(supported_os: [{ 'operatingsystem' => 'RedHat', 'operatingsystemrelease' => ['8'] }]).each do |os, facts|
     context "on #{os}" do
       let(:facts) do
         facts

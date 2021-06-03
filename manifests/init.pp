@@ -143,6 +143,24 @@
 #   nginx_stage.yml app_request_regex
 # @param nginx_stage_min_uid
 #   nginx_stage.yml min_uid
+# @param config_dir_purge
+#   Boolean that sets if ondemand.d should be purged of unmanaged files
+# @param config_source
+#   The source for /etc/ood/config/ondemand.d/ondemand.yml
+#   Overrides `config_content` as well as pinned apps and dashboard layout parameters
+# @param config_content
+#   The content for /etc/ood/config/ondemand.d/ondemand.yml
+#   Overrides pinned apps and dashboard layout parameters
+# @param confs
+#   Hash to define openondemand::conf resources
+# @param pinned_apps
+#   Defines the OnDemand configuration for pinned_apps
+# @param pinned_apps_menu_length
+#   Defines the OnDemand configuration for pinned_apps_menu_length
+# @param pinned_apps_group_by
+#   Defines the OnDemand configuration for pinned_apps_group_by
+# @param dashboard_layout
+#   Defines the OnDemand configuration for dashboard_layout
 # @param hook_env
 #   Boolean that sets of hook.env configuration should be managed
 # @param hook_env_path
@@ -274,6 +292,16 @@ class openondemand (
   Optional[Openondemand::Nginx_stage_namespace_config] $nginx_stage_app_request_regex = undef,
   Integer $nginx_stage_min_uid = 1000,
 
+  # configs
+  Boolean $config_dir_purge = true,
+  Optional[String] $config_source = undef,
+  Optional[String] $config_content = undef,
+  Hash $confs = {},
+  Optional[Array[Variant[String[1], Hash]]] $pinned_apps = undef,
+  Optional[Integer] $pinned_apps_menu_length = undef,
+  Optional[String[1]] $pinned_apps_group_by = undef,
+  Optional[Openondemand::Dashboard_layout] $dashboard_layout = undef,
+
   # hooks
   Boolean $hook_env = true,
   Stdlib::Absolutepath $hook_env_path = '/etc/ood/config/hook.env',
@@ -393,7 +421,7 @@ class openondemand (
     $_clusters = $clusters
   }
 
-  $ood_portal_config = delete_undef_values({
+  $ood_portal_config = {
     'listen_addr_port'                 => $listen_ports,
     'servername'                       => $servername,
     'port'                             => $port,
@@ -442,7 +470,7 @@ class openondemand (
     'oidc_state_max_number_of_cookies' => $oidc_state_max_number_of_cookies,
     'oidc_settings'                    => $oidc_settings,
     'dex'                              => $_dex_config,
-  })
+  }.filter |$key, $value| { $value =~ NotUndef }
   $ood_portal_yaml = to_yaml($ood_portal_config)
   $base_apps = {
     'dashboard' => { 'package' => 'ondemand', 'manage_package' => false },
@@ -453,6 +481,13 @@ class openondemand (
     'myjobs' => { 'package' => 'ondemand', 'manage_package' => false },
     'bc_desktop' => { 'package' => 'ondemand', 'manage_package' => false },
   }
+
+  $ondemand_config = {
+    'pinned_apps' => $pinned_apps,
+    'pinned_apps_menu_length' => $pinned_apps_menu_length,
+    'pinned_apps_group_by' => $pinned_apps_group_by,
+    'dashboard_layout' => $dashboard_layout,
+  }.filter |$key, $value| { $value =~ NotUndef }
 
   contain openondemand::repo
   contain openondemand::install
@@ -497,4 +532,7 @@ class openondemand (
     openondemand::install::app { $name: * => $app }
   }
 
+  $confs.each |$name, $params| {
+    openondemand::conf { $name: * => $params }
+  }
 }

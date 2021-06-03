@@ -101,6 +101,38 @@ class openondemand::config {
     mode   => '0755',
   }
 
+  file { '/etc/ood/config/ondemand.d':
+    ensure  => 'directory',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    recurse => $openondemand::config_dir_purge,
+    force   => $openondemand::config_dir_purge,
+    purge   => $openondemand::config_dir_purge,
+    notify  => Class['openondemand::service'],
+  }
+
+  if ! empty($openondemand::ondemand_config) {
+    if $openondemand::config_source !~ Undef {
+      $config_source = $openondemand::config_source
+      $config_content = undef
+      $config_data = undef
+    } elsif $openondemand::config_content !~ Undef {
+      $config_source = undef
+      $config_content = $openondemand::config_content
+      $config_data = undef
+    } else {
+      $config_source = undef
+      $config_content = undef
+      $config_data = $openondemand::ondemand_config
+    }
+    openondemand::conf { 'ondemand':
+      source  => $config_source,
+      content => $config_content,
+      data    => $config_data,
+    }
+  }
+
   if $openondemand::apps_config_repo {
     vcsrepo { '/opt/ood-apps-config':
       ensure   => 'latest',
