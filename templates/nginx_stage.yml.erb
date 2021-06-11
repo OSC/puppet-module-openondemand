@@ -97,6 +97,27 @@ pun_custom_env:
 #
 #passenger_python: '/opt/ood/nginx_stage/bin/python'
 
+# The maximum number of seconds that an application process may be idle.
+# Set to `false` if you don't want this specified in the nginx config
+#
+#passenger_pool_idle_time: 300
+passenger_pool_idle_time: <%= scope['openondemand::nginx_stage_passenger_pool_idle_time'] %>
+
+# Hash of Passenger configuration options
+# Keys without passenger_ prefix will be ignored
+#
+#passenger_options: {}
+<% unless scope['openondemand::nginx_stage_passenger_options'].empty? -%>
+passenger_options:
+<% scope['openondemand::nginx_stage_passenger_options'].each_pair do |key, value| -%>
+  <%- if value.is_a?(String) -%>
+  <%= key %>: "<%= value %>"
+  <%- else -%>
+  <%= key %>: <%= value %>
+  <%- end -%>
+<% end -%>
+<% end -%>
+
 # Root location of per-user NGINX configs
 #
 #pun_config_path: '/var/lib/nginx/config/puns/%{user}.conf'

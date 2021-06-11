@@ -3,6 +3,23 @@ shared_examples 'openondemand::config' do |_facts|
     is_expected.not_to contain_file('/etc/ood/config/ondemand.d/ondemand.yml')
   end
 
+  context 'with nginx_stage options defined' do
+    let(:params) do
+      {
+        nginx_stage_passenger_options: {
+          'passenger_foobar' => 'baz',
+        },
+      }
+    end
+
+    it 'has valid config' do
+      content = catalogue.resource('file', '/etc/ood/config/nginx_stage.yml').send(:parameters)[:content]
+      data = YAML.safe_load(content)
+      expect(data).to include('passenger_pool_idle_time' => 300)
+      expect(data).to include('passenger_options' => { 'passenger_foobar' => 'baz' })
+    end
+  end
+
   context 'with configurations defined' do
     let(:params) do
       {

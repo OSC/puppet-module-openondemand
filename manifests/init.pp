@@ -143,6 +143,10 @@
 #   nginx_stage.yml app_request_regex
 # @param nginx_stage_min_uid
 #   nginx_stage.yml min_uid
+# @param nginx_stage_passenger_pool_idle_time
+#   nginx_stage.yml passenger_pool_idle_time
+# @param nginx_stage_passenger_options
+#   nginx_stage.yml passenger_options
 # @param config_dir_purge
 #   Boolean that sets if ondemand.d should be purged of unmanaged files
 # @param config_source
@@ -291,6 +295,8 @@ class openondemand (
   String $nginx_stage_scl_env = 'ondemand',
   Optional[Openondemand::Nginx_stage_namespace_config] $nginx_stage_app_request_regex = undef,
   Integer $nginx_stage_min_uid = 1000,
+  Integer $nginx_stage_passenger_pool_idle_time = 300,
+  Hash[Pattern[/^passenger_.+/], Variant[String, Integer]] $nginx_stage_passenger_options = {},
 
   # configs
   Boolean $config_dir_purge = true,
