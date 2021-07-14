@@ -129,6 +129,7 @@ define openondemand::cluster (
   Optional[Integer] $xdmod_resource_id = undef,
   Openondemand::Batch_connect $batch_connect = {},
 ) {
+  include openondemand
 
   if $grafana_host {
     if $grafana_dashboard_name == undef or $grafana_dashboard_uid == undef or $grafana_dashboard_panels == undef or $grafana_labels == undef {
@@ -140,9 +141,11 @@ define openondemand::cluster (
     if !$job_server {
       fail('Must define job_server when job_adapter is kubernetes')
     }
+    $_job_bin = pick($job_bin, $openondemand::kubectl_path)
+  } else {
+    $_job_bin = $job_bin
   }
 
-  include openondemand
 
   file { "/etc/ood/config/clusters.d/${name}.yml":
     ensure  => 'file',

@@ -171,6 +171,8 @@
 #   Path to hook.env
 # @param hook_env_config
 #   Configuration hash to pass into hook.env
+# @param kubectl_path
+#   Path to kubectl
 # @param clusters
 #   Hash of resources to apss to openondemand::cluster
 # @param clusters_hiera_merge
@@ -312,6 +314,7 @@ class openondemand (
   Boolean $hook_env = true,
   Stdlib::Absolutepath $hook_env_path = '/etc/ood/config/hook.env',
   Hash $hook_env_config = {},
+  Stdlib::Absolutepath $kubectl_path = '/bin/kubectl',
 
   # clusters
   Hash $clusters = {},
