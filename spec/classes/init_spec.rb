@@ -14,6 +14,8 @@ describe 'openondemand' do
       include_context 'openondemand::repo', facts
       include_context 'openondemand::apache', facts
       include_context 'openondemand::config', facts
+
+      it { is_expected.to contain_package('ondemand').that_comes_before('Class[sudo]') }
     end # end context
   end # end on_supported_os loop
 end # end describe

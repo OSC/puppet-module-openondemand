@@ -8,6 +8,8 @@ class openondemand::install {
     notify => Exec['ood-portal-generator-generate'],
   }
 
+  # Ensure changes to packaged sudo files and produced rpmnew
+  # Are deleted in idempotent way
   include sudo
   Package['ondemand'] -> Class['sudo']
 
