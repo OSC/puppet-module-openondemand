@@ -273,14 +273,6 @@ class openondemand::config {
     content        => template('openondemand/sudo.erb'),
     sudo_file_name => 'ood',
   }
-  sudo::conf { 'ood.rpmnew':
-    ensure         => 'absent',
-    sudo_file_name => 'ood.rpmnew',
-  }
-  sudo::conf { 'ood.rpmsave':
-    ensure         => 'absent',
-    sudo_file_name => 'ood.rpmsave',
-  }
 
   file { '/etc/cron.d/ood':
     ensure  => 'file',

@@ -8,6 +8,9 @@ class openondemand::install {
     notify => Exec['ood-portal-generator-generate'],
   }
 
+  include sudo
+  Package['ondemand'] -> Class['sudo']
+
   package { 'ondemand-selinux':
     ensure => $openondemand::selinux_package_ensure,
   }
