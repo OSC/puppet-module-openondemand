@@ -110,6 +110,7 @@ v2:
     namespace_prefix: "<%= @job_namespace_prefix %>"
   <%- end -%>
     all_namespaces: <%= @job_all_namespaces %>
+    auto_supplemental_groups: <%= @job_auto_supplemental_groups %>
   <%- if @job_server -%>
     server:
     <%- @job_server.each_pair do |key, value| -%>

@@ -85,6 +85,7 @@ describe 'openondemand::cluster' do
           puts content
           data = YAML.safe_load(content)
           expect(data['v2']['job']['bin']).to eq('/usr/bin/kubectl')
+          expect(data['v2']['job']['auto_supplemental_groups']).to eq(false)
         end
       end
 

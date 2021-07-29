@@ -34,6 +34,7 @@
 # @param job_username_prefix
 # @param job_namespace_prefix
 # @param job_all_namespaces
+# @param job_auto_supplemental_groups
 # @param job_server
 # @param job_mounts
 # @param job_auth
@@ -95,6 +96,7 @@ define openondemand::cluster (
   Optional[String] $job_username_prefix = undef,
   Optional[String] $job_namespace_prefix = undef,
   Boolean $job_all_namespaces = false,
+  Boolean $job_auto_supplemental_groups = false,
   Optional[Openondemand::K8_server] $job_server = undef,
   Array[Openondemand::K8_mount] $job_mounts = [],
   Optional[Openondemand::K8_auth] $job_auth = undef,
