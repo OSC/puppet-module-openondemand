@@ -94,8 +94,9 @@ describe 'openondemand::cluster' do
           default_params.merge!(
             custom_config: {
               foo_string: 'bar',
-              foo_array: ['1', '2'],
-              foo_hash: { 'foo' => 'bar', 'bar' => 'baz' },
+              foo_bool: false,
+              foo_array: ['1', '2', 3],
+              foo_hash: { 'foo' => 'bar', 'bar' => 'baz', 'baz' => false },
             },
           )
         end
@@ -106,8 +107,9 @@ describe 'openondemand::cluster' do
           content = catalogue.resource('file', '/etc/ood/config/clusters.d/test.yml').send(:parameters)[:content]
           data = YAML.safe_load(content)
           expect(data['v2']['custom']['foo_string']).to eq('bar')
-          expect(data['v2']['custom']['foo_array']).to eq(['1', '2'])
-          expect(data['v2']['custom']['foo_string']).to eq('foo' => 'bar', 'bar' => 'baz')
+          expect(data['v2']['custom']['foo_bool']).to eq(false)
+          expect(data['v2']['custom']['foo_array']).to eq(['1', '2', 3])
+          expect(data['v2']['custom']['foo_hash']).to eq('foo' => 'bar', 'bar' => 'baz', 'baz' => false)
         end
       end
 

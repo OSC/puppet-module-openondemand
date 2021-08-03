@@ -228,15 +228,15 @@ v2:
     <%- if value.is_a?(Hash) -%>
     <%= key %>:
     <%- value.each_pair do |k,v| -%>
-      <%= k %>: <%= v %>
+      <%= k %>: <% if v.is_a?(String) %>"<%= v %>"<% else %><%= v %><% end %>
     <%- end # end value.each_pair -%>
     <%- elsif value.is_a?(Array) -%>
     <%= key %>:
     <%- value.each do |v| -%>
-      - <%= v %>
+      - <% if v.is_a?(String) %>"<%= v %>"<% else %><%= v %><% end %>
     <%- end # end value.each -%>
     <%- else -%>
-    <%= key %>: <%= value %>
+    <%= key %>: <% if value.is_a?(String) %>"<%= value %>"<% else %><%= value %><% end %>
     <%- end -%>
   <%- end -%>
 <% end -%>
