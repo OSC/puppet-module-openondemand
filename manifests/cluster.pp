@@ -59,6 +59,8 @@
 # @param grafana_labels
 # @param grafana_cluster_override
 # @param xdmod_resource_id
+# @param custom_config
+#   Custom Hash passed to `v2.custom` in cluster YAML
 # @param batch_connect
 #
 define openondemand::cluster (
@@ -129,6 +131,7 @@ define openondemand::cluster (
   }]] $grafana_labels = undef,
   Optional[String] $grafana_cluster_override = undef,
   Optional[Integer] $xdmod_resource_id = undef,
+  Hash $custom_config = {},
   Openondemand::Batch_connect $batch_connect = {},
 ) {
   include openondemand

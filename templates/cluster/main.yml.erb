@@ -224,6 +224,21 @@ v2:
     xdmod:
       resource_id: <%= @xdmod_resource_id %>
   <%- end -%>
+  <%- @custom_config.each_pair do |key, value| -%>
+    <%- if value.is_a?(Hash) -%>
+    <%= key %>:
+    <%- value.each_pair do |k,v| -%>
+      <%= k %>: <%= v %>
+    <%- end # end value.each_pair -%>
+    <%- elsif value.is_a?(Array) -%>
+    <%= key %>:
+    <%- value.each do |v| -%>
+      - <%= v %>
+    <%- end # end value.each -%>
+    <%- else -%>
+    <%= key %>: <%= value %>
+    <%- end -%>
+  <%- end -%>
 <% end -%>
 <% if ! @batch_connect.empty? -%>
   batch_connect:

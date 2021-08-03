@@ -89,6 +89,28 @@ describe 'openondemand::cluster' do
         end
       end
 
+      context 'custom configs' do
+        let :params do
+          default_params.merge!(
+            custom_config: {
+              foo_string: 'bar',
+              foo_array: ['1', '2'],
+              foo_hash: { 'foo' => 'bar', 'bar' => 'baz' },
+            },
+          )
+        end
+
+        it { is_expected.to compile.with_all_deps }
+
+        it 'hash valid custom config' do
+          content = catalogue.resource('file', '/etc/ood/config/clusters.d/test.yml').send(:parameters)[:content]
+          data = YAML.safe_load(content)
+          expect(data['v2']['custom']['foo_string']).to eq('bar')
+          expect(data['v2']['custom']['foo_array']).to eq(['1', '2'])
+          expect(data['v2']['custom']['foo_string']).to eq('foo' => 'bar', 'bar' => 'baz')
+        end
+      end
+
       context 'with grafana defined' do
         let :params do
           default_params.merge!(
