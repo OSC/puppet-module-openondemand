@@ -147,6 +147,10 @@
 #   nginx_stage.yml passenger_pool_idle_time
 # @param nginx_stage_passenger_options
 #   nginx_stage.yml passenger_options
+# @param nginx_stage_nginx_file_upload_max
+#   nginx_stage.yml nginx_file_upload_max
+# @param nginx_stage_configs
+#   nginx_stage.yml extra configuration options
 # @param config_dir_purge
 #   Boolean that sets if ondemand.d should be purged of unmanaged files
 # @param config_source
@@ -299,6 +303,8 @@ class openondemand (
   Integer $nginx_stage_min_uid = 1000,
   Integer $nginx_stage_passenger_pool_idle_time = 300,
   Hash[Pattern[/^passenger_.+/], Variant[String, Integer]] $nginx_stage_passenger_options = {},
+  Optional[Integer] $nginx_stage_nginx_file_upload_max = undef,
+  Hash $nginx_stage_configs = {},
 
   # configs
   Boolean $config_dir_purge = true,

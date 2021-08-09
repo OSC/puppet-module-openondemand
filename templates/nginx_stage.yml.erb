@@ -118,6 +118,13 @@ passenger_options:
 <% end -%>
 <% end -%>
 
+# Max file upload size in bytes (e.g., 10737420000)
+#
+#nginx_file_upload_max: '10737420000'
+<%- if scope['openondemand::nginx_stage_nginx_file_upload_max'] %>
+nginx_file_upload_max: '<%= scope['openondemand::nginx_stage_nginx_file_upload_max'] %>'
+<%- end -%>
+
 # Root location of per-user NGINX configs
 #
 #pun_config_path: '/var/lib/nginx/config/puns/%{user}.conf'
@@ -233,3 +240,12 @@ min_uid: <%= scope['openondemand::nginx_stage_min_uid'] -%>
 #     the PUN using other commands (e.g., `nginx`, `nginx_clean`, ...)
 #
 #disabled_shell: '/access/denied'
+
+# Set BUNDLE_USER_CONFIG to /dev/null in the PUN environment
+# NB: This prevents a user's ~/.bundle/config from affecting OnDemand applications
+#
+#disable_bundle_user_config: true
+
+<%- unless scope['openondemand::nginx_stage_configs'].empty? -%>
+<%= scope['openondemand::nginx_stage_configs'].to_yaml.gsub("---\n", '') %>
+<%- end -%>

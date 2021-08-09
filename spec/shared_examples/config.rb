@@ -97,5 +97,25 @@ shared_examples 'openondemand::config' do |_facts|
                         ])
       end
     end
+
+    context 'with nginx_stage_configs options defined' do
+      let(:params) do
+        {
+          nginx_stage_configs: {
+            'foo' => 'bar',
+            'bar' => false,
+            'baz' => ['foo', 'bar'],
+          },
+        }
+      end
+
+      it 'has valid config' do
+        content = catalogue.resource('file', '/etc/ood/config/nginx_stage.yml').send(:parameters)[:content]
+        data = YAML.safe_load(content)
+        expect(data).to include('foo' => 'bar')
+        expect(data).to include('bar' => false)
+        expect(data).to include('baz' => ['foo', 'bar'])
+      end
+    end
   end
 end
