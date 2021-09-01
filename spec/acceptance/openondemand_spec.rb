@@ -31,7 +31,7 @@ describe 'openondemand class:' do
 
     describe command('rpm -q ondemand') do
       its(:exit_status) { is_expected.to eq 0 }
-      its(:stdout) { is_expected.to match(/nightly/) }
+      its(:stdout) { is_expected.to match(%r{nightly}) }
     end
   end
 end
