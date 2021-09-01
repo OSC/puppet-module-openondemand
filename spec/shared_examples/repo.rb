@@ -14,6 +14,7 @@ shared_examples 'openondemand::repo' do |facts|
 
   it do
     is_expected.to contain_yumrepo('ondemand-web-nightly').only_with(
+      ensure: 'absent',
       descr: 'Open OnDemand Web Repo - Nightly',
       baseurl: "https://yum.osc.edu/ondemand/nightly/web/el#{facts[:os]['release']['major']}/$basearch",
       enabled: '1',

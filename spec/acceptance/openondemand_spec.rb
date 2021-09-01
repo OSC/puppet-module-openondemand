@@ -29,8 +29,9 @@ describe 'openondemand class:' do
       it { is_expected.to be_enabled }
     end
 
-    describe package('ondemand') do
-      it { is_expected.to be_installed.with_version(%r{nightly}) }
+    describe command('rpm -q ondemand') do
+      its(:exit_status) { is_expected.to eq 0 }
+      its(:stdout) { is_expected.to match(/nightly/) }
     end
   end
 end

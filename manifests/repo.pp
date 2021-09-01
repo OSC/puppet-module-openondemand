@@ -5,6 +5,12 @@ class openondemand::repo {
 
   if $openondemand::repo_nightly {
     $nightly_ensure = 'present'
+    exec { 'makecache ondemand-web-nightly':
+      path        => '/usr/bin:/bin:/usr/sbin:/sbin',
+      command     => "${facts['package_provider']} -q makecache -y --disablerepo='*' --enablerepo='ondemand-web-nightly'",
+      refreshonly => true,
+      subscribe   => Yumrepo['ondemand-web-nightly'],
+    }
   } else {
     $nightly_ensure = 'absent'
   }
