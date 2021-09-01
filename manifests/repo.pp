@@ -3,9 +3,27 @@
 class openondemand::repo {
   assert_private()
 
+  if $openondemand::repo_nightly {
+    $nightly_ensure = 'present'
+  } else {
+    $nightly_ensure = 'absent'
+  }
+
   yumrepo { 'ondemand-web':
     descr           => 'Open OnDemand Web Repo',
     baseurl         => $openondemand::repo_baseurl,
+    enabled         => '1',
+    gpgcheck        => '1',
+    repo_gpgcheck   => '1',
+    gpgkey          => $openondemand::repo_gpgkey,
+    metadata_expire => '1',
+    priority        => $openondemand::repo_priority,
+  }
+
+  yumrepo { 'ondemand-web-nightly':
+    ensure          => $nightly_ensure,
+    descr           => 'Open OnDemand Web Repo - Nightly',
+    baseurl         => $openondemand::repo_nightly_baseurl,
     enabled         => '1',
     gpgcheck        => '1',
     repo_gpgcheck   => '1',

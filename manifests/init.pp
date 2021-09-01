@@ -10,6 +10,8 @@
 #   The priority of the OnDemand repo
 # @param manage_dependency_repos
 #   Boolean that determines if managing repos for package dependencies
+# @param repo_nightly
+#   Add the OnDemand nightly repo
 # @param selinux
 #   Boolean that determines if adding SELinux support
 # @param ondemand_package_ensure
@@ -221,6 +223,7 @@ class openondemand (
     $repo_gpgkey = 'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand',
   Integer[1,99] $repo_priority = 99,
   Boolean $manage_dependency_repos = true,
+  Boolean $repo_nightly = false,
 
   # packages
   Boolean $selinux = false,
@@ -377,6 +380,7 @@ class openondemand (
   }
 
   $repo_baseurl = "${repo_baseurl_prefix}/${repo_release}/web/el${osmajor}/\$basearch"
+  $repo_nightly_baseurl = "${repo_baseurl_prefix}/nightly/web/el${osmajor}/\$basearch"
 
   if $ssl {
     $port = '443'
