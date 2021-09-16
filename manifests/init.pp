@@ -44,8 +44,8 @@
 #   ood_portal.yml use_rewrites
 # @param use_maintenance
 #   ood_portal.yml use_maintenance
-# @param maintenance_ip_whitelist
-#   ood_portal.yml maintenance_ip_whitelist
+# @param maintenance_ip_allowlist
+#   ood_portal.yml maintenance_ip_allowlist
 # @param maintenance_source
 #   Source for maintenance index.html
 # @param maintenance_content
@@ -253,7 +253,7 @@ class openondemand (
   String  $logroot = 'logs',
   Boolean $use_rewrites = true,
   Boolean $use_maintenance = true,
-  Array $maintenance_ip_whitelist = [],
+  Array $maintenance_ip_allowlist = [],
   Optional[String] $maintenance_source = undef,
   Optional[String] $maintenance_content = undef,
   Optional[Variant[String, Boolean]] $security_csp_frame_ancestors = undef,
@@ -459,7 +459,7 @@ class openondemand (
     'logroot'                          => $logroot,
     'use_rewrites'                     => $use_rewrites,
     'use_maintenance'                  => $use_maintenance,
-    'maintenance_ip_whitelist'         => $maintenance_ip_whitelist,
+    'maintenance_ip_allowlist'         => $maintenance_ip_allowlist,
     'security_csp_frame_ancestors'     => $security_csp_frame_ancestors,
     'security_strict_transport'        => $security_strict_transport,
     'lua_root'                         => $lua_root,
