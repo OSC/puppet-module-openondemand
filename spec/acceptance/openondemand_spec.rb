@@ -5,7 +5,8 @@ describe 'openondemand class:' do
     it 'runs successfully' do
       pp = <<-EOS
       class { 'openondemand':
-        generator_insecure => true,
+        #TODO: Uncomment once latest repo has RPMs that support --insecure
+        #generator_insecure => true,
       }
       EOS
 
