@@ -207,7 +207,11 @@ class openondemand::config {
     show_diff => false,
     notify    => Exec['ood-portal-generator-generate'],
   }
-  $generate = '/opt/ood/ood-portal-generator/bin/generate -o /etc/ood/config/ood-portal.conf -d /etc/ood/dex/config.yaml'
+  if $openondemand::generator_insecure {
+    $insecure_arg = ' --insecure'
+  } else {
+    $insecure_arg = ''
+  }
   exec { 'ood-portal-generator-generate':
     path        => '/usr/bin:/bin:/usr/sbin:/sbin',
     command     => $generate,
@@ -216,7 +220,7 @@ class openondemand::config {
   }
   exec { 'ood-portal-generator-generate-refresh':
     path    => '/usr/bin:/bin:/usr/sbin:/sbin',
-    command => $generate,
+    command => "/opt/ood/ood-portal-generator/bin/generate -o /etc/ood/config/ood-portal.conf -d /etc/ood/dex/config.yaml ${insecure_arg}",
     creates => '/etc/ood/config/ood-portal.conf',
     before  => ::Apache::Custom_config['ood-portal'],
   }

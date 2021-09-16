@@ -28,6 +28,10 @@
 #   Boolean that determines if apache is declared or included
 # @param apache_scls
 #   SCLs to load when starting Apache service
+# @param generator_insecure
+#   Run ood-portal-generator with --insecure flag
+#   This is needed if you wish to use default ood@localhost user or
+#   other local users
 # @param listen_addr_port
 #   ood_portal.yml listen_addr_port
 # @param servername
@@ -242,6 +246,7 @@ class openondemand (
   String $apache_scls = 'httpd24',
 
   # ood_portal.yml
+  Boolean $generator_insecure = false,
   Variant[Array, String, Undef] $listen_addr_port = undef,
   Optional[String] $servername = undef,
   Optional[Array] $ssl = undef,
