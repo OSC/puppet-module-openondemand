@@ -213,6 +213,8 @@ class openondemand::config {
     $insecure_arg = ''
   }
   exec { 'ood-portal-generator-generate':
+    # Work around bug in Puppet 6 on EL8 that seems to incorrectly put Puppet Ruby into environment
+    environment => ['RUBYLIB=','GEM_PATH='],
     command     => "/opt/ood/ood-portal-generator/bin/generate -o /etc/ood/config/ood-portal.conf -d /etc/ood/dex/config.yaml ${insecure_arg}",
     refreshonly => true,
     before      => ::Apache::Custom_config['ood-portal'],
