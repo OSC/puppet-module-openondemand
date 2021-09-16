@@ -207,8 +207,13 @@ class openondemand::config {
     show_diff => false,
     notify    => Exec['ood-portal-generator-generate'],
   }
+  if $openondemand::generator_insecure {
+    $insecure_arg = ' --insecure'
+  } else {
+    $insecure_arg = ''
+  }
   exec { 'ood-portal-generator-generate':
-    command     => '/opt/ood/ood-portal-generator/bin/generate -o /etc/ood/config/ood-portal.conf -d /etc/ood/dex/config.yaml',
+    command     => "/opt/ood/ood-portal-generator/bin/generate -o /etc/ood/config/ood-portal.conf -d /etc/ood/dex/config.yaml ${insecure_arg}",
     refreshonly => true,
     before      => ::Apache::Custom_config['ood-portal'],
   }

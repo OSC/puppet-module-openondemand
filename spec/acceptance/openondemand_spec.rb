@@ -4,7 +4,9 @@ describe 'openondemand class:' do
   context 'default parameters' do
     it 'runs successfully' do
       pp = <<-EOS
-      class { 'openondemand': }
+      class { 'openondemand':
+        generator_insecure => true,
+      }
       EOS
 
       apply_manifest(pp, catch_failures: true)
@@ -18,6 +20,7 @@ describe 'openondemand class:' do
       class { 'openondemand':
         repo_nightly            => true,
         ondemand_package_ensure => 'latest',
+        generator_insecure      => true,
       }
       EOS
 
