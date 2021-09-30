@@ -1,31 +1,28 @@
 fixtures:
-  repositories:
+  forge_modules:
     stdlib:
-      repo: https://github.com/puppetlabs/puppetlabs-stdlib.git
-      ref: 4.25.0
+      repo: puppetlabs/stdlib
     yumrepo_core:
-      repo: https://github.com/puppetlabs/puppetlabs-yumrepo_core.git
-      puppet_version: ">= 6.0.0"
+      repo: puppetlabs/yumrepo_core
     epel:
-      repo: https://github.com/voxpupuli/puppet-epel.git
+      repo: puppet/epel
     rhsm:
-      repo: https://github.com/voxpupuli/puppet-rhsm
+      repo: puppet/rhsm
     concat:
-      repo: https://github.com/puppetlabs/puppetlabs-concat.git
+      repo: puppetlabs/concat
     vcsrepo:
-      repo: https://github.com/puppetlabs/puppetlabs-vcsrepo.git
+      repo: puppetlabs/vcsrepo
     apache:
-      repo: https://github.com/puppetlabs/puppetlabs-apache.git
-      ref: v5.2.0
+      repo: puppetlabs/apache
     sudo:
-      repo: https://github.com/saz/puppet-sudo.git
+      repo: saz/sudo
     augeasproviders_core:
-      repo: git://github.com/hercules-team/augeasproviders_core.git
+      repo: herculesteam/augeasproviders_core
     augeasproviders_shellvar:
-      repo: git://github.com/hercules-team/augeasproviders_shellvar.git
+      repo: herculesteam/augeasproviders_shellvar
     systemd:
-      repo: https://github.com/camptocamp/puppet-systemd.git
+      repo: puppet/systemd
     logrotate:
-      repo: https://github.com/voxpupuli/puppet-logrotate.git
+      repo: puppet/logrotate
   symlinks:
     openondemand: "#{source_dir}"
