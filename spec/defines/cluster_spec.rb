@@ -28,19 +28,6 @@ describe 'openondemand::cluster' do
             },
           ],
           login_host: 'login.test',
-          job_adapter: 'torque',
-          job_host: 'batch.test',
-          job_lib: '/opt/torque/lib64',
-          job_bin: '/opt/torque/bin',
-          job_version: '6.0.2',
-          scheduler_type: 'moab',
-          scheduler_host: 'batch.test',
-          scheduler_bin: '/opt/moab/bin',
-          scheduler_version: '9.0.1',
-          scheduler_params: {
-            'moabhomedir' => '/var/spool/moab',
-          },
-          ganglia_host: 'ganglia.test',
           batch_connect: {
             'basic' => { 'script_wrapper' => 'module restore\n%s' },
             'vnc'   => { 'script_wrapper' => 'module restore\nmodule load ondemand-vnc\n%s' },
@@ -60,6 +47,8 @@ describe 'openondemand::cluster' do
       it do
         content = catalogue.resource('file', '/etc/ood/config/clusters.d/test.yml').send(:parameters)[:content]
         puts content
+        data = YAML.safe_load(content)
+        expect(data['v2']['custom']).to be_nil
       end
 
       context 'kubernetes' do
