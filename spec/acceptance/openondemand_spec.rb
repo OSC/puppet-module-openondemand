@@ -15,7 +15,7 @@ describe 'openondemand class:' do
     end
   end
 
-  context 'with nightly repo', skip: true do
+  context 'with nightly repo' do
     it 'runs successfully' do
       pp = <<-EOS
       class { 'openondemand':
