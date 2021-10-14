@@ -141,7 +141,7 @@ v2:
     <%- end -%>
   <%- end -%>
 <% end -%>
-<% if @job_adapter == "torque" || @scheduler_type || @ganglia_host || @grafana_host || @xdmod_resource_id -%>
+<% if @job_adapter == "torque" || @scheduler_type || @ganglia_host || @grafana_host || @xdmod_resource_id || @custom_config -%>
   custom:
   <%- if @job_adapter == "torque" -%>
     pbs:
