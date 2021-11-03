@@ -80,7 +80,7 @@ class openondemand::repo {
 
   if versioncmp($openondemand::osmajor, '8') >= 0 and $openondemand::manage_dependency_repos {
     package { 'nodejs':
-      ensure      => '12',
+      ensure      => '14',
       enable_only => true,
       provider    => 'dnfmodule',
     }
