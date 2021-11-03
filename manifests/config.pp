@@ -216,14 +216,36 @@ class openondemand::config {
     path        => '/usr/bin:/bin:/usr/sbin:/sbin',
     command     => "/opt/ood/ood-portal-generator/bin/generate -o /etc/ood/config/ood-portal.conf -d /etc/ood/dex/config.yaml ${insecure_arg}",
     refreshonly => true,
+    logoutput   => true,
     before      => ::Apache::Custom_config['ood-portal'],
   }
 
-  include ::apache::params
+  include apache
+  include apache::params
+  if $facts['os']['family'] == 'Debian' {
+    $apache_custom_config_confdir = $apache::vhost_dir
+    $apache_custom_config_verify = false
+
+    file { 'ood-portal.conf symlink':
+      ensure  => 'link',
+      path    => "${apache::vhost_enable_dir}/ood-portal.conf",
+      target  => "${apache::vhost_dir}/ood-portal.conf",
+      owner   => 'root',
+      group   => $apache::params::group,
+      mode    => '0640',
+      require => Apache::Custom_config['ood-portal'],
+      notify  => Class['apache::service'],
+    }
+  } else {
+    $apache_custom_config_confdir = $apache::confd_dir
+    $apache_custom_config_verify = true
+  }
   ::apache::custom_config { 'ood-portal':
     source         => '/etc/ood/config/ood-portal.conf',
     filename       => 'ood-portal.conf',
-    verify_command => $::apache::params::verify_command,
+    confdir        => $apache_custom_config_confdir,
+    verify_command => $apache::params::verify_command,
+    verify_config  => $apache_custom_config_verify,
     show_diff      => false,
     owner          => 'root',
     group          => $apache::params::group,

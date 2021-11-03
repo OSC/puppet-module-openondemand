@@ -1,18 +1,15 @@
-# @summary Manage Open OnDemand repos
+# @summary Manage Open OnDemand RPM repos
 # @api private
-class openondemand::repo {
+class openondemand::repo::rpm {
   assert_private()
 
   if $openondemand::repo_nightly {
-    $nightly_ensure = 'present'
     exec { 'makecache ondemand-web-nightly':
       path        => '/usr/bin:/bin:/usr/sbin:/sbin',
       command     => "${facts['package_provider']} -q makecache -y --disablerepo='*' --enablerepo='ondemand-web-nightly'",
       refreshonly => true,
       subscribe   => Yumrepo['ondemand-web-nightly'],
     }
-  } else {
-    $nightly_ensure = 'absent'
   }
 
   yumrepo { 'ondemand-web':
@@ -27,7 +24,7 @@ class openondemand::repo {
   }
 
   yumrepo { 'ondemand-web-nightly':
-    ensure          => $nightly_ensure,
+    ensure          => $openondemand::nightly_ensure,
     descr           => 'Open OnDemand Web Repo - Nightly',
     baseurl         => $openondemand::repo_nightly_baseurl,
     enabled         => '1',

@@ -4,6 +4,8 @@ fixtures:
       repo: puppetlabs/stdlib
     yumrepo_core:
       repo: puppetlabs/yumrepo_core
+    apt:
+      repo: puppetlabs/apt
     epel:
       repo: puppet/epel
     rhsm:
