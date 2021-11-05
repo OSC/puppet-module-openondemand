@@ -8,7 +8,7 @@ shared_examples 'openondemand::repo::apt' do |facts|
       key: {
         'id'     => 'FE143EA1CB378B569BBF7C544B72FE2B92D31755',
         'source' => 'https://apt.osc.edu/ondemand/DEB-GPG-KEY-ondemand',
-      }
+      },
     )
   end
 
@@ -21,7 +21,7 @@ shared_examples 'openondemand::repo::apt' do |facts|
       key: {
         'id'     => 'FE143EA1CB378B569BBF7C544B72FE2B92D31755',
         'source' => 'https://apt.osc.edu/ondemand/DEB-GPG-KEY-ondemand',
-      }
+      },
     )
   end
 
