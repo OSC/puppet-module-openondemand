@@ -50,6 +50,7 @@ jobs:
         set:
           - "centos-7"
           - "rocky-8"
+          - "ubuntu-2004"
         puppet:
           - "puppet6"
           - "puppet7"

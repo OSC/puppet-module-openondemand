@@ -1,4 +1,4 @@
-shared_examples 'openondemand::repo' do |facts|
+shared_examples 'openondemand::repo::rpm' do |facts|
   it do
     is_expected.to contain_yumrepo('ondemand-web').only_with(
       descr: 'Open OnDemand Web Repo',
