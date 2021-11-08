@@ -23,25 +23,35 @@ class openondemand::apache {
     $package_prefix = ''
   }
 
+  if $facts['os']['family'] == 'RedHat' {
+    $session_package = "${package_prefix}mod_session"
+    $proxy_html_package = "${package_prefix}mod_proxy_html"
+    $openidc_package = "${package_prefix}mod_auth_openidc"
+  } else {
+    $session_package = undef
+    $proxy_html_package = undef
+    $openidc_package = undef
+  }
+
   include ::apache::mod::ssl
   ::apache::mod { 'session':
-    package => "${package_prefix}mod_session",
+    package => $session_package,
   }
   ::apache::mod { 'session_cookie':
-    package => "${package_prefix}mod_session",
+    package => $session_package,
   }
   ::apache::mod { 'session_dbd':
-    package => "${package_prefix}mod_session",
+    package => $session_package,
   }
   ::apache::mod { 'auth_form':
-    package => "${package_prefix}mod_session",
+    package => $session_package,
   }
   # mod_request needed by mod_auth_form - should probably be a default module.
   ::apache::mod { 'request': }
   # xml2enc and proxy_html work around apache::mod::proxy_html lack of package name parameter
   ::apache::mod { 'xml2enc':}
   ::apache::mod { 'proxy_html':
-    package => "${package_prefix}mod_proxy_html",
+    package => $proxy_html_package,
   }
   include ::apache::mod::proxy
   include ::apache::mod::proxy_http
@@ -52,10 +62,11 @@ class openondemand::apache {
   }
   ::apache::mod { 'lua': }
   include ::apache::mod::headers
+  include ::apache::mod::rewrite
 
   if $openondemand::auth_type in ['dex','openid-connect'] {
     ::apache::mod { 'auth_openidc':
-      package        => "${package_prefix}mod_auth_openidc",
+      package        => $openidc_package,
       package_ensure => $openondemand::mod_auth_openidc_ensure,
     }
   }

@@ -11,7 +11,11 @@ describe 'openondemand' do
 
       it { is_expected.to create_class('openondemand') }
 
-      include_context 'openondemand::repo', facts
+      if facts[:os]['family'] == 'RedHat'
+        include_context 'openondemand::repo::rpm', facts
+      elsif facts[:os]['family'] == 'Debian'
+        include_context 'openondemand::repo::apt', facts
+      end
       include_context 'openondemand::apache', facts
       include_context 'openondemand::config', facts
 
