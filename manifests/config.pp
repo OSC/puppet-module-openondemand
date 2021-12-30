@@ -208,17 +208,17 @@ class openondemand::config {
     notify    => Exec['ood-portal-generator-generate'],
   }
   exec { 'ood-portal-generator-generate':
-    path        => '/usr/bin:/bin:/usr/sbin:/sbin',
-    command     => '/opt/ood/ood-portal-generator/bin/generate -o /etc/ood/config/ood-portal.conf -d /etc/ood/dex/config.yaml',
-    refreshonly => true,
-    before      => ::Apache::Custom_config['ood-portal'],
+    path    => '/usr/bin:/bin:/usr/sbin:/sbin',
+    command => '/opt/ood/ood-portal-generator/bin/generate -o /etc/ood/config/ood-portal.conf -d /etc/ood/dex/config.yaml',
+    creates => '/etc/ood/config/ood-portal.conf',
+    before  => ::Apache::Custom_config['ood-portal'],
   }
 
   include ::apache::params
   ::apache::custom_config { 'ood-portal':
     source         => '/etc/ood/config/ood-portal.conf',
     filename       => 'ood-portal.conf',
-    verify_command => $::apache::params::verify_command,
+    verify_command => "${apache::params::verify_command} || { /bin/rm -f /etc/ood/config/ood-portal.conf; exit 1; }",
     show_diff      => false,
     owner          => 'root',
     group          => $apache::params::group,
