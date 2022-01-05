@@ -4,7 +4,7 @@ describe 'openondemand class:' do
   context 'default parameters' do
     it 'runs successfully' do
       pp = <<-EOS
-      class { 'openondemand': }
+      class { 'openondemand': repo_release => '2.0' }
       EOS
 
       apply_manifest(pp, catch_failures: true)
@@ -16,6 +16,7 @@ describe 'openondemand class:' do
     it 'runs successfully' do
       pp = <<-EOS
       class { 'openondemand':
+        repo_release            => '2.0',
         repo_nightly            => true,
         ondemand_package_ensure => 'latest',
       }
