@@ -24,6 +24,7 @@ class openondemand::repo {
     gpgkey          => $openondemand::repo_gpgkey,
     metadata_expire => '1',
     priority        => $openondemand::repo_priority,
+    exclude         => $openondemand::repo_exclude,
   }
 
   yumrepo { 'ondemand-web-nightly':

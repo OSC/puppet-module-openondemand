@@ -9,6 +9,7 @@ shared_examples 'openondemand::repo' do |facts|
       gpgkey: 'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand',
       metadata_expire: '1',
       priority: '99',
+      exclude: 'absent',
     )
   end
 
