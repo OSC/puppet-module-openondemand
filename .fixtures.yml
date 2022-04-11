@@ -2,7 +2,6 @@ fixtures:
   repositories:
     stdlib:
       repo: https://github.com/puppetlabs/puppetlabs-stdlib.git
-      ref: 4.25.0
     yumrepo_core:
       repo: https://github.com/puppetlabs/puppetlabs-yumrepo_core.git
       puppet_version: ">= 6.0.0"
@@ -16,13 +15,12 @@ fixtures:
       repo: https://github.com/puppetlabs/puppetlabs-vcsrepo.git
     apache:
       repo: https://github.com/puppetlabs/puppetlabs-apache.git
-      ref: v5.2.0
     sudo:
       repo: https://github.com/saz/puppet-sudo.git
     augeasproviders_core:
-      repo: git://github.com/hercules-team/augeasproviders_core.git
+      repo: https://github.com/hercules-team/augeasproviders_core.git
     augeasproviders_shellvar:
-      repo: git://github.com/hercules-team/augeasproviders_shellvar.git
+      repo: https://github.com/hercules-team/augeasproviders_shellvar.git
     systemd:
       repo: https://github.com/camptocamp/puppet-systemd.git
     logrotate:
