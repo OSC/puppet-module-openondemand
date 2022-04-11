@@ -163,9 +163,9 @@ define openondemand::cluster (
 
   file { "/etc/ood/config/clusters.d/${name}.yml":
     ensure  => 'file',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
+    owner   => $owner,
+    group   => $group,
+    mode    => $mode,
     content => template('openondemand/cluster/main.yml.erb'),
     notify  => Class['openondemand::service'],
   }
