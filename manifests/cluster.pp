@@ -2,6 +2,12 @@
 #
 #
 # @param cluster_title
+# @param owner
+#   Owner of the cluster YAML file
+# @param group
+#   Group of the cluster YAML file
+# @param mode
+#   Ownership mode of the cluster YAML file
 # @param url
 # @param hidden
 # @param acls
@@ -65,6 +71,9 @@
 #
 define openondemand::cluster (
   String $cluster_title = $name,
+  String $owner = 'root',
+  String $group = 'root',
+  Stdlib::Filemode $mode = '0644',
   Optional[Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl] ]$url = undef,
   Boolean $hidden = false,
   Array[Openondemand::Acl] $acls = [],
