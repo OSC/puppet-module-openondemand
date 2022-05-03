@@ -245,6 +245,19 @@ openondemand::install_apps:
     mode: '0700'
 ```
 
+Install additional apps from Git repos:
+
+```yaml
+openondemand::install_apps:
+  bc_osc_rstudio_server:
+    ensure: latest
+    git_repo: https://github.com/OSC/bc_osc_rstudio_server.git
+  bc_osc_jupyter:
+    ensure: present
+    git_repo: https://github.com/OSC/bc_osc_jupyter
+    git_revision: v0.20.0
+```
+
 Add usr apps with a default group
 
 ```yaml
