@@ -18,7 +18,6 @@ describe 'openondemand class:' do
     it 'runs successfully' do
       pp = <<-EOS
       class { 'openondemand':
-        repo_release            => '2.0',
         repo_nightly            => true,
         ondemand_package_ensure => 'latest',
         generator_insecure      => true,
