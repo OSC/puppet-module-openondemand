@@ -1,5 +1,7 @@
 ---
 .github/workflows/ci.yaml:
+  run_on_schedule:
+    - '0 6 * * 1'
   acceptance_matrix:
       set:
         - centos-7
