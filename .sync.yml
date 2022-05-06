@@ -3,6 +3,8 @@ Rakefile:
   changelog_since_tag: v1.5.0
   changelog_max_issues: 1
 .github/workflows/ci.yaml:
+  run_on_schedule:
+    - '0 6 * * 1'
   acceptance_matrix:
       set:
         - centos-7
