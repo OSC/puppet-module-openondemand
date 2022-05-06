@@ -15,11 +15,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - ruby: 2.5.7
+          - ruby: 2.5.9
             puppet: 6
             fixtures: .fixtures.yml
             allow_failure: false
-          - ruby: 2.7.0
+          - ruby: 2.7.6
             puppet: 7
             fixtures: .fixtures.yml
             allow_failure: false
@@ -48,7 +48,7 @@ jobs:
       matrix:
         set:
           - "centos-7"
-          - "centos-8"
+          - "rocky-8"
         puppet:
           - "puppet6"
           - "puppet7"
