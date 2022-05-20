@@ -14,7 +14,7 @@ class openondemand::apache {
       default_vhost => false,
     }
   } else {
-    include ::apache
+    contain ::apache
   }
 
   if $openondemand::scl_apache {

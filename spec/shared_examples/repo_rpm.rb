@@ -2,7 +2,7 @@ shared_examples 'openondemand::repo::rpm' do |facts|
   it do
     is_expected.to contain_yumrepo('ondemand-web').only_with(
       descr: 'Open OnDemand Web Repo',
-      baseurl: "https://yum.osc.edu/ondemand/2.0/web/el#{facts[:os]['release']['major']}/$basearch",
+      baseurl: "https://yum.osc.edu/ondemand/2.1/web/el#{facts[:os]['release']['major']}/$basearch",
       enabled: '1',
       gpgcheck: '1',
       repo_gpgcheck: '1',

@@ -224,7 +224,7 @@
 #
 class openondemand (
   # repos
-  String $repo_release = '2.0',
+  String $repo_release = '2.1',
   Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl]
     $repo_baseurl_prefix = 'https://yum.osc.edu/ondemand',
   Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl, Stdlib::Absolutepath]
@@ -542,6 +542,9 @@ class openondemand (
   ->Class['openondemand::apache']
   ->Class['openondemand::config']
   ->Class['openondemand::service']
+
+  Class['openondemand::install'] -> Class['apache']
+  Class['openondemand::install'] -> Apache::Mod <| |>
 
   $_clusters.each |$name, $cluster| {
     openondemand::cluster { $name: * => $cluster }
