@@ -83,7 +83,7 @@ class openondemand::repo::rpm {
       provider    => 'dnfmodule',
     }
     package { 'ruby':
-      ensure      => '2.7',
+      ensure      => '3.0',
       enable_only => true,
       provider    => 'dnfmodule',
     }

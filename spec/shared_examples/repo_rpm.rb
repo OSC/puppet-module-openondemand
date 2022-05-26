@@ -51,7 +51,7 @@ shared_examples 'openondemand::repo::rpm' do |facts|
       it { is_expected.to contain_package('centos-release-scl').with_ensure('installed') }
     end
     it { is_expected.not_to contain_package('nodejs:14') }
-    it { is_expected.not_to contain_package('ruby:2.7') }
+    it { is_expected.not_to contain_package('ruby:3.0') }
   end
 
   if facts[:os]['release']['major'].to_i == 8
@@ -78,7 +78,7 @@ shared_examples 'openondemand::repo::rpm' do |facts|
     end
     it do
       is_expected.to contain_package('ruby').with(
-        ensure: '2.7',
+        ensure: '3.0',
         enable_only: 'true',
         provider: 'dnfmodule',
       )
