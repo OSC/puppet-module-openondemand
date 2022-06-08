@@ -257,7 +257,7 @@ class openondemand (
   Optional[String] $user_map_cmd  = undef,
   Optional[String] $user_env = undef,
   Optional[String] $map_fail_uri = undef,
-  Variant[Enum['CAS', 'openid-connect', 'shibboleth', 'dex'], String] $auth_type = 'dex',
+  Variant[Enum['CAS', 'openid-connect', 'shibboleth', 'dex'], String[1]] $auth_type = 'dex',
   Optional[Array] $auth_configs = undef,
   String $root_uri = '/pun/sys/dashboard',
   Optional[Struct[{url => String, id => String}]] $analytics = undef,
