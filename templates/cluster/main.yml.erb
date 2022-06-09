@@ -242,13 +242,23 @@ v2:
 <% end -%>
 <% if ! @batch_connect.empty? -%>
   batch_connect:
-  <%- if @batch_connect.key?('basic') -%>
+  <%- if @batch_connect.key?('basic') and @batch_connect['basic'].size > 0 -%>
     basic:
-      script_wrapper: "<%= @batch_connect['basic']['script_wrapper'] %>"
-  <%- end -%>
-  <%- if @batch_connect.key?('vnc') -%>
-    vnc:
+    <%- if @batch_connect['vnc'].key?('script_wrapper') -%>
       script_wrapper: "<%= @batch_connect['vnc']['script_wrapper'] %>"
+    <%- end -%>
+    <%- if @batch_connect['vnc'].key?('set_host') -%>
+      set_host: "<%= @batch_connect['vnc']['set_host'] %>"
+    <%- end -%>
+  <%- end -%>
+  <%- if @batch_connect.key?('vnc') and @batch_connect['vnc'].size > 0 -%>
+    vnc:
+    <%- if @batch_connect['vnc'].key?('script_wrapper') -%>
+      script_wrapper: "<%= @batch_connect['vnc']['script_wrapper'] %>"
+    <%- end -%>
+    <%- if @batch_connect['vnc'].key?('set_host') -%>
+      set_host: "<%= @batch_connect['vnc']['set_host'] %>"
+    <%- end -%>
   <%- end -%>
   <%- if @batch_connect.key?('ssh_allow') -%>
     ssh_allow: <%= @batch_connect['ssh_allow'] %>
