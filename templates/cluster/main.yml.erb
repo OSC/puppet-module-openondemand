@@ -244,11 +244,11 @@ v2:
   batch_connect:
   <%- if @batch_connect.key?('basic') and @batch_connect['basic'].size > 0 -%>
     basic:
-    <%- if @batch_connect['vnc'].key?('script_wrapper') -%>
-      script_wrapper: "<%= @batch_connect['vnc']['script_wrapper'] %>"
+    <%- if @batch_connect['basic'].key?('script_wrapper') -%>
+      script_wrapper: "<%= @batch_connect['basic']['script_wrapper'] %>"
     <%- end -%>
-    <%- if @batch_connect['vnc'].key?('set_host') -%>
-      set_host: "<%= @batch_connect['vnc']['set_host'] %>"
+    <%- if @batch_connect['basic'].key?('set_host') -%>
+      set_host: "<%= @batch_connect['basic']['set_host'] %>"
     <%- end -%>
   <%- end -%>
   <%- if @batch_connect.key?('vnc') and @batch_connect['vnc'].size > 0 -%>
