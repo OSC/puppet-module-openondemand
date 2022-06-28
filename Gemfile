@@ -29,6 +29,7 @@ group :development do
   gem "puppet-module-win-default-r#{minor_version}", '~> 1.0',   require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "puppet-module-win-dev-r#{minor_version}", '~> 1.0',       require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "puppet-lint-param-docs",                                  require: false
+  gem "faraday", '~> 1.0',                                       require: false
   gem "github_changelog_generator",                              require: false
 end
 group :system_tests do
@@ -39,7 +40,7 @@ group :system_tests do
   gem "beaker-pe",                                                               require: false
   gem "beaker-hostgenerator"
   gem "beaker-rspec"
-  gem "beaker-docker", *location_for(ENV['BEAKER_DOCKER_VERSION'] || '~> 0.7.0')
+  gem "beaker-docker"
   gem "beaker-puppet"
   gem "beaker-puppet_install_helper",                                            require: false
   gem "beaker-module_install_helper",                                            require: false

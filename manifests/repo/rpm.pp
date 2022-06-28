@@ -37,7 +37,7 @@ class openondemand::repo::rpm {
   }
 
   # Work around a bug where 'dnf module list' is not executed with -y
-  if versioncmp($openondemand::osmajor, '8') >= 0 {
+  if versioncmp($openondemand::osmajor, '8') == 0 {
     exec { 'dnf makecache ondemand-web':
       path        => '/usr/bin:/bin:/usr/sbin:/sbin',
       command     => "dnf -q makecache -y --disablerepo='*' --enablerepo='ondemand-web'",
@@ -76,7 +76,7 @@ class openondemand::repo::rpm {
     }
   }
 
-  if versioncmp($openondemand::osmajor, '8') >= 0 and $openondemand::manage_dependency_repos {
+  if versioncmp($openondemand::osmajor, '8') == 0 and $openondemand::manage_dependency_repos {
     package { 'nodejs':
       ensure      => '14',
       enable_only => true,
