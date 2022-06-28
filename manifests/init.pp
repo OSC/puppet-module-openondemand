@@ -226,7 +226,7 @@ class openondemand (
   Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl]
     $repo_baseurl_prefix = 'https://yum.osc.edu/ondemand',
   Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl, Stdlib::Absolutepath]
-    $repo_gpgkey = 'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand',
+    $repo_gpgkey = 'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand-SHA512',
   Integer[1,99] $repo_priority = 99,
   String $repo_exclude = 'absent',
   Boolean $manage_dependency_repos = true,

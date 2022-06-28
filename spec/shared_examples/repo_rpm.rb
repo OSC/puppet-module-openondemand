@@ -1,4 +1,12 @@
 shared_examples 'openondemand::repo::rpm' do |facts|
+  let(:gpgkey) do
+    if facts[:os]['release']['major'].to_i <= 8
+      'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand'
+    else
+      'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand-SHA512'
+    end
+  end
+
   it do
     is_expected.to contain_yumrepo('ondemand-web').only_with(
       descr: 'Open OnDemand Web Repo',
@@ -6,7 +14,7 @@ shared_examples 'openondemand::repo::rpm' do |facts|
       enabled: '1',
       gpgcheck: '1',
       repo_gpgcheck: '1',
-      gpgkey: 'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand',
+      gpgkey: gpgkey,
       metadata_expire: '1',
       priority: '99',
       exclude: 'absent',
@@ -21,7 +29,7 @@ shared_examples 'openondemand::repo::rpm' do |facts|
       enabled: '1',
       gpgcheck: '1',
       repo_gpgcheck: '1',
-      gpgkey: 'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand',
+      gpgkey: gpgkey,
       metadata_expire: '1',
       priority: '99',
     )
