@@ -7,8 +7,9 @@ Rakefile:
     - '0 6 * * 1'
   acceptance_matrix:
       set:
-        - centos-7
-        - rocky-8
+        - el7
+        - el8
+        - el9
         - ubuntu-2004
       puppet:
         - puppet6
