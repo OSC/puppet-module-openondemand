@@ -1,8 +1,7 @@
 require 'spec_helper_acceptance'
 
 describe 'openondemand class:' do
-  #TODO: Remove unless once latest repo has new tags
-  context 'default parameters', unless: fact('os.family') == 'Debian' do
+  context 'default parameters' do
     it 'runs successfully' do
       pp = <<-EOS
       class { 'openondemand':
