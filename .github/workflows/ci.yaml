@@ -50,7 +50,6 @@ jobs:
         set:
           - "el7"
           - "el8"
-          - "el9"
           - "ubuntu-1804"
           - "ubuntu-2004"
         puppet:
