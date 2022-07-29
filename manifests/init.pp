@@ -359,7 +359,7 @@ class openondemand (
   $osname = $facts.dig('os', 'name')
   $osmajor = $facts.dig('os', 'release', 'major')
 
-  $supported = ['RedHat-7','RedHat-8','Debian-20.04']
+  $supported = ['RedHat-7','RedHat-8','Debian-18.04','Debian-20.04']
   $os = "${osfamily}-${osmajor}"
   if ! ($os in $supported) {
     fail("Unsupported OS: module ${module_name}. osfamily=${osfamily} osmajor=${osmajor} detected")

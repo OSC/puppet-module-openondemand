@@ -48,8 +48,10 @@ jobs:
       fail-fast: false
       matrix:
         set:
-          - "centos-7"
-          - "rocky-8"
+          - "el7"
+          - "el8"
+          - "el9"
+          - "ubuntu-1804"
           - "ubuntu-2004"
         puppet:
           - "puppet6"
