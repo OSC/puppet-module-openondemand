@@ -124,6 +124,8 @@
 #   OIDC setting that determines how to clean up cookies
 # @param oidc_settings
 #   Hash of OIDC settings passsed directly to Apache config
+# @param dex_uri
+#   Dex URI if put behind Apache reverse proxy
 # @param dex_config
 #   Dex configuration Hash
 # @param web_directory
@@ -292,6 +294,7 @@ class openondemand (
   Hash $oidc_settings = {},
 
   # Dex configs
+  Optional[String[1]] $dex_uri = undef,
   Openondemand::Dex_config $dex_config = {},
 
   # Misc configs
@@ -491,6 +494,7 @@ class openondemand (
     'oidc_session_max_duration'        => $oidc_session_max_duration,
     'oidc_state_max_number_of_cookies' => $oidc_state_max_number_of_cookies,
     'oidc_settings'                    => $oidc_settings,
+    'dex_uri'                          => $dex_uri,
     'dex'                              => $_dex_config,
   }.filter |$key, $value| { $value =~ NotUndef }
   $ood_portal_yaml = to_yaml($ood_portal_config)
