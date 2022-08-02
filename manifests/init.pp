@@ -299,7 +299,7 @@ class openondemand (
   Hash $oidc_settings = {},
 
   # Dex configs
-  Optional[String[1]] $dex_uri = undef,
+  Variant[String[1],Boolean] $dex_uri = '/dex',
   Openondemand::Dex_config $dex_config = {},
 
   # Misc configs
