@@ -4,10 +4,7 @@ describe 'openondemand class:' do
   context 'default parameters' do
     it 'runs successfully' do
       pp = <<-EOS
-      class { 'openondemand':
-        # TODO: Switch to 2.0 repo once it has Ubuntu packages
-        repo_release => 'build/2.0',
-      }
+      class { 'openondemand': }
       EOS
 
       apply_manifest(pp, catch_failures: true)
