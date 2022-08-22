@@ -36,6 +36,8 @@
 #   ood_portal.yml listen_addr_port
 # @param servername
 #   ood_portal.yml servername
+# @param server_aliases
+#   ood_porta.yml server_aliases
 # @param ssl
 #   ood_portal.yml ssl
 # @param logroot
@@ -249,6 +251,7 @@ class openondemand (
   Boolean $generator_insecure = false,
   Variant[Array, String, Undef] $listen_addr_port = undef,
   Optional[String] $servername = undef,
+  Optional[Array] $server_aliases = undef,
   Optional[Array] $ssl = undef,
   String  $logroot = 'logs',
   Boolean $use_rewrites = true,
@@ -460,6 +463,7 @@ class openondemand (
   $ood_portal_config = {
     'listen_addr_port'                 => $listen_ports,
     'servername'                       => $servername,
+    'server_aliases'                   => $server_aliases,
     'port'                             => $port,
     'ssl'                              => $ssl,
     'logroot'                          => $logroot,
