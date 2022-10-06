@@ -28,7 +28,7 @@ shared_examples 'openondemand::repo::apt' do |facts|
   it do
     is_expected.to contain_apt__source('nodesource').with(
       ensure: 'present',
-      location: 'https://deb.nodesource.com/node_12.x',
+      location: 'https://deb.nodesource.com/node_14.x',
       repos: 'main',
       release: facts[:os]['distro']['codename'],
       key: {

@@ -27,7 +27,7 @@ class openondemand::repo::apt {
 
   apt::source { 'nodesource':
     ensure   => 'present',
-    location => 'https://deb.nodesource.com/node_12.x',
+    location => 'https://deb.nodesource.com/node_14.x',
     repos    => 'main',
     release  => $facts['os']['distro']['codename'],
     key      => {
