@@ -241,10 +241,15 @@ class openondemand::config {
     $apache_custom_config_confdir = $apache::confd_dir
     $apache_custom_config_verify = true
   }
+  if $apache::params::verify_command =~ Array {
+    $apache_verify_command = $apache::params::verify_command[0]
+  } else {
+    $apache_verify_command = $apache::params::verify_command
+  }
   ::apache::custom_config { 'ood-portal':
     source         => '/etc/ood/config/ood-portal.conf',
     filename       => 'ood-portal.conf',
-    verify_command => "${apache::params::verify_command} || { /bin/rm -f /etc/ood/config/ood-portal.conf; exit 1; }",
+    verify_command => "${apache_verify_command} || { /bin/rm -f /etc/ood/config/ood-portal.conf; exit 1; }",
     confdir        => $apache_custom_config_confdir,
     verify_config  => $apache_custom_config_verify,
     show_diff      => false,
