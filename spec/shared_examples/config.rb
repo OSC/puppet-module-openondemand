@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'openondemand::config' do |_facts|
   it do
     is_expected.not_to contain_file('/etc/ood/config/ondemand.d/ondemand.yml')
@@ -7,8 +9,8 @@ shared_examples 'openondemand::config' do |_facts|
     let(:params) do
       {
         nginx_stage_passenger_options: {
-          'passenger_foobar' => 'baz',
-        },
+          'passenger_foobar' => 'baz'
+        }
       }
     end
 
@@ -26,7 +28,7 @@ shared_examples 'openondemand::config' do |_facts|
         'pinned_apps' => [
           'usr/*',
           'sys/jupyter',
-          { 'type' => 'dev', 'category' => 'system' },
+          { 'type' => 'dev', 'category' => 'system' }
         ],
         'pinned_apps_menu_length' => 10,
         'pinned_apps_group_by' => 'category',
@@ -35,15 +37,16 @@ shared_examples 'openondemand::config' do |_facts|
             {
               'columns' => [
                 { 'width' => 8, 'widgets' => ['pinned_apps', 'motd'] },
-                { 'width' => 4, 'widgets' => ['xdmod_widget_job_efficiency', 'xdmod_widget_jobs'] },
-              ],
-            },
-          ],
-        },
+                { 'width' => 4, 'widgets' => ['xdmod_widget_job_efficiency', 'xdmod_widget_jobs'] }
+              ]
+            }
+          ]
+        }
       }
     end
 
     it { is_expected.to compile.with_all_deps }
+
     it 'has valid config' do
       content = catalogue.resource('file', '/etc/ood/config/ondemand.d/ondemand.yml').send(:parameters)[:content]
       data = YAML.safe_load(content)
@@ -51,7 +54,7 @@ shared_examples 'openondemand::config' do |_facts|
     end
   end
 
-  context 'hook.env' do
+  context 'with hook.env' do
     let(:params) { { pun_pre_hook_root_cmd: '/dne/hook.sh' } }
 
     it 'has default hook contents' do
@@ -78,8 +81,8 @@ shared_examples 'openondemand::config' do |_facts|
             'IDP_ISSUER_URL' => 'https://idp.example.com/auth/realms/main/protocol/openid-connect/token',
             'IMAGE_PULL_SECRET' => 'private-docker-registry',
             'REGISTRY_DOCKER_CONFIG_JSON' => '/etc/docker-registry-auth/robot-ondemand-read.json',
-            'USE_JOB_POD_REAPER' => true,
-          },
+            'USE_JOB_POD_REAPER' => true
+          }
         }
       end
 
@@ -93,7 +96,7 @@ shared_examples 'openondemand::config' do |_facts|
                           'IDP_ISSUER_URL="https://idp.example.com/auth/realms/main/protocol/openid-connect/token"',
                           'IMAGE_PULL_SECRET="private-docker-registry"',
                           'REGISTRY_DOCKER_CONFIG_JSON="/etc/docker-registry-auth/robot-ondemand-read.json"',
-                          'USE_JOB_POD_REAPER="true"',
+                          'USE_JOB_POD_REAPER="true"'
                         ])
       end
     end
@@ -104,8 +107,8 @@ shared_examples 'openondemand::config' do |_facts|
           nginx_stage_configs: {
             'foo' => 'bar',
             'bar' => false,
-            'baz' => ['foo', 'bar'],
-          },
+            'baz' => ['foo', 'bar']
+          }
         }
       end
 

@@ -1,8 +1,10 @@
-dir = File.expand_path(File.dirname(__FILE__))
+# frozen_string_literal: true
+
+dir = __dir__
 Dir["#{dir}/shared_examples/**/*.rb"].sort.each { |f| require f }
 
 require 'rspec-puppet-facts'
-include RspecPuppetFacts
+include RspecPuppetFacts # rubocop:disable Style/MixinUsage
 
 add_custom_fact :service_provider, ->(_os, facts) {
   case facts[:operatingsystemmajrelease]

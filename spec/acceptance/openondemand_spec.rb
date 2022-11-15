@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 
 describe 'openondemand class:' do
-  context 'default parameters' do
+  context 'with default parameters' do
     it 'runs successfully' do
-      pp = <<-EOS
+      pp = <<-PP
       class { 'openondemand': }
-      EOS
+      PP
 
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
@@ -14,12 +16,12 @@ describe 'openondemand class:' do
 
   context 'with nightly repo', skip: true do
     it 'runs successfully' do
-      pp = <<-EOS
+      pp = <<-PP
       class { 'openondemand':
         repo_nightly            => true,
         ondemand_package_ensure => 'latest',
       }
-      EOS
+      PP
 
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)

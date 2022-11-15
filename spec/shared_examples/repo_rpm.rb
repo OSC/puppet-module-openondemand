@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'openondemand::repo::rpm' do |facts|
   it do
     is_expected.to contain_yumrepo('ondemand-web').only_with(
@@ -68,6 +70,7 @@ shared_examples 'openondemand::repo::rpm' do |facts|
         provider: 'dnfmodule',
       )
     end
+
     it do
       is_expected.to contain_package('ruby').with(
         ensure: '2.7',
