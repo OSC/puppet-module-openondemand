@@ -11,6 +11,7 @@ Rakefile:
         - el8
         - el9
         - ubuntu-2004
+        - ubuntu-2204
       puppet:
         - puppet6
         - puppet7
@@ -27,5 +28,8 @@ spec/acceptance/nodesets/debian-11.yml:
 spec/acceptance/nodesets/ubuntu-1804.yml:
   delete: true
 spec/acceptance/nodesets/ubuntu-2004.yml:
+  packages:
+    - cron
+spec/acceptance/nodesets/ubuntu-2204.yml:
   packages:
     - cron

@@ -55,6 +55,7 @@ jobs:
           - "el8"
           - "el9"
           - "ubuntu-2004"
+          - "ubuntu-2204"
         puppet:
           - "puppet6"
           - "puppet7"
