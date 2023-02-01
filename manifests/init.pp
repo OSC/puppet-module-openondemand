@@ -12,6 +12,8 @@
 #   Exclusion for OnDemand repo
 # @param manage_dependency_repos
 #   Boolean that determines if managing repos for package dependencies
+# @param manage_epel
+#   Boolean that determines if managing EPEL repo
 # @param repo_nightly
 #   Add the OnDemand nightly repo
 # @param selinux
@@ -234,6 +236,7 @@ class openondemand (
   Integer[1,99] $repo_priority = 99,
   String $repo_exclude = 'absent',
   Boolean $manage_dependency_repos = true,
+  Boolean $manage_epel = true,
   Boolean $repo_nightly = false,
 
   # packages
