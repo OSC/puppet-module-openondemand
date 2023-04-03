@@ -427,7 +427,12 @@
 334
 335
 336
-337</pre>
+337
+338
+339
+340
+341
+342</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/config.pp', line 3</span>
@@ -607,7 +612,6 @@ class openondemand::config {
     force   =&gt; $openondemand::announcements_purge,
   }
 
-
   $openondemand::public_files_repo_paths.each |$path| {
     $basename = basename($path)
     file { &quot;${openondemand::public_root}/${basename}&quot;:
@@ -639,18 +643,25 @@ class openondemand::config {
     show_diff =&gt; false,
     notify    =&gt; Exec[&#39;ood-portal-generator-generate&#39;],
   }
-  $generate = &#39;/opt/ood/ood-portal-generator/bin/generate -o /etc/ood/config/ood-portal.conf -d /etc/ood/dex/config.yaml&#39;
+  if $openondemand::generator_insecure {
+    $insecure_arg = &#39; --insecure&#39;
+  } else {
+    $insecure_arg = &#39;&#39;
+  }
+  $generate = &quot;/opt/ood/ood-portal-generator/bin/generate -o /etc/ood/config/ood-portal.conf -d /etc/ood/dex/config.yaml${insecure_arg}&quot;
   exec { &#39;ood-portal-generator-generate&#39;:
     path        =&gt; &#39;/usr/bin:/bin:/usr/sbin:/sbin&#39;,
     command     =&gt; $generate,
     refreshonly =&gt; true,
+    logoutput   =&gt; true,
     before      =&gt; ::Apache::Custom_config[&#39;ood-portal&#39;],
   }
   exec { &#39;ood-portal-generator-generate-refresh&#39;:
-    path    =&gt; &#39;/usr/bin:/bin:/usr/sbin:/sbin&#39;,
-    command =&gt; $generate,
-    creates =&gt; &#39;/etc/ood/config/ood-portal.conf&#39;,
-    before  =&gt; ::Apache::Custom_config[&#39;ood-portal&#39;],
+    path      =&gt; &#39;/usr/bin:/bin:/usr/sbin:/sbin&#39;,
+    command   =&gt; $generate,
+    creates   =&gt; &#39;/etc/ood/config/ood-portal.conf&#39;,
+    logoutput =&gt; true,
+    before    =&gt; ::Apache::Custom_config[&#39;ood-portal&#39;],
   }
 
   include apache
@@ -674,7 +685,7 @@ class openondemand::config {
     $apache_custom_config_verify = true
   }
   if $apache::params::verify_command =~ Array {
-    $apache_verify_command = $apache::params::verify_command[0]
+    $apache_verify_command = join($apache::params::verify_command, &#39; &#39;)
   } else {
     $apache_verify_command = $apache::params::verify_command
   }
@@ -696,7 +707,7 @@ class openondemand::config {
       owner   =&gt; &#39;ondemand-dex&#39;,
       group   =&gt; &#39;ondemand-dex&#39;,
       mode    =&gt; &#39;0600&#39;,
-      require =&gt; Exec[&#39;ood-portal-generator-generate&#39;]
+      require =&gt; Exec[&#39;ood-portal-generator-generate&#39;],
     }
   }
 
@@ -765,7 +776,6 @@ class openondemand::config {
     mode   =&gt; &#39;0750&#39;,
     group  =&gt; $openondemand::nginx_log_group,
   }
-
 }</pre>
       </td>
     </tr>

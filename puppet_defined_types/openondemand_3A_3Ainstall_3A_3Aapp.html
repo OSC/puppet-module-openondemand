@@ -315,9 +315,7 @@ installed</p>
 72
 73
 74
-75
-76
-77</pre>
+75</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/install/app.pp', line 28</span>
@@ -333,15 +331,14 @@ define openondemand::install::app (
   String $group = &#39;root&#39;,
   String $mode  = &#39;0755&#39;,
 ) {
-
   include openondemand
 
   $_path = pick($path, &quot;${openondemand::web_directory}/apps/sys/${name}&quot;)
 
   if $manage_package and ! $git_repo {
     ensure_resource(&#39;package&#39;, $package, {
-      &#39;ensure&#39;  =&gt; $ensure,
-      &#39;require&#39; =&gt; Package[&#39;ondemand&#39;],
+        &#39;ensure&#39;  =&gt; $ensure,
+        &#39;require&#39; =&gt; Package[&#39;ondemand&#39;],
     })
   }
 
@@ -370,7 +367,6 @@ define openondemand::install::app (
       Vcsrepo[$_path] -&gt; File[$_path]
     }
   }
-
 }</pre>
       </td>
     </tr>

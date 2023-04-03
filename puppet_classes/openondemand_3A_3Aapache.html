@@ -200,16 +200,16 @@ class openondemand::apache {
 
   if $openondemand::declare_apache {
     if $openondemand::scl_apache {
-      class { &#39;::apache::version&#39;:
+      class { &#39;apache::version&#39;:
         scl_httpd_version =&gt; &#39;2.4&#39;,
         scl_php_version   =&gt; &#39;7.0&#39;,
       }
     }
-    class { &#39;::apache&#39;:
+    class { &#39;apache&#39;:
       default_vhost =&gt; false,
     }
   } else {
-    include ::apache
+    contain apache
   }
 
   if $openondemand::scl_apache {
@@ -228,39 +228,39 @@ class openondemand::apache {
     $openidc_package = undef
   }
 
-  include ::apache::mod::ssl
-  ::apache::mod { &#39;session&#39;:
+  include apache::mod::ssl
+  apache::mod { &#39;session&#39;:
     package =&gt; $session_package,
   }
-  ::apache::mod { &#39;session_cookie&#39;:
+  apache::mod { &#39;session_cookie&#39;:
     package =&gt; $session_package,
   }
-  ::apache::mod { &#39;session_dbd&#39;:
+  apache::mod { &#39;session_dbd&#39;:
     package =&gt; $session_package,
   }
-  ::apache::mod { &#39;auth_form&#39;:
+  apache::mod { &#39;auth_form&#39;:
     package =&gt; $session_package,
   }
   # mod_request needed by mod_auth_form - should probably be a default module.
-  ::apache::mod { &#39;request&#39;: }
+  apache::mod { &#39;request&#39;: }
   # xml2enc and proxy_html work around apache::mod::proxy_html lack of package name parameter
-  ::apache::mod { &#39;xml2enc&#39;:}
-  ::apache::mod { &#39;proxy_html&#39;:
+  apache::mod { &#39;xml2enc&#39;: }
+  apache::mod { &#39;proxy_html&#39;:
     package =&gt; $proxy_html_package,
   }
-  include ::apache::mod::proxy
-  include ::apache::mod::proxy_http
-  include ::apache::mod::proxy_connect
-  include ::apache::mod::proxy_wstunnel
+  include apache::mod::proxy
+  include apache::mod::proxy_http
+  include apache::mod::proxy_connect
+  include apache::mod::proxy_wstunnel
   if $openondemand::auth_type == &#39;CAS&#39; {
-    include ::apache::mod::auth_cas
+    include apache::mod::auth_cas
   }
-  ::apache::mod { &#39;lua&#39;: }
-  include ::apache::mod::headers
-  include ::apache::mod::rewrite
+  apache::mod { &#39;lua&#39;: }
+  include apache::mod::headers
+  include apache::mod::rewrite
 
   if $openondemand::auth_type in [&#39;dex&#39;,&#39;openid-connect&#39;] {
-    ::apache::mod { &#39;auth_openidc&#39;:
+    apache::mod { &#39;auth_openidc&#39;:
       package        =&gt; $openidc_package,
       package_ensure =&gt; $openondemand::mod_auth_openidc_ensure,
     }
@@ -277,20 +277,20 @@ class openondemand::apache {
   }
 
   systemd::dropin_file { &#39;ood.conf&#39;:
-    unit    =&gt; &quot;${::apache::service_name}.service&quot;,
+    unit    =&gt; &quot;${apache::service_name}.service&quot;,
     content =&gt; join([
-      &#39;[Service]&#39;,
-      &#39;KillSignal=SIGTERM&#39;,
-      &#39;KillMode=process&#39;,
-      &#39;PrivateTmp=false&#39;,
-      &#39;&#39;,
+        &#39;[Service]&#39;,
+        &#39;KillSignal=SIGTERM&#39;,
+        &#39;KillMode=process&#39;,
+        &#39;PrivateTmp=false&#39;,
+        &#39;&#39;,
     ], &quot;\n&quot;),
-    notify  =&gt; Class[&#39;::apache::service&#39;],
+    notify  =&gt; Class[&#39;apache::service&#39;],
   }
   systemd::dropin_file { &#39;ood-portal.conf&#39;:
     ensure =&gt; &#39;absent&#39;,
-    unit   =&gt; &quot;${::apache::service_name}.service&quot;,
-    notify =&gt; Class[&#39;::apache::service&#39;],
+    unit   =&gt; &quot;${apache::service_name}.service&quot;,
+    notify =&gt; Class[&#39;apache::service&#39;],
   }
 }</pre>
       </td>

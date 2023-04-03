@@ -94,7 +94,7 @@
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>&#39;2.0&#39;</tt>)</em>
+        <em class="default">(defaults to: <tt>&#39;3.0&#39;</tt>)</em>
       
       
         &mdash;
@@ -130,7 +130,7 @@
         <span class='type'>(<tt>Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl, Stdlib::Absolutepath]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>&#39;https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand&#39;</tt>)</em>
+        <em class="default">(defaults to: <tt>&#39;https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand-SHA512&#39;</tt>)</em>
       
       
         &mdash;
@@ -190,6 +190,24 @@
         &mdash;
         <div class='inline'>
 <p>Boolean that determines if managing repos for package dependencies</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>manage_epel</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Boolean that determines if managing EPEL repo</p>
 </div>
       
     </li>
@@ -340,6 +358,25 @@
   
     <li>
       
+        <span class='name'>generator_insecure</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Run ood-portal-generator with –insecure flag This is needed if you wish to
+use default ood@localhost user or other local users</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>listen_addr_port</span>
       
       
@@ -370,6 +407,24 @@
         &mdash;
         <div class='inline'>
 <p>ood_portal.yml servername</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>server_aliases</span>
+      
+      
+        <span class='type'>(<tt>Optional[Array]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>ood_porta.yml server_aliases</p>
 </div>
       
     </li>
@@ -448,7 +503,7 @@
   
     <li>
       
-        <span class='name'>maintenance_ip_whitelist</span>
+        <span class='name'>maintenance_ip_allowlist</span>
       
       
         <span class='type'>(<tt>Array</tt>)</span>
@@ -459,7 +514,7 @@
       
         &mdash;
         <div class='inline'>
-<p>ood_portal.yml maintenance_ip_whitelist</p>
+<p>ood_portal.yml maintenance_ip_allowlist</p>
 </div>
       
     </li>
@@ -703,7 +758,7 @@
         <span class='name'>analytics</span>
       
       
-        <span class='type'>(<tt>Optional[Struct[{url =&gt; String, id =&gt; String}]]</tt>)</span>
+        <span class='type'>(<tt>Optional[Struct[{ url =&gt; String, id =&gt; String }]]</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
@@ -1207,10 +1262,10 @@
         <span class='name'>dex_uri</span>
       
       
-        <span class='type'>(<tt>Optional[String[1]]</tt>)</span>
+        <span class='type'>(<tt>Variant[String[1],Boolean]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>undef</tt>)</em>
+        <em class="default">(defaults to: <tt>&#39;/dex&#39;</tt>)</em>
       
       
         &mdash;
@@ -2030,14 +2085,6 @@ defined</p>
         <pre class="lines">
 
 
-221
-222
-223
-224
-225
-226
-227
-228
 229
 230
 231
@@ -2387,21 +2434,33 @@ defined</p>
 575
 576
 577
-578</pre>
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 221</span>
+        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 229</span>
 
 class openondemand (
   # repos
-  String $repo_release = &#39;2.0&#39;,
+  String $repo_release = &#39;3.0&#39;,
   Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl]
-    $repo_baseurl_prefix = &#39;https://yum.osc.edu/ondemand&#39;,
+  $repo_baseurl_prefix = &#39;https://yum.osc.edu/ondemand&#39;,
   Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl, Stdlib::Absolutepath]
-    $repo_gpgkey = &#39;https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand&#39;,
+  $repo_gpgkey = &#39;https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand-SHA512&#39;,
   Integer[1,99] $repo_priority = 99,
   String $repo_exclude = &#39;absent&#39;,
   Boolean $manage_dependency_repos = true,
+  Boolean $manage_epel = true,
   Boolean $repo_nightly = false,
 
   # packages
@@ -2416,13 +2475,15 @@ class openondemand (
   String $apache_scls = &#39;httpd24&#39;,
 
   # ood_portal.yml
+  Boolean $generator_insecure = false,
   Variant[Array, String, Undef] $listen_addr_port = undef,
   Optional[String] $servername = undef,
+  Optional[Array] $server_aliases = undef,
   Optional[Array] $ssl = undef,
   String  $logroot = &#39;logs&#39;,
   Boolean $use_rewrites = true,
   Boolean $use_maintenance = true,
-  Array $maintenance_ip_whitelist = [],
+  Array $maintenance_ip_allowlist = [],
   Optional[String] $maintenance_source = undef,
   Optional[String] $maintenance_content = undef,
   Optional[Variant[String, Boolean]] $security_csp_frame_ancestors = undef,
@@ -2436,7 +2497,7 @@ class openondemand (
   Variant[Enum[&#39;CAS&#39;, &#39;openid-connect&#39;, &#39;shibboleth&#39;, &#39;dex&#39;], String[1]] $auth_type = &#39;dex&#39;,
   Optional[Array] $auth_configs = undef,
   String $root_uri = &#39;/pun/sys/dashboard&#39;,
-  Optional[Struct[{url =&gt; String, id =&gt; String}]] $analytics = undef,
+  Optional[Struct[{ url =&gt; String, id =&gt; String }]] $analytics = undef,
   String $public_uri = &#39;/public&#39;,
   String $public_root = &#39;/var/www/ood/public&#39;,
   String $logout_uri = &#39;/logout&#39;,
@@ -2468,7 +2529,7 @@ class openondemand (
   Hash $oidc_settings = {},
 
   # Dex configs
-  Optional[String[1]] $dex_uri = undef,
+  Variant[String[1],Boolean] $dex_uri = &#39;/dex&#39;,
   Openondemand::Dex_config $dex_config = {},
 
   # Misc configs
@@ -2519,7 +2580,7 @@ class openondemand (
   # apps/locales/public configs
   Optional[String] $apps_config_repo = undef,
   Optional[String] $apps_config_revision = undef,
-  String $apps_config_repo_path = &#39;&#39;,
+  String $apps_config_repo_path = &#39;&#39;, # lint:ignore:params_empty_string_assignment
   Optional[String] $locales_config_repo_path = undef,
   Optional[String] $announcements_config_repo_path = undef,
 
@@ -2531,12 +2592,11 @@ class openondemand (
   # Disable functionality
   Boolean $manage_logrotate = true,
 ) {
-
   $osfamily = $facts.dig(&#39;os&#39;, &#39;family&#39;)
   $osname = $facts.dig(&#39;os&#39;, &#39;name&#39;)
   $osmajor = $facts.dig(&#39;os&#39;, &#39;release&#39;, &#39;major&#39;)
 
-  $supported = [&#39;RedHat-7&#39;,&#39;RedHat-8&#39;,&#39;Debian-18.04&#39;,&#39;Debian-20.04&#39;]
+  $supported = [&#39;RedHat-7&#39;,&#39;RedHat-8&#39;,&#39;RedHat-9&#39;,&#39;Debian-20.04&#39;,&#39;Debian-22.04&#39;]
   $os = &quot;${osfamily}-${osmajor}&quot;
   if ! ($os in $supported) {
     fail(&quot;Unsupported OS: module ${module_name}. osfamily=${osfamily} osmajor=${osmajor} detected&quot;)
@@ -2629,12 +2689,13 @@ class openondemand (
   $ood_portal_config = {
     &#39;listen_addr_port&#39;                 =&gt; $listen_ports,
     &#39;servername&#39;                       =&gt; $servername,
+    &#39;server_aliases&#39;                   =&gt; $server_aliases,
     &#39;port&#39;                             =&gt; $port,
     &#39;ssl&#39;                              =&gt; $ssl,
     &#39;logroot&#39;                          =&gt; $logroot,
     &#39;use_rewrites&#39;                     =&gt; $use_rewrites,
     &#39;use_maintenance&#39;                  =&gt; $use_maintenance,
-    &#39;maintenance_ip_whitelist&#39;         =&gt; $maintenance_ip_whitelist,
+    &#39;maintenance_ip_allowlist&#39;         =&gt; $maintenance_ip_allowlist,
     &#39;security_csp_frame_ancestors&#39;     =&gt; $security_csp_frame_ancestors,
     &#39;security_strict_transport&#39;        =&gt; $security_strict_transport,
     &#39;lua_root&#39;                         =&gt; $lua_root,

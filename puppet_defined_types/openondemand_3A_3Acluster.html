@@ -156,7 +156,7 @@
         <span class='name'>url</span>
       
       
-        <span class='type'>(<tt>Optional[Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl] ]</tt>)</span>
+        <span class='type'>(<tt>Optional[Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl]]</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
@@ -744,7 +744,7 @@
         <span class='type'>(<tt>Hash</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>{&#39;c&#39; =&gt; $name}</tt>)</em>
+        <em class="default">(defaults to: <tt>{ &#39;c&#39; =&gt; $name }</tt>)</em>
       
       
     </li>
@@ -757,7 +757,7 @@
         <span class='type'>(<tt>Hash</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>{&#39;h&#39; =&gt; &quot;%{h}.${::domain}&quot;}</tt>)</em>
+        <em class="default">(defaults to: <tt>{ &#39;h&#39; =&gt; &quot;%{h}.${facts[&#39;networking&#39;][&#39;domain&#39;]}&quot; }</tt>)</em>
       
       
     </li>
@@ -846,8 +846,8 @@
       
       
         <span class='type'>(<tt>Optional[Struct[{
-    'cpu' =&gt; Integer,
-    'memory' =&gt; Integer,
+        'cpu' =&gt; Integer,
+        'memory' =&gt; Integer,
   }]]</tt>)</span>
       
       
@@ -862,9 +862,9 @@
       
       
         <span class='type'>(<tt>Optional[Struct[{
-    'cluster' =&gt; String,
-    'host' =&gt; String,
-    'jobid' =&gt; Optional[String],
+        'cluster' =&gt; String,
+        'host' =&gt; String,
+        'jobid' =&gt; Optional[String],
   }]]</tt>)</span>
       
       
@@ -1040,9 +1040,7 @@
 168
 169
 170
-171
-172
-173</pre>
+171</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/cluster.pp', line 72</span>
@@ -1052,7 +1050,7 @@ define openondemand::cluster (
   String $owner = &#39;root&#39;,
   String $group = &#39;root&#39;,
   Stdlib::Filemode $mode = &#39;0644&#39;,
-  Optional[Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl] ]$url = undef,
+  Optional[Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl]] $url = undef,
   Boolean $hidden = false,
   Array[Openondemand::Acl] $acls = [],
   Optional[Stdlib::Host] $login_host = undef,
@@ -1099,8 +1097,8 @@ define openondemand::cluster (
   Optional[Stdlib::Host] $ganglia_host = undef,
   String $ganglia_scheme = &#39;https://&#39;,
   Array $ganglia_segments = [&#39;gweb&#39;, &#39;graph.php&#39;],
-  Hash $ganglia_req_query = {&#39;c&#39; =&gt; $name},
-  Hash $ganglia_opt_query = {&#39;h&#39; =&gt; &quot;%{h}.${::domain}&quot;},
+  Hash $ganglia_req_query = { &#39;c&#39; =&gt; $name },
+  Hash $ganglia_opt_query = { &#39;h&#39; =&gt; &quot;%{h}.${facts[&#39;networking&#39;][&#39;domain&#39;]}&quot; },
   String $ganglia_version = &#39;3&#39;,
   Optional[Variant[Stdlib::HTTPSUrl,Stdlib::HTTPUrl]] $grafana_host = undef,
   Integer $grafana_org_id = 1,
@@ -1108,13 +1106,13 @@ define openondemand::cluster (
   Optional[String] $grafana_dashboard_name = undef,
   Optional[String] $grafana_dashboard_uid = undef,
   Optional[Struct[{
-    &#39;cpu&#39; =&gt; Integer,
-    &#39;memory&#39; =&gt; Integer,
+        &#39;cpu&#39; =&gt; Integer,
+        &#39;memory&#39; =&gt; Integer,
   }]] $grafana_dashboard_panels = undef,
   Optional[Struct[{
-    &#39;cluster&#39; =&gt; String,
-    &#39;host&#39; =&gt; String,
-    &#39;jobid&#39; =&gt; Optional[String],
+        &#39;cluster&#39; =&gt; String,
+        &#39;host&#39; =&gt; String,
+        &#39;jobid&#39; =&gt; Optional[String],
   }]] $grafana_labels = undef,
   Optional[String] $grafana_cluster_override = undef,
   Optional[Integer] $xdmod_resource_id = undef,
@@ -1138,7 +1136,6 @@ define openondemand::cluster (
     $_job_bin = $job_bin
   }
 
-
   file { &quot;/etc/ood/config/clusters.d/${name}.yml&quot;:
     ensure  =&gt; &#39;file&#39;,
     owner   =&gt; $owner,
@@ -1147,7 +1144,6 @@ define openondemand::cluster (
     content =&gt; template(&#39;openondemand/cluster/main.yml.erb&#39;),
     notify  =&gt; Class[&#39;openondemand::service&#39;],
   }
-
 }</pre>
       </td>
     </tr>

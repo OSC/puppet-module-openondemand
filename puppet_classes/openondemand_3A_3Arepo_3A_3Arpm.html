@@ -182,7 +182,8 @@
 89
 90
 91
-92</pre>
+92
+93</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/repo/rpm.pp', line 3</span>
@@ -224,7 +225,7 @@ class openondemand::repo::rpm {
   }
 
   # Work around a bug where &#39;dnf module list&#39; is not executed with -y
-  if versioncmp($openondemand::osmajor, &#39;8&#39;) &gt;= 0 {
+  if versioncmp($openondemand::osmajor, &#39;8&#39;) == 0 {
     exec { &#39;dnf makecache ondemand-web&#39;:
       path        =&gt; &#39;/usr/bin:/bin:/usr/sbin:/sbin&#39;,
       command     =&gt; &quot;dnf -q makecache -y --disablerepo=&#39;*&#39; --enablerepo=&#39;ondemand-web&#39;&quot;,
@@ -237,9 +238,11 @@ class openondemand::repo::rpm {
     }
   }
 
-  if versioncmp($openondemand::osmajor, &#39;7&#39;) &lt;= 0 and $openondemand::manage_dependency_repos {
+  if $openondemand::manage_epel {
     contain epel
+  }
 
+  if versioncmp($openondemand::osmajor, &#39;7&#39;) &lt;= 0 and $openondemand::manage_dependency_repos {
     if $facts[&#39;os&#39;][&#39;name&#39;] == &#39;CentOS&#39; and versioncmp($openondemand::osmajor, &#39;7&#39;) == 0 {
       file { &#39;/etc/yum.repos.d/ondemand-centos-scl.repo&#39;:
         ensure =&gt; &#39;absent&#39;,
@@ -263,19 +266,18 @@ class openondemand::repo::rpm {
     }
   }
 
-  if versioncmp($openondemand::osmajor, &#39;8&#39;) &gt;= 0 and $openondemand::manage_dependency_repos {
+  if versioncmp($openondemand::osmajor, &#39;8&#39;) == 0 and $openondemand::manage_dependency_repos {
     package { &#39;nodejs&#39;:
       ensure      =&gt; &#39;14&#39;,
       enable_only =&gt; true,
       provider    =&gt; &#39;dnfmodule&#39;,
     }
     package { &#39;ruby&#39;:
-      ensure      =&gt; &#39;2.7&#39;,
+      ensure      =&gt; &#39;3.0&#39;,
       enable_only =&gt; true,
       provider    =&gt; &#39;dnfmodule&#39;,
     }
   }
-
 }</pre>
       </td>
     </tr>

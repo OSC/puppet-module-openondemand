@@ -248,8 +248,7 @@ contents</p>
 56
 57
 58
-59
-60</pre>
+59</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/conf.pp', line 16</span>
@@ -276,9 +275,9 @@ define openondemand::conf (
 
   if $data {
     $_content = join([
-      &#39;# File managed by Puppet - DO NOT EDIT&#39;,
-      to_yaml($data),
-      &#39;&#39;,
+        &#39;# File managed by Puppet - DO NOT EDIT&#39;,
+        to_yaml($data),
+        &#39;&#39;,
     ], &quot;\n&quot;)
   } elsif $content_template {
     $_content = template($content_template)
@@ -297,7 +296,6 @@ define openondemand::conf (
     source  =&gt; $source,
     notify  =&gt; Class[&#39;openondemand::service&#39;],
   }
-
 }</pre>
       </td>
     </tr>

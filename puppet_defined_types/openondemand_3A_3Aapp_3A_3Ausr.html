@@ -224,10 +224,7 @@
 51
 52
 53
-54
-55
-56
-57</pre>
+54</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/app/usr.pp', line 18</span>
@@ -239,7 +236,6 @@ define openondemand::app::usr (
   String $owner = &#39;root&#39;,
   String $group = &#39;root&#39;,
 ) {
-
   include openondemand
 
   $base_web_dir = &quot;${openondemand::web_directory}/apps/usr&quot;
@@ -256,21 +252,19 @@ define openondemand::app::usr (
 
     file { $gateway:
       ensure =&gt; &#39;link&#39;,
-      target =&gt; $gateway_src
+      target =&gt; $gateway_src,
     }
   }
 
   if $ensure == &#39;absent&#39; {
     file { $gateway:
-      ensure =&gt; &#39;absent&#39;
+      ensure =&gt; &#39;absent&#39;,
     }
     -&gt; file { $web_dir:
       ensure =&gt; &#39;absent&#39;,
       force  =&gt; true,
     }
   }
-
-
 }</pre>
       </td>
     </tr>

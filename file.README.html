@@ -91,6 +91,8 @@ and configuration.</p>
 <p>The following are the versions of this module and the supported versions of
 Open OnDemand:</p>
 <ul><li>
+<p>Module 3.x supports Open OnDemand 3.x</p>
+</li><li>
 <p>Module 2.x supports Open OnDemand 2.x</p>
 </li><li>
 <p>Module 1.x supports Open OnDemand 1.18.x</p>
@@ -106,12 +108,12 @@ Example configurations will be done in Hiera format.</p>
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_openondemand'>openondemand</span>
 </code></pre>
 
-<p>Install specific versions of OnDemand from 2.0 repo with OpenID Connect
+<p>Install specific versions of OnDemand from 3.0 repo with OpenID Connect
 support.</p>
 
-<pre class="code ruby"><code class="ruby">openondemand::repo_release: &#39;2.0&#39;
-openondemand::ondemand_package_ensure: &quot;2.0.0-1.el7&quot;
-openondemand::mod_auth_openidc_ensure: &quot;2.4.5-1.el7&quot;
+<pre class="code ruby"><code class="ruby">openondemand::repo_release: &#39;3.0&#39;
+openondemand::ondemand_package_ensure: &quot;3.0.0-1.el7&quot;
+openondemand::mod_auth_openidc_ensure: &quot;3.4.5-1.el7&quot;
 </code></pre>
 
 <p>Configure OnDemand SSL certs</p>
@@ -396,7 +398,9 @@ href="http://osc.github.io/puppet-module-openondemand/">osc.github.io/puppet-mod
 <ul><li>
 <p>RedHat/CentOS 7 x86_64</p>
 </li><li>
-<p>RedHat/Rocky 8 x86_64</p>
+<p>RedHat/Rocky Linux/Alma Linux 8 x86_64</p>
+</li><li>
+<p>RedHat/Rocky Linux/Alma Linux 9 x86_64</p>
 </li><li>
 <p>Ubuntu 18.04 x86_64</p>
 </li><li>
