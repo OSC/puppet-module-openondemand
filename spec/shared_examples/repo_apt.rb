@@ -4,7 +4,7 @@ shared_examples 'openondemand::repo::apt' do |facts|
   it do
     is_expected.to contain_apt__source('ondemand-web').with(
       ensure: 'present',
-      location: 'https://apt.osc.edu/ondemand/2.1/web/apt',
+      location: 'https://apt.osc.edu/ondemand/3.0/web/apt',
       repos: 'main',
       release: facts[:os]['distro']['codename'],
       key: {
