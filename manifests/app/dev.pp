@@ -23,7 +23,6 @@ define openondemand::app::dev (
   String $home_subdir = 'ondemand/dev',
   Optional[Stdlib::Absolutepath] $gateway_src = undef,
 ) {
-
   include openondemand
 
   $base_web_dir = "${openondemand::web_directory}/apps/dev"
@@ -55,13 +54,11 @@ define openondemand::app::dev (
       path    => '/usr/bin:/bin:/usr/sbin:/sbin',
       command => "unlink ${gateway}",
       onlyif  => "test -L ${gateway}",
-      before  => File[$web_dir]
+      before  => File[$web_dir],
     }
     file { $web_dir:
       ensure => 'absent',
       force  => true,
     }
   }
-
-
 }

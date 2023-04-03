@@ -175,7 +175,6 @@ class openondemand::config {
     force   => $openondemand::announcements_purge,
   }
 
-
   $openondemand::public_files_repo_paths.each |$path| {
     $basename = basename($path)
     file { "${openondemand::public_root}/${basename}":
@@ -271,7 +270,7 @@ class openondemand::config {
       owner   => 'ondemand-dex',
       group   => 'ondemand-dex',
       mode    => '0600',
-      require => Exec['ood-portal-generator-generate']
+      require => Exec['ood-portal-generator-generate'],
     }
   }
 
@@ -340,5 +339,4 @@ class openondemand::config {
     mode   => '0750',
     group  => $openondemand::nginx_log_group,
   }
-
 }

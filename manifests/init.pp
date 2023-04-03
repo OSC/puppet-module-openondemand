@@ -230,9 +230,9 @@ class openondemand (
   # repos
   String $repo_release = '3.0',
   Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl]
-    $repo_baseurl_prefix = 'https://yum.osc.edu/ondemand',
+  $repo_baseurl_prefix = 'https://yum.osc.edu/ondemand',
   Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl, Stdlib::Absolutepath]
-    $repo_gpgkey = 'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand-SHA512',
+  $repo_gpgkey = 'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand-SHA512',
   Integer[1,99] $repo_priority = 99,
   String $repo_exclude = 'absent',
   Boolean $manage_dependency_repos = true,
@@ -273,7 +273,7 @@ class openondemand (
   Variant[Enum['CAS', 'openid-connect', 'shibboleth', 'dex'], String[1]] $auth_type = 'dex',
   Optional[Array] $auth_configs = undef,
   String $root_uri = '/pun/sys/dashboard',
-  Optional[Struct[{url => String, id => String}]] $analytics = undef,
+  Optional[Struct[{ url => String, id => String }]] $analytics = undef,
   String $public_uri = '/public',
   String $public_root = '/var/www/ood/public',
   String $logout_uri = '/logout',
@@ -356,7 +356,7 @@ class openondemand (
   # apps/locales/public configs
   Optional[String] $apps_config_repo = undef,
   Optional[String] $apps_config_revision = undef,
-  String $apps_config_repo_path = '',
+  String $apps_config_repo_path = '', # lint:ignore:params_empty_string_assignment
   Optional[String] $locales_config_repo_path = undef,
   Optional[String] $announcements_config_repo_path = undef,
 
@@ -368,7 +368,6 @@ class openondemand (
   # Disable functionality
   Boolean $manage_logrotate = true,
 ) {
-
   $osfamily = $facts.dig('os', 'family')
   $osname = $facts.dig('os', 'name')
   $osmajor = $facts.dig('os', 'release', 'major')

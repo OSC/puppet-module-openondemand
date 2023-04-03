@@ -35,9 +35,9 @@ define openondemand::conf (
 
   if $data {
     $_content = join([
-      '# File managed by Puppet - DO NOT EDIT',
-      to_yaml($data),
-      '',
+        '# File managed by Puppet - DO NOT EDIT',
+        to_yaml($data),
+        '',
     ], "\n")
   } elsif $content_template {
     $_content = template($content_template)
@@ -56,5 +56,4 @@ define openondemand::conf (
     source  => $source,
     notify  => Class['openondemand::service'],
   }
-
 }

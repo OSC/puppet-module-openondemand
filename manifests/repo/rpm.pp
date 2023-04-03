@@ -90,5 +90,4 @@ class openondemand::repo::rpm {
       provider    => 'dnfmodule',
     }
   }
-
 }

@@ -74,7 +74,7 @@ define openondemand::cluster (
   String $owner = 'root',
   String $group = 'root',
   Stdlib::Filemode $mode = '0644',
-  Optional[Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl] ]$url = undef,
+  Optional[Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl]] $url = undef,
   Boolean $hidden = false,
   Array[Openondemand::Acl] $acls = [],
   Optional[Stdlib::Host] $login_host = undef,
@@ -121,8 +121,8 @@ define openondemand::cluster (
   Optional[Stdlib::Host] $ganglia_host = undef,
   String $ganglia_scheme = 'https://',
   Array $ganglia_segments = ['gweb', 'graph.php'],
-  Hash $ganglia_req_query = {'c' => $name},
-  Hash $ganglia_opt_query = {'h' => "%{h}.${::domain}"},
+  Hash $ganglia_req_query = { 'c' => $name },
+  Hash $ganglia_opt_query = { 'h' => "%{h}.${facts['networking']['domain']}" },
   String $ganglia_version = '3',
   Optional[Variant[Stdlib::HTTPSUrl,Stdlib::HTTPUrl]] $grafana_host = undef,
   Integer $grafana_org_id = 1,
@@ -130,13 +130,13 @@ define openondemand::cluster (
   Optional[String] $grafana_dashboard_name = undef,
   Optional[String] $grafana_dashboard_uid = undef,
   Optional[Struct[{
-    'cpu' => Integer,
-    'memory' => Integer,
+        'cpu' => Integer,
+        'memory' => Integer,
   }]] $grafana_dashboard_panels = undef,
   Optional[Struct[{
-    'cluster' => String,
-    'host' => String,
-    'jobid' => Optional[String],
+        'cluster' => String,
+        'host' => String,
+        'jobid' => Optional[String],
   }]] $grafana_labels = undef,
   Optional[String] $grafana_cluster_override = undef,
   Optional[Integer] $xdmod_resource_id = undef,
@@ -160,7 +160,6 @@ define openondemand::cluster (
     $_job_bin = $job_bin
   }
 
-
   file { "/etc/ood/config/clusters.d/${name}.yml":
     ensure  => 'file',
     owner   => $owner,
@@ -169,5 +168,4 @@ define openondemand::cluster (
     content => template('openondemand/cluster/main.yml.erb'),
     notify  => Class['openondemand::service'],
   }
-
 }
