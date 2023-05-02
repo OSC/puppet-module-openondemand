@@ -57,6 +57,7 @@ The following parameters are available in the `openondemand` class:
 
 * [`repo_release`](#repo_release)
 * [`repo_baseurl_prefix`](#repo_baseurl_prefix)
+* [`repo_proxy`](#repo_proxy)
 * [`repo_gpgkey`](#repo_gpgkey)
 * [`repo_priority`](#repo_priority)
 * [`repo_exclude`](#repo_exclude)
@@ -181,6 +182,14 @@ Data type: `Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl]`
 The baseurl prefix for OnDemand repo
 
 Default value: `'https://yum.osc.edu/ondemand'`
+
+##### <a name="repo_proxy"></a>`repo_proxy`
+
+Data type: `String`
+
+Sets proxy for OnDemand Repo
+
+Default value: `'_none_'`
 
 ##### <a name="repo_gpgkey"></a>`repo_gpgkey`
 

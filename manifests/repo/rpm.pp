@@ -22,6 +22,7 @@ class openondemand::repo::rpm {
     metadata_expire => '1',
     priority        => $openondemand::repo_priority,
     exclude         => $openondemand::repo_exclude,
+    proxy           => $openondemand::repo_proxy,
   }
 
   yumrepo { 'ondemand-web-nightly':
@@ -34,6 +35,7 @@ class openondemand::repo::rpm {
     gpgkey          => $openondemand::repo_gpgkey,
     metadata_expire => '1',
     priority        => $openondemand::repo_priority,
+    proxy           => $openondemand::repo_proxy,
   }
 
   # Work around a bug where 'dnf module list' is not executed with -y
