@@ -1,25 +1,30 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 
 describe 'openondemand class:' do
-  context 'default parameters' do
+  context 'with default parameters' do
     it 'runs successfully' do
-      pp = <<-EOS
-      class { 'openondemand': }
-      EOS
+      pp = <<-PP
+      class { 'openondemand':
+        generator_insecure => true,
+      }
+      PP
 
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
     end
   end
 
-  context 'with nightly repo', skip: true do
+  context 'with nightly repo' do
     it 'runs successfully' do
-      pp = <<-EOS
+      pp = <<-PP
       class { 'openondemand':
         repo_nightly            => true,
         ondemand_package_ensure => 'latest',
+        generator_insecure      => true,
       }
-      EOS
+      PP
 
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)

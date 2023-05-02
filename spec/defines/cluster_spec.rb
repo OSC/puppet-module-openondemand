@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'openondemand::cluster' do
@@ -17,21 +19,21 @@ describe 'openondemand::cluster' do
             {
               'adapter' => 'group',
               'groups' => ['test-group'],
-              'type' => 'whitelist',
-            },
+              'type' => 'whitelist'
+            }
           ],
           rsv_query_acls: [
             {
               'adapter' => 'group',
               'groups' => ['test-group-rsv'],
-              'type' => 'blacklist',
-            },
+              'type' => 'blacklist'
+            }
           ],
           login_host: 'login.test',
           batch_connect: {
             'basic' => { 'script_wrapper' => 'module restore\n%s' },
-            'vnc'   => { 'script_wrapper' => 'module restore\nmodule load ondemand-vnc\n%s' },
-          },
+            'vnc' => { 'script_wrapper' => 'module restore\nmodule load ondemand-vnc\n%s' }
+          }
         }
       end
 
@@ -39,9 +41,9 @@ describe 'openondemand::cluster' do
 
       it do
         is_expected.to contain_file('/etc/ood/config/clusters.d/test.yml').with('ensure' => 'file',
-                                                                                'owner'   => 'root',
-                                                                                'group'   => 'root',
-                                                                                'mode'    => '0644')
+                                                                                'owner' => 'root',
+                                                                                'group' => 'root',
+                                                                                'mode' => '0644')
       end
 
       it do
@@ -51,7 +53,7 @@ describe 'openondemand::cluster' do
         expect(data['v2']['custom']).to be_nil
       end
 
-      context 'kubernetes' do
+      context 'with kubernetes' do
         let :params do
           {
             job_adapter: 'kubernetes',
@@ -60,10 +62,10 @@ describe 'openondemand::cluster' do
             job_username_prefix: 'dev',
             job_server: { 'endpoint' => 'https://k8dev.example.com:6443', 'cert_authority_file' => '/etc/k8dev.crt' },
             job_mounts: [
-              { 'name' => 'home', 'destination_path' => '/home', 'path' => '/home', 'host_type' => 'Directory', 'type' => 'host' },
+              { 'name' => 'home', 'destination_path' => '/home', 'path' => '/home', 'host_type' => 'Directory', 'type' => 'host' }
             ],
             job_auth: { 'type' => 'oidc' },
-            batch_connect: { 'ssh_allow' => false },
+            batch_connect: { 'ssh_allow' => false }
           }
         end
 
@@ -78,14 +80,14 @@ describe 'openondemand::cluster' do
         end
       end
 
-      context 'custom configs' do
+      context 'with custom configs' do
         let :params do
           default_params.merge!(
             custom_config: {
               foo_string: 'bar',
               foo_bool: false,
               foo_array: ['1', '2', 3],
-              foo_hash: { 'foo' => 'bar', 'bar' => 'baz', 'baz' => false },
+              foo_hash: { 'foo' => 'bar', 'bar' => 'baz', 'baz' => false }
             },
           )
         end
@@ -129,7 +131,7 @@ describe 'openondemand::cluster' do
               grafana_dashboard_name: 'test',
               grafana_dashboard_uid: 'foo',
               grafana_dashboard_panels: { 'cpu' => 1, 'memory' => 2 },
-              grafana_labels: { 'cluster' => 'cluster', 'host' => 'host' },
+              grafana_labels: { 'cluster' => 'cluster', 'host' => 'host' }
             }
           end
 
@@ -155,7 +157,7 @@ describe 'openondemand::cluster' do
           end
         end
 
-        context 'require cpu and memory panels' do
+        context 'with require cpu and memory panels' do
           let :params do
             default_params.merge!(
               ganglia_host: nil,

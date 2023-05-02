@@ -3,21 +3,21 @@ Rakefile:
   changelog_since_tag: v1.5.0
   changelog_max_issues: 1
 .github/workflows/ci.yaml:
+  run_on_schedule:
+    - '0 6 * * 1'
   acceptance_matrix:
       set:
         - el7
         - el8
-        - ---el9
-        - ubuntu-1804
+        - el9
         - ubuntu-2004
+        - ubuntu-2204
       puppet:
         - puppet6
         - puppet7
 .gitlab-ci.yml:
   delete: true
 appveyor.yml:
-  delete: true
-spec/acceptance/nodesets/el9.yml:
   delete: true
 spec/acceptance/nodesets/debian-9.yml:
   delete: true
@@ -26,8 +26,10 @@ spec/acceptance/nodesets/debian-10.yml:
 spec/acceptance/nodesets/debian-11.yml:
   delete: true
 spec/acceptance/nodesets/ubuntu-1804.yml:
+  delete: true
+spec/acceptance/nodesets/ubuntu-2004.yml:
   packages:
     - cron
-spec/acceptance/nodesets/ubuntu-2004.yml:
+spec/acceptance/nodesets/ubuntu-2204.yml:
   packages:
     - cron

@@ -22,7 +22,6 @@ define openondemand::app::usr (
   String $owner = 'root',
   String $group = 'root',
 ) {
-
   include openondemand
 
   $base_web_dir = "${openondemand::web_directory}/apps/usr"
@@ -39,19 +38,17 @@ define openondemand::app::usr (
 
     file { $gateway:
       ensure => 'link',
-      target => $gateway_src
+      target => $gateway_src,
     }
   }
 
   if $ensure == 'absent' {
     file { $gateway:
-      ensure => 'absent'
+      ensure => 'absent',
     }
     -> file { $web_dir:
       ensure => 'absent',
       force  => true,
     }
   }
-
-
 }

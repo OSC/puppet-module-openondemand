@@ -62,6 +62,7 @@ The following parameters are available in the `openondemand` class:
 * [`repo_priority`](#repo_priority)
 * [`repo_exclude`](#repo_exclude)
 * [`manage_dependency_repos`](#manage_dependency_repos)
+* [`manage_epel`](#manage_epel)
 * [`repo_nightly`](#repo_nightly)
 * [`selinux`](#selinux)
 * [`ondemand_package_ensure`](#ondemand_package_ensure)
@@ -70,13 +71,15 @@ The following parameters are available in the `openondemand` class:
 * [`install_apps`](#install_apps)
 * [`declare_apache`](#declare_apache)
 * [`apache_scls`](#apache_scls)
+* [`generator_insecure`](#generator_insecure)
 * [`listen_addr_port`](#listen_addr_port)
 * [`servername`](#servername)
+* [`server_aliases`](#server_aliases)
 * [`ssl`](#ssl)
 * [`logroot`](#logroot)
 * [`use_rewrites`](#use_rewrites)
 * [`use_maintenance`](#use_maintenance)
-* [`maintenance_ip_whitelist`](#maintenance_ip_whitelist)
+* [`maintenance_ip_allowlist`](#maintenance_ip_allowlist)
 * [`maintenance_source`](#maintenance_source)
 * [`maintenance_content`](#maintenance_content)
 * [`security_csp_frame_ancestors`](#security_csp_frame_ancestors)
@@ -170,7 +173,7 @@ Data type: `String`
 
 The release of OnDemand repo
 
-Default value: `'2.0'`
+Default value: `'3.0'`
 
 ##### <a name="repo_baseurl_prefix"></a>`repo_baseurl_prefix`
 
@@ -186,7 +189,7 @@ Data type: `Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl, Stdlib::Absolutepath]`
 
 The URL for OnDemand repo GPG key
 
-Default value: `'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand'`
+Default value: `'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand-SHA512'`
 
 ##### <a name="repo_proxy"></a>`repo_proxy`
 
@@ -217,6 +220,14 @@ Default value: `'absent'`
 Data type: `Boolean`
 
 Boolean that determines if managing repos for package dependencies
+
+Default value: ``true``
+
+##### <a name="manage_epel"></a>`manage_epel`
+
+Data type: `Boolean`
+
+Boolean that determines if managing EPEL repo
 
 Default value: ``true``
 
@@ -284,6 +295,16 @@ SCLs to load when starting Apache service
 
 Default value: `'httpd24'`
 
+##### <a name="generator_insecure"></a>`generator_insecure`
+
+Data type: `Boolean`
+
+Run ood-portal-generator with --insecure flag
+This is needed if you wish to use default ood@localhost user or
+other local users
+
+Default value: ``false``
+
 ##### <a name="listen_addr_port"></a>`listen_addr_port`
 
 Data type: `Variant[Array, String, Undef]`
@@ -297,6 +318,14 @@ Default value: ``undef``
 Data type: `Optional[String]`
 
 ood_portal.yml servername
+
+Default value: ``undef``
+
+##### <a name="server_aliases"></a>`server_aliases`
+
+Data type: `Optional[Array]`
+
+ood_porta.yml server_aliases
 
 Default value: ``undef``
 
@@ -332,11 +361,11 @@ ood_portal.yml use_maintenance
 
 Default value: ``true``
 
-##### <a name="maintenance_ip_whitelist"></a>`maintenance_ip_whitelist`
+##### <a name="maintenance_ip_allowlist"></a>`maintenance_ip_allowlist`
 
 Data type: `Array`
 
-ood_portal.yml maintenance_ip_whitelist
+ood_portal.yml maintenance_ip_allowlist
 
 Default value: `[]`
 
@@ -446,7 +475,7 @@ Default value: `'/pun/sys/dashboard'`
 
 ##### <a name="analytics"></a>`analytics`
 
-Data type: `Optional[Struct[{url => String, id => String}]]`
+Data type: `Optional[Struct[{ url => String, id => String }]]`
 
 ood_portal.yml analytics
 
@@ -670,11 +699,11 @@ Default value: `{}`
 
 ##### <a name="dex_uri"></a>`dex_uri`
 
-Data type: `Optional[String[1]]`
+Data type: `Variant[String[1],Boolean]`
 
 Dex URI if put behind Apache reverse proxy
 
-Default value: ``undef``
+Default value: `'/dex'`
 
 ##### <a name="dex_config"></a>`dex_config`
 
@@ -1273,7 +1302,7 @@ Default value: `'0644'`
 
 ##### <a name="url"></a>`url`
 
-Data type: `Optional[Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl] ]`
+Data type: `Optional[Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl]]`
 
 
 
@@ -1637,7 +1666,7 @@ Data type: `Hash`
 
 
 
-Default value: `{'c' => $name}`
+Default value: `{ 'c' => $name }`
 
 ##### <a name="ganglia_opt_query"></a>`ganglia_opt_query`
 
@@ -1645,7 +1674,7 @@ Data type: `Hash`
 
 
 
-Default value: `{'h' => "%{h}.${::domain}"}`
+Default value: `{ 'h' => "%{h}.${facts['networking']['domain']}" }`
 
 ##### <a name="ganglia_version"></a>`ganglia_version`
 
@@ -1698,8 +1727,8 @@ Default value: ``undef``
 ##### <a name="grafana_dashboard_panels"></a>`grafana_dashboard_panels`
 
 Data type: `Optional[Struct[{
-    'cpu' => Integer,
-    'memory' => Integer,
+        'cpu' => Integer,
+        'memory' => Integer,
   }]]`
 
 
@@ -1709,9 +1738,9 @@ Default value: ``undef``
 ##### <a name="grafana_labels"></a>`grafana_labels`
 
 Data type: `Optional[Struct[{
-    'cluster' => String,
-    'host' => String,
-    'jobid' => Optional[String],
+        'cluster' => String,
+        'host' => String,
+        'jobid' => Optional[String],
   }]]`
 
 

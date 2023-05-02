@@ -1,12 +1,22 @@
+# frozen_string_literal: true
+
 shared_examples 'openondemand::repo::rpm' do |facts|
+  let(:gpgkey) do
+    if facts[:os]['release']['major'].to_i <= 8
+      'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand'
+    else
+      'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand-SHA512'
+    end
+  end
+
   it do
     is_expected.to contain_yumrepo('ondemand-web').only_with(
       descr: 'Open OnDemand Web Repo',
-      baseurl: "https://yum.osc.edu/ondemand/2.0/web/el#{facts[:os]['release']['major']}/$basearch",
+      baseurl: "https://yum.osc.edu/ondemand/3.0/web/el#{facts[:os]['release']['major']}/$basearch",
       enabled: '1',
       gpgcheck: '1',
       repo_gpgcheck: '1',
-      gpgkey: 'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand',
+      gpgkey: gpgkey,
       metadata_expire: '1',
       priority: '99',
       exclude: 'absent',
@@ -21,7 +31,7 @@ shared_examples 'openondemand::repo::rpm' do |facts|
       enabled: '1',
       gpgcheck: '1',
       repo_gpgcheck: '1',
-      gpgkey: 'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand',
+      gpgkey: gpgkey,
       metadata_expire: '1',
       priority: '99',
     )
@@ -43,7 +53,7 @@ shared_examples 'openondemand::repo::rpm' do |facts|
       it { is_expected.to contain_package('centos-release-scl').with_ensure('installed') }
     end
     it { is_expected.not_to contain_package('nodejs:14') }
-    it { is_expected.not_to contain_package('ruby:2.7') }
+    it { is_expected.not_to contain_package('ruby:3.0') }
   end
 
   if facts[:os]['release']['major'].to_i == 8
@@ -68,9 +78,10 @@ shared_examples 'openondemand::repo::rpm' do |facts|
         provider: 'dnfmodule',
       )
     end
+
     it do
       is_expected.to contain_package('ruby').with(
-        ensure: '2.7',
+        ensure: '3.0',
         enable_only: 'true',
         provider: 'dnfmodule',
       )

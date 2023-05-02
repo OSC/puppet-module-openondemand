@@ -14,6 +14,8 @@
 #   Exclusion for OnDemand repo
 # @param manage_dependency_repos
 #   Boolean that determines if managing repos for package dependencies
+# @param manage_epel
+#   Boolean that determines if managing EPEL repo
 # @param repo_nightly
 #   Add the OnDemand nightly repo
 # @param selinux
@@ -30,10 +32,16 @@
 #   Boolean that determines if apache is declared or included
 # @param apache_scls
 #   SCLs to load when starting Apache service
+# @param generator_insecure
+#   Run ood-portal-generator with --insecure flag
+#   This is needed if you wish to use default ood@localhost user or
+#   other local users
 # @param listen_addr_port
 #   ood_portal.yml listen_addr_port
 # @param servername
 #   ood_portal.yml servername
+# @param server_aliases
+#   ood_porta.yml server_aliases
 # @param ssl
 #   ood_portal.yml ssl
 # @param logroot
@@ -42,8 +50,8 @@
 #   ood_portal.yml use_rewrites
 # @param use_maintenance
 #   ood_portal.yml use_maintenance
-# @param maintenance_ip_whitelist
-#   ood_portal.yml maintenance_ip_whitelist
+# @param maintenance_ip_allowlist
+#   ood_portal.yml maintenance_ip_allowlist
 # @param maintenance_source
 #   Source for maintenance index.html
 # @param maintenance_content
@@ -222,15 +230,16 @@
 #
 class openondemand (
   # repos
-  String $repo_release = '2.0',
+  String $repo_release = '3.0',
   Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl]
-    $repo_baseurl_prefix = 'https://yum.osc.edu/ondemand',
+  $repo_baseurl_prefix = 'https://yum.osc.edu/ondemand',
   Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl, Stdlib::Absolutepath]
-    $repo_gpgkey = 'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand',
+  $repo_gpgkey = 'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand-SHA512',
   String $repo_proxy = '_none_',
   Integer[1,99] $repo_priority = 99,
   String $repo_exclude = 'absent',
   Boolean $manage_dependency_repos = true,
+  Boolean $manage_epel = true,
   Boolean $repo_nightly = false,
 
   # packages
@@ -245,13 +254,15 @@ class openondemand (
   String $apache_scls = 'httpd24',
 
   # ood_portal.yml
+  Boolean $generator_insecure = false,
   Variant[Array, String, Undef] $listen_addr_port = undef,
   Optional[String] $servername = undef,
+  Optional[Array] $server_aliases = undef,
   Optional[Array] $ssl = undef,
   String  $logroot = 'logs',
   Boolean $use_rewrites = true,
   Boolean $use_maintenance = true,
-  Array $maintenance_ip_whitelist = [],
+  Array $maintenance_ip_allowlist = [],
   Optional[String] $maintenance_source = undef,
   Optional[String] $maintenance_content = undef,
   Optional[Variant[String, Boolean]] $security_csp_frame_ancestors = undef,
@@ -265,7 +276,7 @@ class openondemand (
   Variant[Enum['CAS', 'openid-connect', 'shibboleth', 'dex'], String[1]] $auth_type = 'dex',
   Optional[Array] $auth_configs = undef,
   String $root_uri = '/pun/sys/dashboard',
-  Optional[Struct[{url => String, id => String}]] $analytics = undef,
+  Optional[Struct[{ url => String, id => String }]] $analytics = undef,
   String $public_uri = '/public',
   String $public_root = '/var/www/ood/public',
   String $logout_uri = '/logout',
@@ -297,7 +308,7 @@ class openondemand (
   Hash $oidc_settings = {},
 
   # Dex configs
-  Optional[String[1]] $dex_uri = undef,
+  Variant[String[1],Boolean] $dex_uri = '/dex',
   Openondemand::Dex_config $dex_config = {},
 
   # Misc configs
@@ -348,7 +359,7 @@ class openondemand (
   # apps/locales/public configs
   Optional[String] $apps_config_repo = undef,
   Optional[String] $apps_config_revision = undef,
-  String $apps_config_repo_path = '',
+  String $apps_config_repo_path = '', # lint:ignore:params_empty_string_assignment
   Optional[String] $locales_config_repo_path = undef,
   Optional[String] $announcements_config_repo_path = undef,
 
@@ -360,12 +371,11 @@ class openondemand (
   # Disable functionality
   Boolean $manage_logrotate = true,
 ) {
-
   $osfamily = $facts.dig('os', 'family')
   $osname = $facts.dig('os', 'name')
   $osmajor = $facts.dig('os', 'release', 'major')
 
-  $supported = ['RedHat-7','RedHat-8','Debian-18.04','Debian-20.04']
+  $supported = ['RedHat-7','RedHat-8','RedHat-9','Debian-20.04','Debian-22.04']
   $os = "${osfamily}-${osmajor}"
   if ! ($os in $supported) {
     fail("Unsupported OS: module ${module_name}. osfamily=${osfamily} osmajor=${osmajor} detected")
@@ -458,12 +468,13 @@ class openondemand (
   $ood_portal_config = {
     'listen_addr_port'                 => $listen_ports,
     'servername'                       => $servername,
+    'server_aliases'                   => $server_aliases,
     'port'                             => $port,
     'ssl'                              => $ssl,
     'logroot'                          => $logroot,
     'use_rewrites'                     => $use_rewrites,
     'use_maintenance'                  => $use_maintenance,
-    'maintenance_ip_whitelist'         => $maintenance_ip_whitelist,
+    'maintenance_ip_allowlist'         => $maintenance_ip_allowlist,
     'security_csp_frame_ancestors'     => $security_csp_frame_ancestors,
     'security_strict_transport'        => $security_strict_transport,
     'lua_root'                         => $lua_root,

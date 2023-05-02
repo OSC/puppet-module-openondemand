@@ -36,15 +36,14 @@ define openondemand::install::app (
   String $group = 'root',
   String $mode  = '0755',
 ) {
-
   include openondemand
 
   $_path = pick($path, "${openondemand::web_directory}/apps/sys/${name}")
 
   if $manage_package and ! $git_repo {
     ensure_resource('package', $package, {
-      'ensure'  => $ensure,
-      'require' => Package['ondemand'],
+        'ensure'  => $ensure,
+        'require' => Package['ondemand'],
     })
   }
 
@@ -73,5 +72,4 @@ define openondemand::install::app (
       Vcsrepo[$_path] -> File[$_path]
     }
   }
-
 }

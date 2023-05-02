@@ -93,7 +93,7 @@ v2:
   <%- if @job_singularity_image -%>
     singularity_image: "<%= @job_singularity_image %>"
   <%- end -%>
-  <%- if @job_strict_host_checking -%>
+  <%- if !@job_strict_host_checking.nil? -%>
     strict_host_checking: <%= @job_strict_host_checking %>
   <%- end -%>
   <%- if @job_tmux_bin -%>

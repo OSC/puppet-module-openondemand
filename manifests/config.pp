@@ -175,7 +175,6 @@ class openondemand::config {
     force   => $openondemand::announcements_purge,
   }
 
-
   $openondemand::public_files_repo_paths.each |$path| {
     $basename = basename($path)
     file { "${openondemand::public_root}/${basename}":
@@ -207,18 +206,25 @@ class openondemand::config {
     show_diff => false,
     notify    => Exec['ood-portal-generator-generate'],
   }
-  $generate = '/opt/ood/ood-portal-generator/bin/generate -o /etc/ood/config/ood-portal.conf -d /etc/ood/dex/config.yaml'
+  if $openondemand::generator_insecure {
+    $insecure_arg = ' --insecure'
+  } else {
+    $insecure_arg = ''
+  }
+  $generate = "/opt/ood/ood-portal-generator/bin/generate -o /etc/ood/config/ood-portal.conf -d /etc/ood/dex/config.yaml${insecure_arg}"
   exec { 'ood-portal-generator-generate':
     path        => '/usr/bin:/bin:/usr/sbin:/sbin',
     command     => $generate,
     refreshonly => true,
+    logoutput   => true,
     before      => ::Apache::Custom_config['ood-portal'],
   }
   exec { 'ood-portal-generator-generate-refresh':
-    path    => '/usr/bin:/bin:/usr/sbin:/sbin',
-    command => $generate,
-    creates => '/etc/ood/config/ood-portal.conf',
-    before  => ::Apache::Custom_config['ood-portal'],
+    path      => '/usr/bin:/bin:/usr/sbin:/sbin',
+    command   => $generate,
+    creates   => '/etc/ood/config/ood-portal.conf',
+    logoutput => true,
+    before    => ::Apache::Custom_config['ood-portal'],
   }
 
   include apache
@@ -242,7 +248,7 @@ class openondemand::config {
     $apache_custom_config_verify = true
   }
   if $apache::params::verify_command =~ Array {
-    $apache_verify_command = $apache::params::verify_command[0]
+    $apache_verify_command = join($apache::params::verify_command, ' ')
   } else {
     $apache_verify_command = $apache::params::verify_command
   }
@@ -264,7 +270,7 @@ class openondemand::config {
       owner   => 'ondemand-dex',
       group   => 'ondemand-dex',
       mode    => '0600',
-      require => Exec['ood-portal-generator-generate']
+      require => Exec['ood-portal-generator-generate'],
     }
   }
 
@@ -333,5 +339,4 @@ class openondemand::config {
     mode   => '0750',
     group  => $openondemand::nginx_log_group,
   }
-
 }

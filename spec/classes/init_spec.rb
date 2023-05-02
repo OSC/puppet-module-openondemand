@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'openondemand' do
@@ -11,15 +13,16 @@ describe 'openondemand' do
 
       it { is_expected.to create_class('openondemand') }
 
-      if facts[:os]['family'] == 'RedHat'
+      case facts[:os]['family']
+      when 'RedHat'
         include_context 'openondemand::repo::rpm', facts
-      elsif facts[:os]['family'] == 'Debian'
+      when 'Debian'
         include_context 'openondemand::repo::apt', facts
       end
       include_context 'openondemand::apache', facts
       include_context 'openondemand::config', facts
 
       it { is_expected.to contain_package('ondemand').that_comes_before('Class[sudo]') }
-    end # end context
-  end # end on_supported_os loop
-end # end describe
+    end
+  end
+end

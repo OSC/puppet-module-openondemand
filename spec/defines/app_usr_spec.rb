@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'openondemand::app::usr' do
@@ -17,9 +19,9 @@ describe 'openondemand::app::usr' do
 
       it do
         is_expected.to contain_file('/var/www/ood/apps/usr/test').with('ensure' => 'directory',
-                                                                       'owner'   => 'root',
-                                                                       'group'   => 'root',
-                                                                       'mode'    => '0750')
+                                                                       'owner' => 'root',
+                                                                       'group' => 'root',
+                                                                       'mode' => '0750')
       end
     end
   end
