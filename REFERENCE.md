@@ -58,6 +58,7 @@ The following parameters are available in the `openondemand` class:
 * [`repo_release`](#repo_release)
 * [`repo_baseurl_prefix`](#repo_baseurl_prefix)
 * [`repo_gpgkey`](#repo_gpgkey)
+* [`repo_proxy`](#repo_proxy)
 * [`repo_priority`](#repo_priority)
 * [`repo_exclude`](#repo_exclude)
 * [`manage_dependency_repos`](#manage_dependency_repos)
@@ -186,6 +187,14 @@ Data type: `Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl, Stdlib::Absolutepath]`
 The URL for OnDemand repo GPG key
 
 Default value: `'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand'`
+
+##### <a name="repo_proxy"></a>`repo_proxy`
+
+Data type: `String`
+
+The URL for OnDemand repo proxy
+
+Default value: `'_none_'`
 
 ##### <a name="repo_priority"></a>`repo_priority`
 
