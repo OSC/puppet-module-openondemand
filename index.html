@@ -60,38 +60,31 @@
       <div id="content"><div id='filecontents'>
 <h1 id="label-puppet-module-openondemand">puppet-module-openondemand</h1>
 
-<p><a href="https://forge.puppetlabs.com/osc/openondemand"><img
-src="http://img.shields.io/puppetforge/v/osc/openondemand.svg"></a> <a
-href="https://github.com/osc/puppet-module-openondemand/actions?query=workflow%3ACI"><img
-src="https://github.com/osc/puppet-module-openondemand/workflows/CI/badge.svg?branch=master"></a></p>
+<p><a href="https://forge.puppetlabs.com/osc/openondemand"><img src="http://img.shields.io/puppetforge/v/osc/openondemand.svg"></a> <a href="https://github.com/osc/puppet-module-openondemand/actions?query=workflow%3ACI"><img src="https://github.com/osc/puppet-module-openondemand/workflows/CI/badge.svg?branch=master"></a></p>
 
 <h4 id="label-Table+of+Contents">Table of Contents</h4>
 <ol><li>
 <p><a href="#overview">Overview</a></p>
 <ul><li>
-<p><a href="#supported-versions-of-open-ondemand">Supported Versions of Open
-OnDemand</a></p>
+<p><a href="#supported-versions-of-open-ondemand">Supported Versions of Open OnDemand</a></p>
 </li></ul>
 </li><li>
 <p><a href="#usage">Usage - Configuration options</a></p>
 </li><li>
-<p><a href="#reference">Reference - Parameter and detailed reference to all
-options</a></p>
+<p><a href="#reference">Reference - Parameter and detailed reference to all options</a></p>
 </li><li>
 <p><a href="#limitations">Limitations - OS compatibility, etc.</a></p>
 </li></ol>
 
 <h2 id="label-Overview">Overview</h2>
 
-<p>Manage <a href="http://openondemand.org/">Open OnDemand</a> installation
-and configuration.</p>
+<p>Manage <a href="http://openondemand.org/">Open OnDemand</a> installation and configuration.</p>
 
 <h3 id="label-Supported+Versions+of+Open+OnDemand">Supported Versions of Open OnDemand</h3>
 
-<p>The following are the versions of this module and the supported versions of
-Open OnDemand:</p>
+<p>The following are the versions of this module and the supported versions of Open OnDemand:</p>
 <ul><li>
-<p>Module 3.x supports Open OnDemand 3.x</p>
+<p>Module 3.x and 4.x supports Open OnDemand 3.x</p>
 </li><li>
 <p>Module 2.x supports Open OnDemand 2.x</p>
 </li><li>
@@ -102,14 +95,12 @@ Open OnDemand:</p>
 
 <h2 id="label-Usage">Usage</h2>
 
-<p>All configuration can be done through the <code>openondemand</code> class.
-Example configurations will be done in Hiera format.</p>
+<p>All configuration can be done through the <code>openondemand</code> class. Example configurations will be done in Hiera format.</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_openondemand'>openondemand</span>
 </code></pre>
 
-<p>Install specific versions of OnDemand from 3.0 repo with OpenID Connect
-support.</p>
+<p>Install specific versions of OnDemand from 3.0 repo with OpenID Connect support.</p>
 
 <pre class="code ruby"><code class="ruby">openondemand::repo_release: &#39;3.0&#39;
 openondemand::ondemand_package_ensure: &quot;3.0.0-1.el7&quot;
@@ -125,8 +116,7 @@ openondemand::ssl:
   - &quot;SSLCertificateChainFile /etc/pki/tls/certs/%{lookup(&#39;openondemand::servername&#39;)}-interm.crt&quot;
 </code></pre>
 
-<p>If you already declare the apache class you may wish to only include apache
-in this module:</p>
+<p>If you already declare the apache class you may wish to only include apache in this module:</p>
 
 <pre class="code ruby"><code class="ruby">openondemand::declare_apache: false
 apache::version::scl_httpd_version: &#39;2.4&#39;
@@ -172,8 +162,7 @@ openondemand::dex_config:
           nameAttr: cn
 </code></pre>
 
-<p>Setup OnDemand to authenticate with OpenID Connect system, in these
-examples the IdP is Keycloak.</p>
+<p>Setup OnDemand to authenticate with OpenID Connect system, in these examples the IdP is Keycloak.</p>
 
 <pre class="code ruby"><code class="ruby">openondemand::servername: ondemand.osc.edu
 openondemand::auth_type: &#39;openid-connect&#39;
@@ -193,8 +182,7 @@ openondemand::oidc_settings:
   OIDCStripCookies: &#39;mod_auth_openidc_session mod_auth_openidc_session_chunks mod_auth_openidc_session_0 mod_auth_openidc_session_1&#39;
 </code></pre>
 
-<p>Configure OnDemand via git repo that contains app configs, locales, public,
-and annoucement files</p>
+<p>Configure OnDemand via git repo that contains app configs, locales, public, and annoucement files</p>
 
 <pre class="code ruby"><code class="ruby">openondemand::servername: ondemand.osc.edu
 openondemand::apps_config_repo: https://github.com/OSC/osc-ood-config.git
@@ -227,8 +215,7 @@ openondemand::announcements_config_repo_path: &quot;%{lookup(&#39;openondemand::
     job_conf: /etc/slurm/slurm.conf
 </code></pre>
 
-<p>Define a Torque cluster. The following example is based on a cluster at OSC
-using Torque</p>
+<p>Define a Torque cluster. The following example is based on a cluster at OSC using Torque</p>
 
 <pre class="code ruby"><code class="ruby">openondemand::clusters:
   owens:
@@ -298,9 +285,7 @@ using Torque</p>
 
 <p>Add XDMoD support</p>
 
-<p>Ensure the cluster definition has <code>xdmod_resource_id</code> set to
-<code>resource_id</code> of the cluster in XDMoD. Also must do something
-like the following to set the appropriate environment variable:</p>
+<p>Ensure the cluster definition has <code>xdmod_resource_id</code> set to <code>resource_id</code> of the cluster in XDMoD. Also must do something like the following to set the appropriate environment variable:</p>
 
 <pre class="code ruby"><code class="ruby">openondemand::nginx_stage_pun_custom_env:
   OOD_XDMOD_HOST: http://xdmod.osc.edu
@@ -368,13 +353,7 @@ openondemand::dashboard_layout:
           - xdmod_widget_jobs
 </code></pre>
 
-<p>Define some configurations for <code>/etc/ood/config/ondemand.d</code>.
-This will generate
-<code>/etc/ood/config/ondemand.d/pinned_apps.yml.erb</code> based on the
-source file as well as
-<code>/etc/ood/config/ondemand.d/dashboard_layout.yml</code> from a
-template file. The example for <code>foobar</code> will generate the YAML
-file using data defined in Hiera.</p>
+<p>Define some configurations for <code>/etc/ood/config/ondemand.d</code>. This will generate <code>/etc/ood/config/ondemand.d/pinned_apps.yml.erb</code> based on the source file as well as <code>/etc/ood/config/ondemand.d/dashboard_layout.yml</code> from a template file. The example for <code>foobar</code> will generate the YAML file using data defined in Hiera.</p>
 
 <pre class="code ruby"><code class="ruby">openondemand::confs:
   pinned_apps:
@@ -389,8 +368,7 @@ file using data defined in Hiera.</p>
 
 <h2 id="label-Reference">Reference</h2>
 
-<p><a
-href="http://osc.github.io/puppet-module-openondemand/">osc.github.io/puppet-module-openondemand/</a></p>
+<p><a href="http://osc.github.io/puppet-module-openondemand/">osc.github.io/puppet-module-openondemand/</a></p>
 
 <h2 id="label-Limitations">Limitations</h2>
 

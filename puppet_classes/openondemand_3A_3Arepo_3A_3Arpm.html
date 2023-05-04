@@ -183,7 +183,9 @@
 90
 91
 92
-93</pre>
+93
+94
+95</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/repo/rpm.pp', line 3</span>
@@ -210,6 +212,7 @@ class openondemand::repo::rpm {
     metadata_expire =&gt; &#39;1&#39;,
     priority        =&gt; $openondemand::repo_priority,
     exclude         =&gt; $openondemand::repo_exclude,
+    proxy           =&gt; $openondemand::repo_proxy,
   }
 
   yumrepo { &#39;ondemand-web-nightly&#39;:
@@ -222,6 +225,7 @@ class openondemand::repo::rpm {
     gpgkey          =&gt; $openondemand::repo_gpgkey,
     metadata_expire =&gt; &#39;1&#39;,
     priority        =&gt; $openondemand::repo_priority,
+    proxy           =&gt; $openondemand::repo_proxy,
   }
 
   # Work around a bug where &#39;dnf module list&#39; is not executed with -y

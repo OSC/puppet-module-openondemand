@@ -142,6 +142,24 @@
   
     <li>
       
+        <span class='name'>repo_proxy</span>
+      
+      
+        <span class='type'>(<tt>Optional[String[1]]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The URL for proxy for OnDemand repo</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>repo_priority</span>
       
       
@@ -369,8 +387,7 @@
       
         &mdash;
         <div class='inline'>
-<p>Run ood-portal-generator with –insecure flag This is needed if you wish to
-use default ood@localhost user or other local users</p>
+<p>Run ood-portal-generator with –insecure flag This is needed if you wish to use default ood@localhost user or other local users</p>
 </div>
       
     </li>
@@ -1342,8 +1359,7 @@ use default ood@localhost user or other local users</p>
       
         &mdash;
         <div class='inline'>
-<p>Configure how often you want to run nginx_clean Defaults to &#39;0 <em>/2 *
-* </em>&#39; (every other hour)</p>
+<p>Configure how often you want to run nginx_clean Defaults to &#39;0 <em>/2 * * </em>&#39; (every other hour)</p>
 </div>
       
     </li>
@@ -1577,9 +1593,7 @@ use default ood@localhost user or other local users</p>
       
         &mdash;
         <div class='inline'>
-<p>The source for /etc/ood/config/ondemand.d/ondemand.yml Overrides
-<code>config_content</code> as well as pinned apps and dashboard layout
-parameters</p>
+<p>The source for /etc/ood/config/ondemand.d/ondemand.yml Overrides <code>config_content</code> as well as pinned apps and dashboard layout parameters</p>
 </div>
       
     </li>
@@ -1597,8 +1611,7 @@ parameters</p>
       
         &mdash;
         <div class='inline'>
-<p>The content for /etc/ood/config/ondemand.d/ondemand.yml Overrides pinned
-apps and dashboard layout parameters</p>
+<p>The content for /etc/ood/config/ondemand.d/ondemand.yml Overrides pinned apps and dashboard layout parameters</p>
 </div>
       
     </li>
@@ -1994,8 +2007,7 @@ apps and dashboard layout parameters</p>
       
         &mdash;
         <div class='inline'>
-<p>Source for apps config, not used if <code>apps_config_repo</code> is
-defined</p>
+<p>Source for apps config, not used if <code>apps_config_repo</code> is defined</p>
 </div>
       
     </li>
@@ -2013,8 +2025,7 @@ defined</p>
       
         &mdash;
         <div class='inline'>
-<p>Source for locales config, not used if <code>apps_config_repo</code> is
-defined</p>
+<p>Source for locales config, not used if <code>apps_config_repo</code> is defined</p>
 </div>
       
     </li>
@@ -2032,8 +2043,7 @@ defined</p>
       
         &mdash;
         <div class='inline'>
-<p>Source for aouncements config, not used if <code>apps_config_repo</code> is
-defined</p>
+<p>Source for aouncements config, not used if <code>apps_config_repo</code> is defined</p>
 </div>
       
     </li>
@@ -2085,8 +2095,6 @@ defined</p>
         <pre class="lines">
 
 
-229
-230
 231
 232
 233
@@ -2445,10 +2453,13 @@ defined</p>
 586
 587
 588
-589</pre>
+589
+590
+591
+592</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 229</span>
+        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 231</span>
 
 class openondemand (
   # repos
@@ -2457,6 +2468,7 @@ class openondemand (
   $repo_baseurl_prefix = &#39;https://yum.osc.edu/ondemand&#39;,
   Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl, Stdlib::Absolutepath]
   $repo_gpgkey = &#39;https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand-SHA512&#39;,
+  Optional[String[1]] $repo_proxy = undef,
   Integer[1,99] $repo_priority = 99,
   String $repo_exclude = &#39;absent&#39;,
   Boolean $manage_dependency_repos = true,
