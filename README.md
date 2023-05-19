@@ -236,6 +236,20 @@ openondemand::nginx_stage_pun_custom_env:
   OOD_XDMOD_HOST: http://xdmod.osc.edu
 ```
 
+Add Support Ticket configuration:
+
+```yaml
+openondemand::confs:
+  support_ticket:
+    data:
+      support_ticket:
+        email:
+          from: noreply@example.com
+          to: support@example.com
+```
+
+The above example will create `/etc/ood/config/ondemand.d/support_ticket.yml` with the YAML defined in `data` parameter.
+
 Install additional apps of specific versions as well as hide some apps
 
 ```yaml
