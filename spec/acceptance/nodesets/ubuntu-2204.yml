@@ -15,7 +15,6 @@ HOSTS:
       - LANG=en_US.UTF-8
       - LANGUAGE=en_US.UTF-8
       - LC_ALL=en_US.UTF-8
-      - STDLIB_LOG_DEPRECATIONS=false
     docker_container_name: 'openondemand-ubuntu2204'
     default_module_install_opts:
       ignore-dependencies: 
