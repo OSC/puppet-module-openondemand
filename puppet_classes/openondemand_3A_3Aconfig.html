@@ -6,7 +6,7 @@
 <title>
   Puppet Class: openondemand::config
   
-    &mdash; Documentation by YARD 0.9.28
+    &mdash; Documentation by YARD 0.9.34
   
 </title>
 
@@ -80,6 +80,7 @@
     
   </div>
 </div>
+
 
 
 <div class="tags">
@@ -432,7 +433,10 @@
 339
 340
 341
-342</pre>
+342
+343
+344
+345</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/config.pp', line 3</span>
@@ -587,6 +591,7 @@ class openondemand::config {
     ensure  =&gt; &#39;directory&#39;,
     owner   =&gt; &#39;root&#39;,
     group   =&gt; &#39;root&#39;,
+    mode    =&gt; &#39;0644&#39;,
     source  =&gt; $openondemand::_apps_config_source,
     recurse =&gt; true,
     purge   =&gt; true,
@@ -596,6 +601,7 @@ class openondemand::config {
     ensure  =&gt; &#39;directory&#39;,
     owner   =&gt; &#39;root&#39;,
     group   =&gt; &#39;root&#39;,
+    mode    =&gt; &#39;0644&#39;,
     source  =&gt; $openondemand::_locales_config_source,
     recurse =&gt; true,
     purge   =&gt; true,
@@ -606,6 +612,7 @@ class openondemand::config {
     ensure  =&gt; &#39;directory&#39;,
     owner   =&gt; &#39;root&#39;,
     group   =&gt; &#39;root&#39;,
+    mode    =&gt; &#39;0644&#39;,
     source  =&gt; $openondemand::_announcements_config_source,
     recurse =&gt; $openondemand::announcements_purge,
     purge   =&gt; $openondemand::announcements_purge,

@@ -6,7 +6,7 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.28
+    &mdash; Documentation by YARD 0.9.34
   
 </title>
 
@@ -291,6 +291,19 @@ openondemand::announcements_config_repo_path: &quot;%{lookup(&#39;openondemand::
   OOD_XDMOD_HOST: http://xdmod.osc.edu
 </code></pre>
 
+<p>Add Support Ticket configuration:</p>
+
+<pre class="code ruby"><code class="ruby">openondemand::confs:
+  support_ticket:
+    data:
+      support_ticket:
+        email:
+          from: noreply@example.com
+          to: support@example.com
+</code></pre>
+
+<p>The above example will create <code>/etc/ood/config/ondemand.d/support_ticket.yml</code> with the YAML defined in <code>data</code> parameter.</p>
+
 <p>Install additional apps of specific versions as well as hide some apps</p>
 
 <pre class="code ruby"><code class="ruby">openondemand::install_apps:
@@ -310,6 +323,13 @@ openondemand::announcements_config_repo_path: &quot;%{lookup(&#39;openondemand::
     ensure: present
     git_repo: https://github.com/OSC/bc_osc_jupyter
     git_revision: v0.20.0
+</code></pre>
+
+<p>Install additional apps from Puppet sources:</p>
+
+<pre class="code ruby"><code class="ruby">openondemand::install_apps:
+  bc_osc_rstudio_server:
+    source: puppet:///modules/profile/bc_osc_rstudio_server
 </code></pre>
 
 <p>Add usr apps with a default group</p>

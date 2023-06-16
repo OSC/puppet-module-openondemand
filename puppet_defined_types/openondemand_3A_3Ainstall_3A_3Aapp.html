@@ -6,7 +6,7 @@
 <title>
   Defined Type: openondemand::install::app
   
-    &mdash; Documentation by YARD 0.9.28
+    &mdash; Documentation by YARD 0.9.34
   
 </title>
 
@@ -78,6 +78,7 @@
     
   </div>
 </div>
+
 
 
 <div class="tags">
@@ -186,6 +187,24 @@
   
     <li>
       
+        <span class='name'>source</span>
+      
+      
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The Puppet source path for app</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>path</span>
       
       
@@ -267,8 +286,6 @@
         <pre class="lines">
 
 
-28
-29
 30
 31
 32
@@ -314,10 +331,21 @@
 72
 73
 74
-75</pre>
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/install/app.pp', line 28</span>
+        <pre class="code"><span class="info file"># File 'manifests/install/app.pp', line 30</span>
 
 define openondemand::install::app (
   String $ensure = &#39;present&#39;,
@@ -325,6 +353,7 @@ define openondemand::install::app (
   Boolean $manage_package = true,
   Optional[String] $git_repo = undef,
   Optional[String] $git_revision = undef,
+  Optional[String] $source = undef,
   Optional[Stdlib::Absolutepath] $path = undef,
   String $owner = &#39;root&#39;,
   String $group = &#39;root&#39;,
@@ -333,6 +362,12 @@ define openondemand::install::app (
   include openondemand
 
   $_path = pick($path, &quot;${openondemand::web_directory}/apps/sys/${name}&quot;)
+
+  if $source {
+    $recurse = &#39;remote&#39;
+  } else {
+    $recurse = undef
+  }
 
   if $manage_package and ! $git_repo {
     ensure_resource(&#39;package&#39;, $package, {
@@ -353,10 +388,12 @@ define openondemand::install::app (
 
   if $ensure != &#39;absent&#39; {
     file { $_path:
-      ensure =&gt; &#39;directory&#39;,
-      owner  =&gt; $owner,
-      group  =&gt; $group,
-      mode   =&gt; $mode,
+      ensure  =&gt; &#39;directory&#39;,
+      owner   =&gt; $owner,
+      group   =&gt; $group,
+      mode    =&gt; $mode,
+      source  =&gt; $source,
+      recurse =&gt; $recurse,
     }
 
     if $manage_package and ! $git_repo {
