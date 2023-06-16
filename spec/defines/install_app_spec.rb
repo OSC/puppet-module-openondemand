@@ -54,6 +54,21 @@ describe 'openondemand::install::app' do
 
         it { is_expected.to contain_vcsrepo('/var/www/ood/apps/sys/test').that_comes_before('File[/var/www/ood/apps/sys/test]') }
       end
+
+      context 'when source' do
+        let(:params) do
+          {
+            'source' => 'puppet:///modules/apps'
+          }
+        end
+
+        it do
+          is_expected.to contain_file('/var/www/ood/apps/sys/test').with(
+            'source' => 'puppet:///modules/apps',
+            'recurse' => 'remote',
+          )
+        end
+      end
     end
   end
 end

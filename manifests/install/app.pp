@@ -16,6 +16,8 @@
 #   If defined, no package will be installed
 # @param git_revision
 #   The git revision to checkout
+# @param source
+#   The Puppet source path for app
 # @param path
 #   Path to app, defaults to `/var/www/ood/apps/sys/$name`
 # @param owner
@@ -31,6 +33,7 @@ define openondemand::install::app (
   Boolean $manage_package = true,
   Optional[String] $git_repo = undef,
   Optional[String] $git_revision = undef,
+  Optional[String] $source = undef,
   Optional[Stdlib::Absolutepath] $path = undef,
   String $owner = 'root',
   String $group = 'root',
@@ -39,6 +42,12 @@ define openondemand::install::app (
   include openondemand
 
   $_path = pick($path, "${openondemand::web_directory}/apps/sys/${name}")
+
+  if $source {
+    $recurse = 'remote'
+  } else {
+    $recurse = undef
+  }
 
   if $manage_package and ! $git_repo {
     ensure_resource('package', $package, {
@@ -59,10 +68,12 @@ define openondemand::install::app (
 
   if $ensure != 'absent' {
     file { $_path:
-      ensure => 'directory',
-      owner  => $owner,
-      group  => $group,
-      mode   => $mode,
+      ensure  => 'directory',
+      owner   => $owner,
+      group   => $group,
+      mode    => $mode,
+      source  => $source,
+      recurse => $recurse,
     }
 
     if $manage_package and ! $git_repo {

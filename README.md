@@ -273,6 +273,14 @@ openondemand::install_apps:
     git_revision: v0.20.0
 ```
 
+Install additional apps from Puppet sources:
+
+```yaml
+openondemand::install_apps:
+  bc_osc_rstudio_server:
+    source: puppet:///modules/profile/bc_osc_rstudio_server
+```
+
 Add usr apps with a default group
 
 ```yaml
