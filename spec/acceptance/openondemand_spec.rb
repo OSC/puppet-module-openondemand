@@ -20,6 +20,8 @@ describe 'openondemand class:' do
     it 'runs successfully' do
       pp = <<-PP
       class { 'openondemand':
+        # TODO: Remove once repo_release uses 3.1
+        repo_release            => 'build/3.1',
         repo_nightly            => true,
         ondemand_package_ensure => 'latest',
         generator_insecure      => true,
