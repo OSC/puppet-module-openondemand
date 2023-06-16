@@ -17,6 +17,9 @@ HOSTS:
       - LANGUAGE=en_US.UTF-8
       - LC_ALL=en_US.UTF-8
     docker_container_name: 'openondemand-el7'
+    default_module_install_opts:
+      ignore-dependencies: 
+      force: 
 CONFIG:
   log_level: debug
   type: foss

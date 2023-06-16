@@ -19,6 +19,18 @@ Rakefile:
   delete: true
 appveyor.yml:
   delete: true
+spec/acceptance/nodesets/el7.yml:
+  default_module_install_opts:
+    ignore-dependencies: ~
+    force: ~
+spec/acceptance/nodesets/el8.yml:
+  default_module_install_opts:
+    ignore-dependencies: ~
+    force: ~
+spec/acceptance/nodesets/el9.yml:
+  default_module_install_opts:
+    ignore-dependencies: ~
+    force: ~
 spec/acceptance/nodesets/debian-9.yml:
   delete: true
 spec/acceptance/nodesets/debian-10.yml:
@@ -30,6 +42,12 @@ spec/acceptance/nodesets/ubuntu-1804.yml:
 spec/acceptance/nodesets/ubuntu-2004.yml:
   packages:
     - cron
+  default_module_install_opts:
+    ignore-dependencies: ~
+    force: ~
 spec/acceptance/nodesets/ubuntu-2204.yml:
   packages:
     - cron
+  default_module_install_opts:
+    ignore-dependencies: ~
+    force: ~
