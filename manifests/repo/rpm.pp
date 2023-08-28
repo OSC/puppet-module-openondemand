@@ -1,6 +1,9 @@
 # @summary Manage Open OnDemand RPM repos
 # @api private
-class openondemand::repo::rpm {
+class openondemand::repo::rpm (
+  Integer $gpgcheck = 1,
+  Integer $repo_gpgcheck = 1,
+) {
   assert_private()
 
   if $openondemand::repo_nightly {
@@ -16,8 +19,8 @@ class openondemand::repo::rpm {
     descr           => 'Open OnDemand Web Repo',
     baseurl         => $openondemand::repo_baseurl,
     enabled         => '1',
-    gpgcheck        => '1',
-    repo_gpgcheck   => '1',
+    gpgcheck        => $gpgcheck,
+    repo_gpgcheck   => $repo_gpgcheck,
     gpgkey          => $openondemand::repo_gpgkey,
     metadata_expire => '1',
     priority        => $openondemand::repo_priority,
@@ -30,8 +33,8 @@ class openondemand::repo::rpm {
     descr           => 'Open OnDemand Web Repo - Nightly',
     baseurl         => $openondemand::repo_nightly_baseurl,
     enabled         => '1',
-    gpgcheck        => '1',
-    repo_gpgcheck   => '1',
+    gpgcheck        => $gpgcheck,
+    repo_gpgcheck   => $repo_gpgcheck,
     gpgkey          => $openondemand::repo_gpgkey,
     metadata_expire => '1',
     priority        => $openondemand::repo_priority,
