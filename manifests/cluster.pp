@@ -275,18 +275,19 @@ define openondemand::cluster (
       $ganglia = undef
     }
     if $grafana_host {
+      $grafana_dashboard = {
+        'name'    => $grafana_dashboard_name,
+        'uid'     => $grafana_dashboard_uid,
+        'panels'  => $grafana_dashboard_panels,
+      }.filter |$k,$v| { $v =~ NotUndef }
       $grafana = {
         'host'              => $grafana_host,
         'orgId'             => $grafana_org_id,
         'theme'             => $grafana_theme,
-        'dashboard'         => {
-          'name'    => $grafana_dashboard_name,
-          'uid'     => $grafana_dashboard_uid,
-          'panels'  => $grafana_dashboard_panels,
-        },
+        'dashboard'         => $grafana_dashboard,
         'labels'            => $grafana_labels,
         'cluster_override'  => $grafana_cluster_override,
-      }
+      }.filter |$k,$v| { $v =~ NotUndef }
     } else {
       $grafana = undef
     }
