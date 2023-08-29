@@ -76,7 +76,7 @@ define openondemand::cluster (
   Stdlib::Filemode $mode = '0644',
   Optional[Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl]] $url = undef,
   Boolean $hidden = false,
-  Array[Openondemand::Acl] $acls = [],
+  Optional[Array[Openondemand::Acl]] $acls = undef,
   Optional[Stdlib::Host] $login_host = undef,
   Optional[Enum['torque','slurm','lsf','pbspro','sge','linux_host','kubernetes']] $job_adapter = undef,
   Optional[String] $job_cluster = undef,
