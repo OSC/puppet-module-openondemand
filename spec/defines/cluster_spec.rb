@@ -87,7 +87,15 @@ describe 'openondemand::cluster' do
               foo_string: 'bar',
               foo_bool: false,
               foo_array: ['1', '2', 3],
-              foo_hash: { 'foo' => 'bar', 'bar' => 'baz', 'baz' => false }
+              foo_hash: { 'foo' => 'bar', 'bar' => 'baz', 'baz' => false },
+              classrooms: {
+                jupyter: {
+                  AI_BOOTCAMP_OSC: {
+                    hours: 3,
+                    project: 'FOO'
+                  }
+                }
+              }
             },
           )
         end
@@ -96,11 +104,15 @@ describe 'openondemand::cluster' do
 
         it 'hash valid custom config' do
           content = catalogue.resource('file', '/etc/ood/config/clusters.d/test.yml').send(:parameters)[:content]
+          puts content
           data = YAML.safe_load(content)
           expect(data['v2']['custom']['foo_string']).to eq('bar')
           expect(data['v2']['custom']['foo_bool']).to eq(false)
           expect(data['v2']['custom']['foo_array']).to eq(['1', '2', 3])
           expect(data['v2']['custom']['foo_hash']).to eq('foo' => 'bar', 'bar' => 'baz', 'baz' => false)
+          expect(data['v2']['custom'].key?('classrooms')).to eq(true)
+          expect(data['v2']['custom']['classrooms'].key?('jupyter')).to eq(true)
+          expect(data['v2']['custom'].dig('classrooms', 'jupyter', 'AI_BOOTCAMP_OSC', 'hours')).to eq(3)
         end
       end
 

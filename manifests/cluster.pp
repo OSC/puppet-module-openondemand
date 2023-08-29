@@ -92,9 +92,9 @@ define openondemand::cluster (
   Optional[Stdlib::Absolutepath] $sge_root = undef,
   Optional[Stdlib::Absolutepath] $libdrmaa_path = undef,
   Optional[String] $job_version = undef,
-  Hash[String, Stdlib::Absolutepath] $job_bin_overrides = {},
+  Optional[Hash[String, Stdlib::Absolutepath]] $job_bin_overrides = undef,
   Optional[Stdlib::Host] $job_submit_host = undef,
-  Array[Stdlib::Host] $job_ssh_hosts = [],
+  Optional[Array[Stdlib::Host]] $job_ssh_hosts = undef,
   Optional[Integer] $job_site_timeout = undef,
   Optional[Boolean] $job_debug = undef,
   Optional[Stdlib::Absolutepath] $job_singularity_bin = undef,
@@ -109,7 +109,7 @@ define openondemand::cluster (
   Boolean $job_all_namespaces = false,
   Boolean $job_auto_supplemental_groups = false,
   Optional[Openondemand::K8_server] $job_server = undef,
-  Array[Openondemand::K8_mount] $job_mounts = [],
+  Optional[Array[Openondemand::K8_mount]] $job_mounts = undef,
   Optional[Openondemand::K8_auth] $job_auth = undef,
   # END Kubernetes
   Optional[Enum['moab']] $scheduler_type = undef,
@@ -117,7 +117,7 @@ define openondemand::cluster (
   Optional[Stdlib::Absolutepath] $scheduler_bin = undef,
   Optional[String] $scheduler_version = undef,
   Hash $scheduler_params = {},
-  Array[Openondemand::Acl] $rsv_query_acls = [],
+  Optional[Array[Openondemand::Acl]] $rsv_query_acls = undef,
   Optional[Stdlib::Host] $ganglia_host = undef,
   String $ganglia_scheme = 'https://',
   Array $ganglia_segments = ['gweb', 'graph.php'],
@@ -141,7 +141,7 @@ define openondemand::cluster (
   Optional[String] $grafana_cluster_override = undef,
   Optional[Integer] $xdmod_resource_id = undef,
   Hash $custom_config = {},
-  Openondemand::Batch_connect $batch_connect = {},
+  Optional[Openondemand::Batch_connect] $batch_connect = undef,
 ) {
   include openondemand
 
@@ -160,12 +160,175 @@ define openondemand::cluster (
     $_job_bin = $job_bin
   }
 
+  if $job_singularity_bindpath =~ Array {
+    $_job_singularity_bindpath = join($job_singularity_bindpath, ',')
+  } else {
+    $_job_singularity_bindpath = $job_singularity_bindpath
+  }
+
+  $metadata = {
+    'title' => $cluster_title,
+    'url'   => $url,
+    'hidden' => $hidden,
+  }.filter |$k,$v| { $v =~ NotUndef }
+
+  if $login_host {
+    $login = {
+      'host' => $login_host,
+    }
+  } else {
+    $login = undef
+  }
+
+  if $job_adapter {
+    if $job_adapter == 'kubernetes' {
+      $job_kubernetes = {
+        'config_file' => $job_config_file,
+        'username_prefix' => $job_username_prefix,
+        'namespace_prefix'  => $job_namespace_prefix,
+        'all_namespaces'    => $job_all_namespaces,
+        'auto_supplemental_groups'  => $job_auto_supplemental_groups,
+        'server'                    => $job_server,
+        'mounts'                    => $job_mounts,
+        'auth'                      => $job_auth,
+      }.filter |$k,$v| { $v =~ NotUndef }
+    } else {
+      $job_kubernetes = {}
+    }
+    $job_base = {
+      'adapter'               => $job_adapter,
+      'cluster'               => $job_cluster,
+      'host'                  => $job_host,
+      'lib'                   => $job_lib,
+      'libdir'                => $job_libdir,
+      'bin'                   => $_job_bin,
+      'bindir'                => $job_bindir,
+      'conf'                  => $job_conf,
+      'envdir'                => $job_envdir,
+      'serverdir'             => $job_serverdir,
+      'exec'                  => $job_exec,
+      'sge_root'              => $sge_root,
+      'libdrmaa_path'         => $libdrmaa_path,
+      'version'               => $job_version,
+      'submit_host'           => $job_submit_host,
+      'ssh_hosts'             => $job_ssh_hosts,
+      'site_timeout'          => $job_site_timeout,
+      'debug'                 => $job_debug,
+      'singularity_bin'       => $job_singularity_bin,
+      'singularity_bindpath'  => $_job_singularity_bindpath,
+      'singularity_image'     => $job_singularity_image,
+      'strict_host_checking'  => $job_strict_host_checking,
+      'tmux_bin'              => $job_tmux_bin,
+      'bin_overrides'         => $job_bin_overrides,
+    }.filter |$k,$v| { $v =~ NotUndef }
+    $job = $job_base + $job_kubernetes
+  } else {
+    $job = undef
+  }
+
+  if $job_adapter == 'torque' or $scheduler_type or $ganglia_host or $grafana_host or $xdmod_resource_id or ! empty($custom_config) {
+    if $job_adapter == 'torque' {
+      $pbs = {
+        'host'    => $job_host,
+        'lib'     => $job_lib,
+        'bin'     => $job_bin,
+        'version' => $job_version,
+      }.filter |$k,$v| { $v =~ NotUndef }
+    } else {
+      $pbs = undef
+    }
+    if $scheduler_type == 'moab' {
+      $moab = {
+        'host'    => $scheduler_host,
+        'bin'     => $scheduler_bin,
+        'version' => $scheduler_version,
+        'homedir' => $scheduler_params['moabhomedir'],
+      }.filter |$k,$v| { $v =~ NotUndef }
+    } else {
+      $moab = undef
+    }
+    if $job_adapter == 'torque' and $scheduler_type == 'moab' {
+      $rsv_query = {
+        'torque_host'    => $job_host,
+        'torque_lib'     => $job_lib,
+        'torque_bin'     => $job_bin,
+        'torque_version' => $job_version,
+        'moab_host'      => $scheduler_host,
+        'moab_bin'       => $scheduler_bin,
+        'moab_version'   => $scheduler_version,
+        'moab_homedir'   => $scheduler_params['moabhomedir'],
+        'acls'           => $rsv_query_acls,
+      }.filter |$k,$v| { $v =~ NotUndef }
+    } else {
+      $rsv_query = undef
+    }
+    if $ganglia_host {
+      $ganglia = {
+        'host'      => $ganglia_host,
+        'scheme'    => $ganglia_scheme,
+        'segments'  => $ganglia_segments,
+        'req_query' => $ganglia_req_query,
+        'opt_query' => $ganglia_opt_query,
+        'version'   => $ganglia_version,
+      }.filter |$k,$v| { $v =~ NotUndef }
+    } else {
+      $ganglia = undef
+    }
+    if $grafana_host {
+      $grafana = {
+        'host'              => $grafana_host,
+        'orgId'             => $grafana_org_id,
+        'theme'             => $grafana_theme,
+        'dashboard'         => {
+          'name'    => $grafana_dashboard_name,
+          'uid'     => $grafana_dashboard_uid,
+          'panels'  => $grafana_dashboard_panels,
+        },
+        'labels'            => $grafana_labels,
+        'cluster_override'  => $grafana_cluster_override,
+      }
+    } else {
+      $grafana = undef
+    }
+    if $xdmod_resource_id {
+      $xdmod = {
+        'resource_id' => $xdmod_resource_id,
+      }
+    } else {
+      $xdmod = undef
+    }
+    $custom_base = {
+      'pbs'       => $pbs,
+      'moab'      => $moab,
+      'rsv_query' => $rsv_query,
+      'ganglia'   => $ganglia,
+      'grafana'   => $grafana,
+      'xdmod'     => $xdmod,
+    }.filter |$k,$v| { $v =~ NotUndef }
+    $custom = $custom_base + $custom_config
+  } else {
+    $custom = undef
+  }
+
+  $v2 = {
+    'metadata'      => $metadata,
+    'acls'          => $acls,
+    'login'         => $login,
+    'job'           => $job,
+    'custom'        => $custom,
+    'batch_connect' => $batch_connect,
+  }.filter |$k,$v| { $v =~ NotUndef }
+
+  $config = {
+    'v2' => $v2,
+  }
+
   file { "/etc/ood/config/clusters.d/${name}.yml":
     ensure  => 'file',
     owner   => $owner,
     group   => $group,
     mode    => $mode,
-    content => template('openondemand/cluster/main.yml.erb'),
+    content => to_yaml($config),
     notify  => Class['openondemand::service'],
   }
 }
