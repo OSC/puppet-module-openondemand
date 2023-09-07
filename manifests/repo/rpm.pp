@@ -1,7 +1,7 @@
 # @summary Manage Open OnDemand RPM repos
 # @api private
 class openondemand::repo::rpm (
-  Integer $gpgcheck = 1,
+  Integer $gpgcheck      = 1,
   Integer $repo_gpgcheck = 1,
 ) {
   assert_private()

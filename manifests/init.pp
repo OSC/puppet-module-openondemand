@@ -11,7 +11,7 @@
 # @param repo_exclude
 #   Exclusion for OnDemand repo
 # @param repo_proxy
-    The URL for proxy for OnDemand repo
+#   The URL for proxy for OnDemand repo
 # @param manage_dependency_repos
 #   Boolean that determines if managing repos for package dependencies
 # @param manage_epel
