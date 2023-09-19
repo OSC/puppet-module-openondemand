@@ -183,10 +183,10 @@
         <span class='name'>acls</span>
       
       
-        <span class='type'>(<tt>Array[Openondemand::Acl]</tt>)</span>
+        <span class='type'>(<tt>Optional[Array[Openondemand::Acl]]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>[]</tt>)</em>
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
     </li>
@@ -391,10 +391,10 @@
         <span class='name'>job_bin_overrides</span>
       
       
-        <span class='type'>(<tt>Hash[String, Stdlib::Absolutepath]</tt>)</span>
+        <span class='type'>(<tt>Optional[Hash[String, Stdlib::Absolutepath]]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>{}</tt>)</em>
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
     </li>
@@ -417,10 +417,10 @@
         <span class='name'>job_ssh_hosts</span>
       
       
-        <span class='type'>(<tt>Array[Stdlib::Host]</tt>)</span>
+        <span class='type'>(<tt>Optional[Array[Stdlib::Host]]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>[]</tt>)</em>
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
     </li>
@@ -599,10 +599,10 @@
         <span class='name'>job_mounts</span>
       
       
-        <span class='type'>(<tt>Array[Openondemand::K8_mount]</tt>)</span>
+        <span class='type'>(<tt>Optional[Array[Openondemand::K8_mount]]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>[]</tt>)</em>
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
     </li>
@@ -690,10 +690,10 @@
         <span class='name'>rsv_query_acls</span>
       
       
-        <span class='type'>(<tt>Array[Openondemand::Acl]</tt>)</span>
+        <span class='type'>(<tt>Optional[Array[Openondemand::Acl]]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>[]</tt>)</em>
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
     </li>
@@ -923,10 +923,10 @@
         <span class='name'>batch_connect</span>
       
       
-        <span class='type'>(<tt>Openondemand::Batch_connect</tt>)</span>
+        <span class='type'>(<tt>Optional[Openondemand::Batch_connect]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>{}</tt>)</em>
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
     </li>
@@ -1041,7 +1041,171 @@
 168
 169
 170
-171</pre>
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/cluster.pp', line 72</span>
@@ -1053,7 +1217,7 @@ define openondemand::cluster (
   Stdlib::Filemode $mode = &#39;0644&#39;,
   Optional[Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl]] $url = undef,
   Boolean $hidden = false,
-  Array[Openondemand::Acl] $acls = [],
+  Optional[Array[Openondemand::Acl]] $acls = undef,
   Optional[Stdlib::Host] $login_host = undef,
   Optional[Enum[&#39;torque&#39;,&#39;slurm&#39;,&#39;lsf&#39;,&#39;pbspro&#39;,&#39;sge&#39;,&#39;linux_host&#39;,&#39;kubernetes&#39;]] $job_adapter = undef,
   Optional[String] $job_cluster = undef,
@@ -1069,9 +1233,9 @@ define openondemand::cluster (
   Optional[Stdlib::Absolutepath] $sge_root = undef,
   Optional[Stdlib::Absolutepath] $libdrmaa_path = undef,
   Optional[String] $job_version = undef,
-  Hash[String, Stdlib::Absolutepath] $job_bin_overrides = {},
+  Optional[Hash[String, Stdlib::Absolutepath]] $job_bin_overrides = undef,
   Optional[Stdlib::Host] $job_submit_host = undef,
-  Array[Stdlib::Host] $job_ssh_hosts = [],
+  Optional[Array[Stdlib::Host]] $job_ssh_hosts = undef,
   Optional[Integer] $job_site_timeout = undef,
   Optional[Boolean] $job_debug = undef,
   Optional[Stdlib::Absolutepath] $job_singularity_bin = undef,
@@ -1086,7 +1250,7 @@ define openondemand::cluster (
   Boolean $job_all_namespaces = false,
   Boolean $job_auto_supplemental_groups = false,
   Optional[Openondemand::K8_server] $job_server = undef,
-  Array[Openondemand::K8_mount] $job_mounts = [],
+  Optional[Array[Openondemand::K8_mount]] $job_mounts = undef,
   Optional[Openondemand::K8_auth] $job_auth = undef,
   # END Kubernetes
   Optional[Enum[&#39;moab&#39;]] $scheduler_type = undef,
@@ -1094,7 +1258,7 @@ define openondemand::cluster (
   Optional[Stdlib::Absolutepath] $scheduler_bin = undef,
   Optional[String] $scheduler_version = undef,
   Hash $scheduler_params = {},
-  Array[Openondemand::Acl] $rsv_query_acls = [],
+  Optional[Array[Openondemand::Acl]] $rsv_query_acls = undef,
   Optional[Stdlib::Host] $ganglia_host = undef,
   String $ganglia_scheme = &#39;https://&#39;,
   Array $ganglia_segments = [&#39;gweb&#39;, &#39;graph.php&#39;],
@@ -1118,7 +1282,7 @@ define openondemand::cluster (
   Optional[String] $grafana_cluster_override = undef,
   Optional[Integer] $xdmod_resource_id = undef,
   Hash $custom_config = {},
-  Openondemand::Batch_connect $batch_connect = {},
+  Optional[Openondemand::Batch_connect] $batch_connect = undef,
 ) {
   include openondemand
 
@@ -1137,12 +1301,176 @@ define openondemand::cluster (
     $_job_bin = $job_bin
   }
 
+  if $job_singularity_bindpath =~ Array {
+    $_job_singularity_bindpath = join($job_singularity_bindpath, &#39;,&#39;)
+  } else {
+    $_job_singularity_bindpath = $job_singularity_bindpath
+  }
+
+  $metadata = {
+    &#39;title&#39; =&gt; $cluster_title,
+    &#39;url&#39;   =&gt; $url,
+    &#39;hidden&#39; =&gt; $hidden,
+  }.filter |$k,$v| { $v =~ NotUndef }
+
+  if $login_host {
+    $login = {
+      &#39;host&#39; =&gt; $login_host,
+    }
+  } else {
+    $login = undef
+  }
+
+  if $job_adapter {
+    if $job_adapter == &#39;kubernetes&#39; {
+      $job_kubernetes = {
+        &#39;config_file&#39; =&gt; $job_config_file,
+        &#39;username_prefix&#39; =&gt; $job_username_prefix,
+        &#39;namespace_prefix&#39;  =&gt; $job_namespace_prefix,
+        &#39;all_namespaces&#39;    =&gt; $job_all_namespaces,
+        &#39;auto_supplemental_groups&#39;  =&gt; $job_auto_supplemental_groups,
+        &#39;server&#39;                    =&gt; $job_server,
+        &#39;mounts&#39;                    =&gt; $job_mounts,
+        &#39;auth&#39;                      =&gt; $job_auth,
+      }.filter |$k,$v| { $v =~ NotUndef }
+    } else {
+      $job_kubernetes = {}
+    }
+    $job_base = {
+      &#39;adapter&#39;               =&gt; $job_adapter,
+      &#39;cluster&#39;               =&gt; $job_cluster,
+      &#39;host&#39;                  =&gt; $job_host,
+      &#39;lib&#39;                   =&gt; $job_lib,
+      &#39;libdir&#39;                =&gt; $job_libdir,
+      &#39;bin&#39;                   =&gt; $_job_bin,
+      &#39;bindir&#39;                =&gt; $job_bindir,
+      &#39;conf&#39;                  =&gt; $job_conf,
+      &#39;envdir&#39;                =&gt; $job_envdir,
+      &#39;serverdir&#39;             =&gt; $job_serverdir,
+      &#39;exec&#39;                  =&gt; $job_exec,
+      &#39;sge_root&#39;              =&gt; $sge_root,
+      &#39;libdrmaa_path&#39;         =&gt; $libdrmaa_path,
+      &#39;version&#39;               =&gt; $job_version,
+      &#39;submit_host&#39;           =&gt; $job_submit_host,
+      &#39;ssh_hosts&#39;             =&gt; $job_ssh_hosts,
+      &#39;site_timeout&#39;          =&gt; $job_site_timeout,
+      &#39;debug&#39;                 =&gt; $job_debug,
+      &#39;singularity_bin&#39;       =&gt; $job_singularity_bin,
+      &#39;singularity_bindpath&#39;  =&gt; $_job_singularity_bindpath,
+      &#39;singularity_image&#39;     =&gt; $job_singularity_image,
+      &#39;strict_host_checking&#39;  =&gt; $job_strict_host_checking,
+      &#39;tmux_bin&#39;              =&gt; $job_tmux_bin,
+      &#39;bin_overrides&#39;         =&gt; $job_bin_overrides,
+    }.filter |$k,$v| { $v =~ NotUndef }
+    $job = $job_base + $job_kubernetes
+  } else {
+    $job = undef
+  }
+
+  if $job_adapter == &#39;torque&#39; or $scheduler_type or $ganglia_host or $grafana_host or $xdmod_resource_id or ! empty($custom_config) {
+    if $job_adapter == &#39;torque&#39; {
+      $pbs = {
+        &#39;host&#39;    =&gt; $job_host,
+        &#39;lib&#39;     =&gt; $job_lib,
+        &#39;bin&#39;     =&gt; $job_bin,
+        &#39;version&#39; =&gt; $job_version,
+      }.filter |$k,$v| { $v =~ NotUndef }
+    } else {
+      $pbs = undef
+    }
+    if $scheduler_type == &#39;moab&#39; {
+      $moab = {
+        &#39;host&#39;    =&gt; $scheduler_host,
+        &#39;bin&#39;     =&gt; $scheduler_bin,
+        &#39;version&#39; =&gt; $scheduler_version,
+        &#39;homedir&#39; =&gt; $scheduler_params[&#39;moabhomedir&#39;],
+      }.filter |$k,$v| { $v =~ NotUndef }
+    } else {
+      $moab = undef
+    }
+    if $job_adapter == &#39;torque&#39; and $scheduler_type == &#39;moab&#39; {
+      $rsv_query = {
+        &#39;torque_host&#39;    =&gt; $job_host,
+        &#39;torque_lib&#39;     =&gt; $job_lib,
+        &#39;torque_bin&#39;     =&gt; $job_bin,
+        &#39;torque_version&#39; =&gt; $job_version,
+        &#39;moab_host&#39;      =&gt; $scheduler_host,
+        &#39;moab_bin&#39;       =&gt; $scheduler_bin,
+        &#39;moab_version&#39;   =&gt; $scheduler_version,
+        &#39;moab_homedir&#39;   =&gt; $scheduler_params[&#39;moabhomedir&#39;],
+        &#39;acls&#39;           =&gt; $rsv_query_acls,
+      }.filter |$k,$v| { $v =~ NotUndef }
+    } else {
+      $rsv_query = undef
+    }
+    if $ganglia_host {
+      $ganglia = {
+        &#39;host&#39;      =&gt; $ganglia_host,
+        &#39;scheme&#39;    =&gt; $ganglia_scheme,
+        &#39;segments&#39;  =&gt; $ganglia_segments,
+        &#39;req_query&#39; =&gt; $ganglia_req_query,
+        &#39;opt_query&#39; =&gt; $ganglia_opt_query,
+        &#39;version&#39;   =&gt; $ganglia_version,
+      }.filter |$k,$v| { $v =~ NotUndef }
+    } else {
+      $ganglia = undef
+    }
+    if $grafana_host {
+      $grafana_dashboard = {
+        &#39;name&#39;    =&gt; $grafana_dashboard_name,
+        &#39;uid&#39;     =&gt; $grafana_dashboard_uid,
+        &#39;panels&#39;  =&gt; $grafana_dashboard_panels,
+      }.filter |$k,$v| { $v =~ NotUndef }
+      $grafana = {
+        &#39;host&#39;              =&gt; $grafana_host,
+        &#39;orgId&#39;             =&gt; $grafana_org_id,
+        &#39;theme&#39;             =&gt; $grafana_theme,
+        &#39;dashboard&#39;         =&gt; $grafana_dashboard,
+        &#39;labels&#39;            =&gt; $grafana_labels,
+        &#39;cluster_override&#39;  =&gt; $grafana_cluster_override,
+      }.filter |$k,$v| { $v =~ NotUndef }
+    } else {
+      $grafana = undef
+    }
+    if $xdmod_resource_id {
+      $xdmod = {
+        &#39;resource_id&#39; =&gt; $xdmod_resource_id,
+      }
+    } else {
+      $xdmod = undef
+    }
+    $custom_base = {
+      &#39;pbs&#39;       =&gt; $pbs,
+      &#39;moab&#39;      =&gt; $moab,
+      &#39;rsv_query&#39; =&gt; $rsv_query,
+      &#39;ganglia&#39;   =&gt; $ganglia,
+      &#39;grafana&#39;   =&gt; $grafana,
+      &#39;xdmod&#39;     =&gt; $xdmod,
+    }.filter |$k,$v| { $v =~ NotUndef }
+    $custom = $custom_base + $custom_config
+  } else {
+    $custom = undef
+  }
+
+  $v2 = {
+    &#39;metadata&#39;      =&gt; $metadata,
+    &#39;acls&#39;          =&gt; $acls,
+    &#39;login&#39;         =&gt; $login,
+    &#39;job&#39;           =&gt; $job,
+    &#39;custom&#39;        =&gt; $custom,
+    &#39;batch_connect&#39; =&gt; $batch_connect,
+  }.filter |$k,$v| { $v =~ NotUndef }
+
+  $config = {
+    &#39;v2&#39; =&gt; $v2,
+  }
+
   file { &quot;/etc/ood/config/clusters.d/${name}.yml&quot;:
     ensure  =&gt; &#39;file&#39;,
     owner   =&gt; $owner,
     group   =&gt; $group,
     mode    =&gt; $mode,
-    content =&gt; template(&#39;openondemand/cluster/main.yml.erb&#39;),
+    content =&gt; to_yaml($config),
     notify  =&gt; Class[&#39;openondemand::service&#39;],
   }
 }</pre>
