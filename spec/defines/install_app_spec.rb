@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe 'openondemand::install::app' do
   on_supported_os(supported_os: [{ 'operatingsystem' => 'RedHat', 'operatingsystemrelease' => ['8'] }]).each do |os, facts|
-    context "on #{os}" do
+    context "when #{os}" do
       let(:facts) do
         facts
       end
