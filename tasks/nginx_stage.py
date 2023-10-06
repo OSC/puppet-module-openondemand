@@ -25,6 +25,14 @@ try:
         cmd.append('--force')
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = process.communicate()
+    try:
+        out = out.decode()
+    except (UnicodeDecodeError, AttributeError):
+        pass
+    try:
+        err = err.decode()
+    except (UnicodeDecodeError, AttributeError):
+        pass
     exitcode = process.returncode
     if exitcode == 0:
         if command in ['nginx_clean','nginx_list']:
