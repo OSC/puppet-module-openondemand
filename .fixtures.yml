@@ -16,9 +16,8 @@ fixtures:
       repo: puppetlabs/vcsrepo
     apache:
       repo: puppetlabs/apache
-    # TODO: Once something newer than 7.0.2 released
-    #sudo:
-    #  repo: saz/sudo
+    sudo:
+      repo: saz/sudo
     augeasproviders_core:
       repo: puppet/augeasproviders_core
     augeasproviders_shellvar:
@@ -27,9 +26,5 @@ fixtures:
       repo: puppet/systemd
     logrotate:
       repo: puppet/logrotate
-  # TODO: Remove once something newer than 7.0.2 released
-  repositories:
-    sudo:
-      repo: https://github.com/saz/puppet-sudo.git
   symlinks:
     openondemand: "#{source_dir}"
