@@ -171,9 +171,14 @@ openondemand::clusters:
     job_version: '6.0.1'
     batch_connect:
       basic:
-        script_wrapper: 'module restore\n%s'
+        script_wrapper: |
+          module restore
+          %s
       vnc:
-        script_wrapper: 'module restore\nmodule load ondemand-vnc\n%s'
+        script_wrapper: |
+          module restore
+          module load ondemand-vnc
+          %s
 ```
 
 Define a Linux Host Adapter cluster:
@@ -199,7 +204,10 @@ openondemand::clusters:
     job_tmux_bin: /usr/bin/tmux
     batch_connect:
       vnc:
-        script_wrapper: 'module restore\nmodule load ondemand-vnc\n%s'
+        script_wrapper: |
+          module restore
+          module load ondemand-vnc
+          %s
 ```
 
 Define a Kubernetes cluster:
