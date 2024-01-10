@@ -71,6 +71,7 @@ The following parameters are available in the `openondemand` class:
 * [`install_apps`](#-openondemand--install_apps)
 * [`declare_apache`](#-openondemand--declare_apache)
 * [`apache_scls`](#-openondemand--apache_scls)
+* [`apache_user`](#-openondemand--apache_user)
 * [`generator_insecure`](#-openondemand--generator_insecure)
 * [`listen_addr_port`](#-openondemand--listen_addr_port)
 * [`servername`](#-openondemand--servername)
@@ -294,6 +295,14 @@ Data type: `String`
 SCLs to load when starting Apache service
 
 Default value: `'httpd24'`
+
+##### <a name="-openondemand--apache_user"></a>`apache_user`
+
+Data type: `String`
+
+Name for Apache user
+
+Default value: `'apache'`
 
 ##### <a name="-openondemand--generator_insecure"></a>`generator_insecure`
 
