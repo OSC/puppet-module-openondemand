@@ -56,38 +56,14 @@ class openondemand::repo::rpm {
     contain epel
   }
 
-  if versioncmp($openondemand::osmajor, '7') <= 0 and $openondemand::manage_dependency_repos {
-    if $facts['os']['name'] == 'CentOS' and versioncmp($openondemand::osmajor, '7') == 0 {
-      file { '/etc/yum.repos.d/ondemand-centos-scl.repo':
-        ensure => 'absent',
-      }
-    }
-
-    case $facts['os']['name'] {
-      'RedHat': {
-        rh_repo { "rhel-server-rhscl-${openondemand::osmajor}-rpms":
-          ensure => 'present',
-        }
-      }
-      'CentOS': {
-        package { 'centos-release-scl':
-          ensure => 'installed',
-        }
-      }
-      default: {
-        # Do nothing
-      }
-    }
-  }
-
-  if versioncmp($openondemand::osmajor, '8') == 0 and $openondemand::manage_dependency_repos {
+  if String($openondemand::osmajor) in ['8', '9'] and $openondemand::manage_dependency_repos {
     package { 'nodejs':
-      ensure      => '14',
+      ensure      => '18',
       enable_only => true,
       provider    => 'dnfmodule',
     }
     package { 'ruby':
-      ensure      => '3.0',
+      ensure      => '3.1',
       enable_only => true,
       provider    => 'dnfmodule',
     }

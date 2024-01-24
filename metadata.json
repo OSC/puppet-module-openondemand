@@ -47,12 +47,6 @@
   ],
   "operatingsystem_support": [
     {
-      "operatingsystem": "CentOS",
-      "operatingsystemrelease": [
-        "7"
-      ]
-    },
-    {
       "operatingsystem": "Rocky",
       "operatingsystemrelease": [
         "8",
@@ -69,9 +63,14 @@
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "7",
         "8",
         "9"
+      ]
+    },
+    {
+      "operatingsystem": "Amazon",
+      "operatingsystemrelease": [
+        "2023"
       ]
     },
     {
@@ -79,6 +78,12 @@
       "operatingsystemrelease": [
         "20.04",
         "22.04"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "12"
       ]
     }
   ],
@@ -95,5 +100,5 @@
   ],
   "pdk-version": "2.7.1",
   "template-url": "https://github.com/treydock/pdk-templates.git#master",
-  "template-ref": "heads/master-0-g76f4dbb"
+  "template-ref": "heads/master-0-ge8bcc28"
 }

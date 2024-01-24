@@ -2,11 +2,4 @@ openondemand::nginx_stage_app_root:
   dev: "/var/www/ood/apps/dev/%{literal('%')}{owner}/gateway/%{literal('%')}{name}"
   usr: "/var/www/ood/apps/usr/%{literal('%')}{owner}/gateway/%{literal('%')}{name}"
   sys: "/var/www/ood/apps/sys/%{literal('%')}{name}"
-openondemand::basic_auth_users:
-  ood:
-    password: ood
-openondemand::auth_configs:
-  - 'AuthName "Private"'
-  - 'AuthUserFile "/opt/rh/httpd24/root/etc/httpd/.htpasswd"'
-  - 'RequestHeader unset Authorization'
-  - 'Require valid-user'
+

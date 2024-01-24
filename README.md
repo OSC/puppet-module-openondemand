@@ -19,7 +19,8 @@ Manage [Open OnDemand](http://openondemand.org/) installation and configuration.
 
 The following are the versions of this module and the supported versions of Open OnDemand:
 
-* Module 3.x and 4.x supports Open OnDemand 3.x
+* Module 5.x supports Open OnDemand 3.1
+* Module 3.x and 4.x supports Open OnDemand 3.0
 * Module 2.x supports Open OnDemand 2.x
 * Module 1.x supports Open OnDemand 1.18.x
 * Module <= 0.12.0 supports Open OnDemand <= 1.7
@@ -55,8 +56,6 @@ If you already declare the apache class you may wish to only include apache in t
 
 ```yaml
 openondemand::declare_apache: false
-apache::version::scl_httpd_version: '2.4'
-apache::version::scl_php_version: '7.0'
 apache::default_vhost: false
 ```
 
@@ -357,8 +356,9 @@ openondemand::confs:
 
 This module has been tested on:
 
-* RedHat/CentOS 7 x86_64
-* RedHat/Rocky Linux/Alma Linux 8 x86_64
-* RedHat/Rocky Linux/Alma Linux 9 x86_64
-* Ubuntu 18.04 x86_64
-* Ubuntu 20.04 x86_64
+* RedHat/Rocky Linux/Alma Linux 8
+* RedHat/Rocky Linux/Alma Linux 9
+* Amazon Linux 2023
+* Ubuntu 20.04
+* Ubuntu 22.04
+* Debian 12

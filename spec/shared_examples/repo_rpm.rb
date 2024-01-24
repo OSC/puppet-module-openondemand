@@ -12,7 +12,7 @@ shared_examples 'openondemand::repo::rpm' do |facts|
   it do
     is_expected.to contain_yumrepo('ondemand-web').only_with(
       descr: 'Open OnDemand Web Repo',
-      baseurl: "https://yum.osc.edu/ondemand/3.0/web/el#{facts[:os]['release']['major']}/$basearch",
+      baseurl: "https://yum.osc.edu/ondemand/3.1/web/el#{facts[:os]['release']['major']}/$basearch",
       enabled: '1',
       gpgcheck: '1',
       repo_gpgcheck: '1',
@@ -37,25 +37,6 @@ shared_examples 'openondemand::repo::rpm' do |facts|
     )
   end
 
-  if facts[:os]['release']['major'].to_i == 7
-    it { is_expected.not_to contain_exec('dnf makecache ondemand-web') }
-
-    if facts[:os]['name'] == 'CentOS'
-      it { is_expected.to contain_file('/etc/yum.repos.d/ondemand-centos-scl.repo').with_ensure('absent') }
-    else
-      it { is_expected.not_to contain_file('/etc/yum.repos.d/ondemand-centos-scl.repo') }
-    end
-
-    case facts[:os]['name']
-    when 'RedHat'
-      it { is_expected.to contain_rh_repo("rhel-server-rhscl-#{facts[:os]['release']['major']}-rpms").with_ensure('present') }
-    when 'CentOS'
-      it { is_expected.to contain_package('centos-release-scl').with_ensure('installed') }
-    end
-    it { is_expected.not_to contain_package('nodejs:14') }
-    it { is_expected.not_to contain_package('ruby:3.0') }
-  end
-
   if facts[:os]['release']['major'].to_i == 8
     it do
       is_expected.to contain_exec('dnf makecache ondemand-web').with(
@@ -71,9 +52,12 @@ shared_examples 'openondemand::repo::rpm' do |facts|
       is_expected.to contain_exec('dnf makecache ondemand-web').that_comes_before('Package[ruby]')
     end
 
+  end
+
+  if facts[:os]['release']['major'].to_s =~ %r{^(8|9)$}
     it do
       is_expected.to contain_package('nodejs').with(
-        ensure: '14',
+        ensure: '18',
         enable_only: 'true',
         provider: 'dnfmodule',
       )
@@ -81,7 +65,7 @@ shared_examples 'openondemand::repo::rpm' do |facts|
 
     it do
       is_expected.to contain_package('ruby').with(
-        ensure: '3.0',
+        ensure: '3.1',
         enable_only: 'true',
         provider: 'dnfmodule',
       )
@@ -91,9 +75,8 @@ shared_examples 'openondemand::repo::rpm' do |facts|
   context 'when manage_dependency_repos => false' do
     let(:params) { { manage_dependency_repos: false } }
 
-    it { is_expected.not_to contain_file('/etc/yum.repos.d/ondemand-centos-scl.repo') }
-    it { is_expected.not_to contain_rh_repo("rhel-server-rhscl-#{facts[:os]['release']['major']}-rpms") }
-    it { is_expected.not_to contain_package('centos-release-scl') }
+    it { is_expected.not_to contain_package('nodejs') }
+    it { is_expected.not_to contain_package('ruby') }
   end
 
   context 'when repo_nightly => true' do

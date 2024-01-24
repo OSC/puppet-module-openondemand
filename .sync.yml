@@ -7,11 +7,13 @@ Rakefile:
     - '0 6 * * 1'
   acceptance_matrix:
       set:
-        - el7
+        - ---el7
         - el8
         - el9
+        - amazon2023
         - ubuntu-2004
         - ubuntu-2204
+        - debian-12
       puppet:
         - puppet7
         - puppet8
@@ -20,9 +22,7 @@ Rakefile:
 appveyor.yml:
   delete: true
 spec/acceptance/nodesets/el7.yml:
-  default_module_install_opts:
-    ignore-dependencies: ~
-    force: ~
+  delete: true
 spec/acceptance/nodesets/el8.yml:
   default_module_install_opts:
     ignore-dependencies: ~
@@ -46,6 +46,12 @@ spec/acceptance/nodesets/ubuntu-2004.yml:
     ignore-dependencies: ~
     force: ~
 spec/acceptance/nodesets/ubuntu-2204.yml:
+  packages:
+    - cron
+  default_module_install_opts:
+    ignore-dependencies: ~
+    force: ~
+spec/acceptance/nodesets/debian-12.yml:
   packages:
     - cron
   default_module_install_opts:

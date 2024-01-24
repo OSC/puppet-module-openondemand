@@ -32,8 +32,6 @@
 #   Boolean that determines if apache is declared or included
 # @param apache_user
 #   Name of the Apache user
-# @param apache_scls
-#   SCLs to load when starting Apache service
 # @param generator_insecure
 #   Run ood-portal-generator with --insecure flag
 #   This is needed if you wish to use default ood@localhost user or
@@ -46,6 +44,8 @@
 #   ood_porta.yml server_aliases
 # @param ssl
 #   ood_portal.yml ssl
+# @param disable_logs
+#   ood_portal.yml disable_logs
 # @param logroot
 #   ood_portal.yml logroot
 # @param use_rewrites
@@ -78,6 +78,10 @@
 #   ood_portal.yml auth_type
 # @param auth_configs
 #   ood_portal.yml auth_configs
+# @param custom_vhost_directives
+#   ood_portal.yml custom_vhost_directives
+# @param custom_location_directives
+#   ood_portal.yml custom_location_directives
 # @param root_uri
 #   ood_portal.yml root_uri
 # @param analytics
@@ -234,7 +238,7 @@
 #
 class openondemand (
   # repos
-  String $repo_release = '3.0',
+  String $repo_release = '3.1',
   Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl]
   $repo_baseurl_prefix = 'https://yum.osc.edu/ondemand',
   Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl, Stdlib::Absolutepath]
@@ -256,7 +260,6 @@ class openondemand (
   # Apache
   Boolean $declare_apache = true,
   String[1] $apache_user = 'apache',
-  String $apache_scls = 'httpd24',
 
   # ood_portal.yml
   Boolean $generator_insecure = false,
@@ -264,6 +267,7 @@ class openondemand (
   Optional[String] $servername = undef,
   Optional[Array] $server_aliases = undef,
   Optional[Array] $ssl = undef,
+  Boolean $disable_logs = false,
   String  $logroot = 'logs',
   Boolean $use_rewrites = true,
   Boolean $use_maintenance = true,
@@ -280,6 +284,8 @@ class openondemand (
   Optional[String] $map_fail_uri = undef,
   Variant[Enum['CAS', 'openid-connect', 'shibboleth', 'dex'], String[1]] $auth_type = 'dex',
   Optional[Array] $auth_configs = undef,
+  Array $custom_vhost_directives = [],
+  Array $custom_location_directives = [],
   String $root_uri = '/pun/sys/dashboard',
   Optional[Struct[{ url => String, id => String }]] $analytics = undef,
   String $public_uri = '/public',
@@ -381,16 +387,10 @@ class openondemand (
   $osname = $facts.dig('os', 'name')
   $osmajor = $facts.dig('os', 'release', 'major')
 
-  $supported = ['RedHat-7','RedHat-8','RedHat-9','Debian-20.04','Debian-22.04']
+  $supported = ['RedHat-7','RedHat-8','RedHat-9','RedHat-2023','Debian-20.04','Debian-22.04','Debian-12']
   $os = "${osfamily}-${osmajor}"
   if ! ($os in $supported) {
     fail("Unsupported OS: module ${module_name}. osfamily=${osfamily} osmajor=${osmajor} detected")
-  }
-
-  if versioncmp($osmajor, '7') <= 0 {
-    $scl_apache = true
-  } else {
-    $scl_apache = false
   }
 
   if $selinux {
@@ -477,6 +477,7 @@ class openondemand (
     'server_aliases'                   => $server_aliases,
     'port'                             => $port,
     'ssl'                              => $ssl,
+    'disable_logs'                     => $disable_logs,
     'logroot'                          => $logroot,
     'use_rewrites'                     => $use_rewrites,
     'use_maintenance'                  => $use_maintenance,
@@ -491,6 +492,8 @@ class openondemand (
     'map_fail_uri'                     => $map_fail_uri,
     'pun_stage_cmd'                    => $pun_stage_cmd,
     'auth'                             => $auth,
+    'custom_vhost_directives'          => $custom_vhost_directives,
+    'custom_location_directives'       => $custom_location_directives,
     'root_uri'                         => $root_uri,
     'analytics'                        => $analytics,
     'public_uri'                       => $public_uri,
@@ -544,7 +547,8 @@ class openondemand (
   if $osfamily == 'RedHat' {
     contain openondemand::repo::rpm
     Class['openondemand::repo::rpm'] -> Class['openondemand::install']
-  } elsif $osfamily == 'Debian' {
+  }
+  if $osfamily == 'Debian' {
     contain openondemand::repo::apt
     Class['openondemand::repo::apt'] -> Class['openondemand::install']
   }
