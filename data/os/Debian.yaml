@@ -1,4 +1,5 @@
 ---
 openondemand::repo_baseurl_prefix: https://apt.osc.edu/ondemand
 openondemand::repo_gpgkey: https://apt.osc.edu/ondemand/DEB-GPG-KEY-ondemand
+openondemand::apache_user: www-data
 openondemand::logroot: /var/log/apache2

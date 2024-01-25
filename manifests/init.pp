@@ -30,6 +30,8 @@
 #   Hash of apps to install, passed to ondemand::install::app
 # @param declare_apache
 #   Boolean that determines if apache is declared or included
+# @param apache_user
+#   Name of the Apache user
 # @param apache_scls
 #   SCLs to load when starting Apache service
 # @param generator_insecure
@@ -253,6 +255,7 @@ class openondemand (
 
   # Apache
   Boolean $declare_apache = true,
+  String[1] $apache_user = 'apache',
   String $apache_scls = 'httpd24',
 
   # ood_portal.yml
