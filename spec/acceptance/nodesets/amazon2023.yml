@@ -2,9 +2,7 @@ HOSTS:
   amazon-2023:
     roles:
       - agent
-    # Update to non-hack version once beaker-docker supports Amazon
-    # platform: amazon-2023-x86_64
-    platform: el-2023-x86_64
+    platform: amazon-2023-x86_64
     hypervisor: docker
     image: amazonlinux:2023
     docker_preserve_image: true

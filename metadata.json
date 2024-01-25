@@ -100,5 +100,5 @@
   ],
   "pdk-version": "2.7.1",
   "template-url": "https://github.com/treydock/pdk-templates.git#master",
-  "template-ref": "heads/master-0-ge8bcc28"
+  "template-ref": "heads/master-0-g5a59870"
 }

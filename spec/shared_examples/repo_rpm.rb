@@ -72,11 +72,23 @@ shared_examples 'openondemand::repo::rpm' do |facts|
     end
   end
 
+  if facts[:os]['name'] == 'Amazon'
+    it { is_expected.not_to contain_class('epel') }
+  else
+    it { is_expected.to contain_class('epel') }
+  end
+
   context 'when manage_dependency_repos => false' do
     let(:params) { { manage_dependency_repos: false } }
 
     it { is_expected.not_to contain_package('nodejs') }
     it { is_expected.not_to contain_package('ruby') }
+  end
+
+  context 'when manage_epel => false' do
+    let(:params) { { manage_epel: false } }
+
+    it { is_expected.not_to contain_class('epel') }
   end
 
   context 'when repo_nightly => true' do
