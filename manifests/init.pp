@@ -399,9 +399,17 @@ class openondemand (
     $selinux_package_ensure = 'absent'
   }
 
+  if $facts['os']['name'] == 'Amazon' {
+    $dist = 'amzn'
+  } elsif $osfamily == 'RedHat' {
+    $dist = 'el'
+  } else {
+    $dist = undef
+  }
+
   if $osfamily == 'RedHat' {
-    $repo_baseurl = "${repo_baseurl_prefix}/${repo_release}/web/el${osmajor}/\$basearch"
-    $repo_nightly_baseurl = "${repo_baseurl_prefix}/nightly/web/el${osmajor}/\$basearch"
+    $repo_baseurl = "${repo_baseurl_prefix}/${repo_release}/web/${dist}${osmajor}/\$basearch"
+    $repo_nightly_baseurl = "${repo_baseurl_prefix}/nightly/web/${dist}${osmajor}/\$basearch"
   } elsif $osfamily == 'Debian' {
     $repo_baseurl = "${repo_baseurl_prefix}/${repo_release}/web/apt"
     $repo_nightly_baseurl = "${repo_baseurl_prefix}/nightly/web/apt"

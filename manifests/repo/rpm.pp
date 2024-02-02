@@ -39,17 +39,11 @@ class openondemand::repo::rpm {
   }
 
   # Work around a bug where 'dnf module list' is not executed with -y
-  if versioncmp($openondemand::osmajor, '8') == 0 {
-    exec { 'dnf makecache ondemand-web':
-      path        => '/usr/bin:/bin:/usr/sbin:/sbin',
-      command     => "dnf -q makecache -y --disablerepo='*' --enablerepo='ondemand-web'",
-      refreshonly => true,
-      subscribe   => Yumrepo['ondemand-web'],
-    }
-    if $openondemand::manage_dependency_repos {
-      Exec['dnf makecache ondemand-web'] -> Package['nodejs']
-      Exec['dnf makecache ondemand-web'] -> Package['ruby']
-    }
+  exec { 'dnf makecache ondemand-web':
+    path        => '/usr/bin:/bin:/usr/sbin:/sbin',
+    command     => "dnf -q makecache -y --disablerepo='*' --enablerepo='ondemand-web'",
+    refreshonly => true,
+    subscribe   => Yumrepo['ondemand-web'],
   }
 
   if $openondemand::manage_epel {
@@ -61,11 +55,13 @@ class openondemand::repo::rpm {
       ensure      => '18',
       enable_only => true,
       provider    => 'dnfmodule',
+      require     => Exec['dnf makecache ondemand-web'],
     }
     package { 'ruby':
       ensure      => '3.1',
       enable_only => true,
       provider    => 'dnfmodule',
+      require     => Exec['dnf makecache ondemand-web'],
     }
   }
 }

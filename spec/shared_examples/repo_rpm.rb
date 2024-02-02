@@ -37,21 +37,13 @@ shared_examples 'openondemand::repo::rpm' do |facts|
     )
   end
 
-  if facts[:os]['release']['major'].to_i == 8
-    it do
-      is_expected.to contain_exec('dnf makecache ondemand-web').with(
-        path: '/usr/bin:/bin:/usr/sbin:/sbin',
-        command: "dnf -q makecache -y --disablerepo='*' --enablerepo='ondemand-web'",
-        refreshonly: 'true',
-        subscribe: 'Yumrepo[ondemand-web]',
-      )
-    end
-
-    it do
-      is_expected.to contain_exec('dnf makecache ondemand-web').that_comes_before('Package[nodejs]')
-      is_expected.to contain_exec('dnf makecache ondemand-web').that_comes_before('Package[ruby]')
-    end
-
+  it do
+    is_expected.to contain_exec('dnf makecache ondemand-web').with(
+      path: '/usr/bin:/bin:/usr/sbin:/sbin',
+      command: "dnf -q makecache -y --disablerepo='*' --enablerepo='ondemand-web'",
+      refreshonly: 'true',
+      subscribe: 'Yumrepo[ondemand-web]',
+    )
   end
 
   if facts[:os]['release']['major'].to_s =~ %r{^(8|9)$}
@@ -60,6 +52,7 @@ shared_examples 'openondemand::repo::rpm' do |facts|
         ensure: '18',
         enable_only: 'true',
         provider: 'dnfmodule',
+        require: 'Exec[dnf makecache ondemand-web]',
       )
     end
 
@@ -68,6 +61,7 @@ shared_examples 'openondemand::repo::rpm' do |facts|
         ensure: '3.1',
         enable_only: 'true',
         provider: 'dnfmodule',
+        require: 'Exec[dnf makecache ondemand-web]',
       )
     end
   end
