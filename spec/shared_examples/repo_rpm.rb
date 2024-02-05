@@ -99,8 +99,13 @@ shared_examples 'openondemand::repo::rpm' do |facts|
     context 'when repo_release => 3.0' do
       let(:params) { { repo_release: '3.0' } }
 
-      it { is_expected.to contain_package('nodejs').with_ensure('14') }
-      it { is_expected.to contain_package('ruby').with_ensure('3.0') }
+      if facts[:os]['release']['major'].to_s == '9'
+        it { is_expected.to contain_package('nodejs').with_ensure('18') }
+        it { is_expected.to contain_package('ruby').with_ensure('3.1') }
+      else
+        it { is_expected.to contain_package('nodejs').with_ensure('14') }
+        it { is_expected.to contain_package('ruby').with_ensure('3.0') }
+      end
     end
   end
 

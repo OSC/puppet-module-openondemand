@@ -417,7 +417,11 @@ class openondemand (
     $scl_apache = false
   }
 
-  if $repo_release == '3.0' {
+  # EL9 only has these two versions at this time
+  if "${osfamily}-${osmajor}" == 'RedHat-9' {
+    $nodejs = '18'
+    $ruby = '3.1'
+  } elsif $repo_release == '3.0' {
     $nodejs = '14'
     $ruby = '3.0'
   } else {
