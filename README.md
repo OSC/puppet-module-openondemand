@@ -19,7 +19,7 @@ Manage [Open OnDemand](http://openondemand.org/) installation and configuration.
 
 The following are the versions of this module and the supported versions of Open OnDemand:
 
-* Module 5.x supports Open OnDemand 3.1
+* Module 5.x supports Open OnDemand 3.1 and 3.0
 * Module 3.x and 4.x supports Open OnDemand 3.0
 * Module 2.x supports Open OnDemand 2.x
 * Module 1.x supports Open OnDemand 1.18.x
@@ -356,6 +356,7 @@ openondemand::confs:
 
 This module has been tested on:
 
+* RedHat/CentOS 7 x86_64
 * RedHat/Rocky Linux/Alma Linux 8
 * RedHat/Rocky Linux/Alma Linux 9
 * Amazon Linux 2023

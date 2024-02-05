@@ -3,16 +3,19 @@
 require 'spec_helper_acceptance'
 
 describe 'openondemand class:' do
-  context 'with default parameters' do
-    it 'runs successfully' do
-      pp = <<-PP
-      class { 'openondemand':
-        generator_insecure => true,
-      }
-      PP
+  supported_releases.each do |release|
+    context "when repo_release => #{release}"  do
+      it 'runs successfully' do
+        pp = <<-PP
+        class { 'openondemand':
+          repo_release       => '#{release}',
+          generator_insecure => true,
+        }
+        PP
 
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
+      end
     end
   end
 
@@ -20,8 +23,6 @@ describe 'openondemand class:' do
     it 'runs successfully' do
       pp = <<-PP
       class { 'openondemand':
-        # TODO: Remove once repo_release uses 3.1
-        repo_release            => 'build/3.1',
         repo_nightly            => true,
         ondemand_package_ensure => 'latest',
         generator_insecure      => true,

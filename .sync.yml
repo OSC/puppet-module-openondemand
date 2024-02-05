@@ -7,7 +7,7 @@ Rakefile:
     - '0 6 * * 1'
   acceptance_matrix:
       set:
-        - ---el7
+        - el7
         - el8
         - el9
         - amazon2023
@@ -22,7 +22,9 @@ Rakefile:
 appveyor.yml:
   delete: true
 spec/acceptance/nodesets/el7.yml:
-  delete: true
+  default_module_install_opts:
+    ignore-dependencies: ~
+    force: ~
 spec/acceptance/nodesets/el8.yml:
   default_module_install_opts:
     ignore-dependencies: ~

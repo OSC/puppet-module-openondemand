@@ -1,6 +1,20 @@
 # frozen_string_literal: true
 
 shared_examples 'openondemand::repo::rpm' do |facts|
+  let(:repo_release) do
+    if facts[:os]['release']['major'].to_i == 7
+      '3.0'
+    else
+      '3.1'
+    end
+  end
+  let(:dist) do
+    if facts[:os]['name'] == 'Amazon'
+      "amzn#{facts[:os]['release']['major']}"
+    else
+      "el#{facts[:os]['release']['major']}"
+    end
+  end
   let(:gpgkey) do
     if facts[:os]['release']['major'].to_i <= 8
       'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand'
@@ -12,7 +26,7 @@ shared_examples 'openondemand::repo::rpm' do |facts|
   it do
     is_expected.to contain_yumrepo('ondemand-web').only_with(
       descr: 'Open OnDemand Web Repo',
-      baseurl: "https://yum.osc.edu/ondemand/3.1/web/el#{facts[:os]['release']['major']}/$basearch",
+      baseurl: "https://yum.osc.edu/ondemand/#{repo_release}/web/#{dist}/$basearch",
       enabled: '1',
       gpgcheck: '1',
       repo_gpgcheck: '1',
@@ -27,7 +41,7 @@ shared_examples 'openondemand::repo::rpm' do |facts|
     is_expected.to contain_yumrepo('ondemand-web-nightly').only_with(
       ensure: 'absent',
       descr: 'Open OnDemand Web Repo - Nightly',
-      baseurl: "https://yum.osc.edu/ondemand/nightly/web/el#{facts[:os]['release']['major']}/$basearch",
+      baseurl: "https://yum.osc.edu/ondemand/nightly/web/#{dist}/$basearch",
       enabled: '1',
       gpgcheck: '1',
       repo_gpgcheck: '1',
@@ -37,13 +51,30 @@ shared_examples 'openondemand::repo::rpm' do |facts|
     )
   end
 
-  it do
-    is_expected.to contain_exec('dnf makecache ondemand-web').with(
-      path: '/usr/bin:/bin:/usr/sbin:/sbin',
-      command: "dnf -q makecache -y --disablerepo='*' --enablerepo='ondemand-web'",
-      refreshonly: 'true',
-      subscribe: 'Yumrepo[ondemand-web]',
-    )
+  if facts[:os]['release']['major'].to_i != 7
+    it do
+      is_expected.to contain_exec('dnf makecache ondemand-web').with(
+        path: '/usr/bin:/bin:/usr/sbin:/sbin',
+        command: "dnf -q makecache -y --disablerepo='*' --enablerepo='ondemand-web'",
+        refreshonly: 'true',
+        subscribe: 'Yumrepo[ondemand-web]',
+      )
+    end
+  else
+    it { is_expected.not_to contain_exec('dnf makecache ondemand-web') }
+  end
+
+  if facts[:os]['release']['major'].to_i == 7
+    case facts[:os]['name']
+    when 'RedHat'
+      it { is_expected.to contain_rh_repo("rhel-server-rhscl-#{facts[:os]['release']['major']}-rpms").with_ensure('present') }
+    when 'CentOS'
+      it { is_expected.to contain_package('centos-release-scl').with_ensure('installed') }
+    end
+    it { is_expected.not_to contain_package('nodejs:14') }
+    it { is_expected.not_to contain_package('ruby:3.0') }
+    it { is_expected.not_to contain_package('nodejs:18') }
+    it { is_expected.not_to contain_package('ruby:3.1') }
   end
 
   if facts[:os]['release']['major'].to_s =~ %r{^(8|9)$}
@@ -64,6 +95,13 @@ shared_examples 'openondemand::repo::rpm' do |facts|
         require: 'Exec[dnf makecache ondemand-web]',
       )
     end
+
+    context 'when repo_release => 3.0' do
+      let(:params) { { repo_release: '3.0' } }
+
+      it { is_expected.to contain_package('nodejs').with_ensure('14') }
+      it { is_expected.to contain_package('ruby').with_ensure('3.0') }
+    end
   end
 
   if facts[:os]['name'] == 'Amazon'
@@ -75,6 +113,8 @@ shared_examples 'openondemand::repo::rpm' do |facts|
   context 'when manage_dependency_repos => false' do
     let(:params) { { manage_dependency_repos: false } }
 
+    it { is_expected.not_to contain_rh_repo("rhel-server-rhscl-#{facts[:os]['release']['major']}-rpms").with_ensure('present') }
+    it { is_expected.not_to contain_package('centos-release-scl').with_ensure('installed') }
     it { is_expected.not_to contain_package('nodejs') }
     it { is_expected.not_to contain_package('ruby') }
   end

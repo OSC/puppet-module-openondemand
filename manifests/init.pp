@@ -32,6 +32,8 @@
 #   Boolean that determines if apache is declared or included
 # @param apache_user
 #   Name of the Apache user
+# @param apache_scls
+#   SCLs to load when starting Apache service
 # @param generator_insecure
 #   Run ood-portal-generator with --insecure flag
 #   This is needed if you wish to use default ood@localhost user or
@@ -260,6 +262,7 @@ class openondemand (
   # Apache
   Boolean $declare_apache = true,
   String[1] $apache_user = 'apache',
+  String $apache_scls = 'httpd24',
 
   # ood_portal.yml
   Boolean $generator_insecure = false,
@@ -391,6 +394,35 @@ class openondemand (
   $os = "${osfamily}-${osmajor}"
   if ! ($os in $supported) {
     fail("Unsupported OS: module ${module_name}. osfamily=${osfamily} osmajor=${osmajor} detected")
+  }
+
+  # Handle unsupported distro and OnDemand combos
+  if $repo_release == '3.1' {
+    if "${osfamily}-${osmajor}" == 'RedHat-7' {
+      fail('EL7 is not supported with OnDemand 3.1')
+    }
+  }
+  if $repo_release == '3.0' {
+    if "${osname}-${osmajor}" == 'Amazon-2023' {
+      fail('Amazon 2023 is not supported with OnDemand 3.0')
+    }
+    if "${osname}-${osmajor}" == 'Debian-12' {
+      fail('Debian 12 is not supported with OnDemand 3.0')
+    }
+  }
+
+  if versioncmp($osmajor, '7') <= 0 {
+    $scl_apache = true
+  } else {
+    $scl_apache = false
+  }
+
+  if $repo_release == '3.0' {
+    $nodejs = '14'
+    $ruby = '3.0'
+  } else {
+    $nodejs = '18'
+    $ruby = '3.1'
   }
 
   if $selinux {
