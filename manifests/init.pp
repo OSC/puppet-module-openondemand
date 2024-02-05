@@ -418,8 +418,8 @@ class openondemand (
   }
 
   # EL9 only has these two versions at this time
-  if "${osfamily}-${osmajor}" == 'RedHat-9' {
-    $nodejs = '18'
+  if $repo_release == '3.0' and "${osfamily}-${osmajor}" == 'RedHat-9' {
+    $nodejs = 'absent'
     $ruby = '3.1'
   } elsif $repo_release == '3.0' {
     $nodejs = '14'
