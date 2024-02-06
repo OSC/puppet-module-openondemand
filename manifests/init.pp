@@ -10,6 +10,8 @@
 #   The URL for proxy for OnDemand repo
 # @param repo_priority
 #   The priority of the OnDemand repo
+# @param repo_module_hotfixes
+#   The module_hotfixes of the OnDemand repo
 # @param repo_exclude
 #   Exclusion for OnDemand repo
 # @param manage_dependency_repos
@@ -247,6 +249,7 @@ class openondemand (
   $repo_gpgkey = 'https://yum.osc.edu/ondemand/RPM-GPG-KEY-ondemand-SHA512',
   Optional[String[1]] $repo_proxy = undef,
   Integer[1,99] $repo_priority = 99,
+  Optional[Boolean] $repo_module_hotfixes = undef,
   String $repo_exclude = 'absent',
   Boolean $manage_dependency_repos = true,
   Boolean $manage_epel = true,

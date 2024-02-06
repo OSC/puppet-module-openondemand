@@ -23,6 +23,7 @@ class openondemand::repo::rpm {
     priority        => $openondemand::repo_priority,
     exclude         => $openondemand::repo_exclude,
     proxy           => $openondemand::repo_proxy,
+    module_hotfixes => $openondemand::repo_module_hotfixes,
   }
 
   yumrepo { 'ondemand-web-nightly':
@@ -36,6 +37,7 @@ class openondemand::repo::rpm {
     metadata_expire => '1',
     priority        => $openondemand::repo_priority,
     proxy           => $openondemand::repo_proxy,
+    module_hotfixes => $openondemand::repo_module_hotfixes,
   }
 
   if versioncmp($openondemand::osmajor, '8') >= 0 {
