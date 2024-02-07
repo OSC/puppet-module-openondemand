@@ -110,7 +110,7 @@ shared_examples 'openondemand::repo::rpm' do |facts|
 
       if facts[:os]['release']['major'].to_s == '9'
         it { is_expected.to contain_package('nodejs').with_ensure('absent') }
-        it { is_expected.to contain_package('ruby').with_ensure('3.1') }
+        it { is_expected.to contain_package('ruby').with_ensure('absent') }
       else
         it { is_expected.to contain_package('nodejs').with_ensure('14') }
         it { is_expected.to contain_package('ruby').with_ensure('3.0') }
