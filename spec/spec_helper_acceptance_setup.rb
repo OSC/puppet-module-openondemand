@@ -36,8 +36,8 @@ openondemand::ssl:
 - "SSLCertificateFile /etc/pki/tls/certs/localhost.crt"
 - "SSLCertificateKeyFile /etc/pki/tls/private/localhost.key"
     HIERA
-    create_remote_file(hosts, '/etc/puppetlabs/puppet/hiera.yaml', hiera_yaml)
     on hosts, 'mkdir -p /etc/puppetlabs/puppet/data'
+    create_remote_file(hosts, '/etc/puppetlabs/puppet/hiera.yaml', hiera_yaml)
     create_remote_file(hosts, '/etc/puppetlabs/puppet/data/Amazon.yaml', amazon_yaml)
     # Need to bootstrap the localhost cert/key
     if fact('os.name') == 'Amazon'
