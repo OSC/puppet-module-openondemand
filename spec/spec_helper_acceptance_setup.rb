@@ -16,3 +16,41 @@ def supported_releases
     ['3.0', '3.1']
   end
 end
+
+RSpec.configure do |c|
+  c.before :suite do
+    hiera_yaml = <<-HIERA
+---
+version: 5
+defaults:
+  datadir: data
+  data_hash: yaml_data
+hierarchy:
+  - name: os
+    path: "%{facts.os.name}.yaml"
+  - name: "common"
+    path: "common.yaml"
+    HIERA
+    amazon_yaml = <<-HIERA
+openondemand::ssl:
+- "SSLCertificateFile /etc/pki/tls/certs/localhost.crt"
+- "SSLCertificateKeyFile /etc/pki/tls/private/localhost.key"
+    HIERA
+    create_remote_file(hosts, '/etc/puppetlabs/puppet/hiera.yaml', hiera_yaml)
+    on hosts, 'mkdir -p /etc/puppetlabs/puppet/data'
+    create_remote_file(hosts, '/etc/puppetlabs/puppet/data/Amazon.yaml', amazon_yaml)
+    # Need to bootstrap the localhost cert/key
+    if fact('os.name') == 'Amazon'
+      on hosts, 'dnf install -y sscg'
+      cert_bootstrap = [
+        'sscg -q',
+        '--cert-file /etc/pki/tls/certs/localhost.crt',
+        '--cert-key-file /etc/pki/tls/private/localhost.key',
+        '--ca-file /etc/pki/tls/certs/localhost.crt',
+        '--dhparams-file /tmp/dhparams.pem --lifetime 365',
+        '--hostname $(hostname) --email root@$(hostname)'
+      ]
+      on hosts, cert_bootstrap.join(' ')
+    end
+  end
+end
