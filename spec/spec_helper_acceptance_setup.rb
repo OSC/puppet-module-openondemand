@@ -32,6 +32,8 @@ hierarchy:
     path: "common.yaml"
     HIERA
     amazon_yaml = <<-HIERA
+# The Apache service won't start during the Docker based tests
+apache::service_ensure: stopped
 openondemand::ssl:
 - "SSLCertificateFile /etc/pki/tls/certs/localhost.crt"
 - "SSLCertificateKeyFile /etc/pki/tls/private/localhost.key"
