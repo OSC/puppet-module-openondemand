@@ -47,12 +47,6 @@
   ],
   "operatingsystem_support": [
     {
-      "operatingsystem": "CentOS",
-      "operatingsystemrelease": [
-        "7"
-      ]
-    },
-    {
       "operatingsystem": "Rocky",
       "operatingsystemrelease": [
         "8",
@@ -69,7 +63,6 @@
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "7",
         "8",
         "9"
       ]
@@ -107,5 +100,5 @@
   ],
   "pdk-version": "2.7.1",
   "template-url": "https://github.com/treydock/pdk-templates.git#master",
-  "template-ref": "heads/master-0-g5a59870"
+  "template-ref": "heads/master-0-g50afcd2"
 }
