@@ -18,7 +18,7 @@
     },
     {
       "name": "puppetlabs/apache",
-      "version_requirement": ">= 5.2.0 < 12.0.0"
+      "version_requirement": ">= 5.2.0 < 13.0.0"
     },
     {
       "name": "puppetlabs/vcsrepo",
@@ -77,7 +77,8 @@
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
         "20.04",
-        "22.04"
+        "22.04",
+        "24.04"
       ]
     },
     {
@@ -100,5 +101,5 @@
   ],
   "pdk-version": "2.7.1",
   "template-url": "https://github.com/treydock/pdk-templates.git#master",
-  "template-ref": "heads/master-0-g50afcd2"
+  "template-ref": "heads/master-0-gd2de99e"
 }

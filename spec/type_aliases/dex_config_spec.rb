@@ -12,9 +12,9 @@ describe 'Openondemand::Dex_config' do
           'type' => 'ldap',
           'id' => 'ldap',
           'config' => {
-            'host' => 'ldap.example.org'
-          }
-        }]
+            'host' => 'ldap.example.org',
+          },
+        }],
       }
       is_expected.to allow_value(value)
     end

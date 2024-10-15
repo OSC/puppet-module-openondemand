@@ -13,6 +13,7 @@ Rakefile:
         - amazon2023
         - ubuntu-2004
         - ubuntu-2204
+        - ubuntu-2404
         - debian-12
       puppet:
         - puppet7
@@ -46,6 +47,12 @@ spec/acceptance/nodesets/ubuntu-2004.yml:
     ignore-dependencies: ~
     force: ~
 spec/acceptance/nodesets/ubuntu-2204.yml:
+  packages:
+    - cron
+  default_module_install_opts:
+    ignore-dependencies: ~
+    force: ~
+spec/acceptance/nodesets/ubuntu-2404.yml:
   packages:
     - cron
   default_module_install_opts:

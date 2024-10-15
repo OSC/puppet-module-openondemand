@@ -399,7 +399,7 @@ class openondemand (
   $osname = $facts.dig('os', 'name')
   $osmajor = $facts.dig('os', 'release', 'major')
 
-  $supported = ['RedHat-7','RedHat-8','RedHat-9','RedHat-2023','Debian-20.04','Debian-22.04','Debian-12']
+  $supported = ['RedHat-7','RedHat-8','RedHat-9','RedHat-2023','Debian-20.04','Debian-22.04','Debian-24.04','Debian-12']
   $os = "${osfamily}-${osmajor}"
   if ! ($os in $supported) {
     fail("Unsupported OS: module ${module_name}. osfamily=${osfamily} osmajor=${osmajor} detected")
@@ -417,6 +417,9 @@ class openondemand (
     }
     if "${osname}-${osmajor}" == 'Debian-12' {
       fail('Debian 12 is not supported with OnDemand 3.0')
+    }
+    if "${osname}-${osmajor}" == 'Ubuntu-24.04' {
+      fail('Ubuntu 24.04 is not supported with OnDemand 3.0')
     }
   }
 

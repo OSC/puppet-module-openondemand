@@ -8,7 +8,7 @@ def supported_releases
   osname = fact('os.name')
   osfamily = fact('os.family')
   osmajor = fact('os.release.major')
-  if ['Amazon-2023', 'Debian-12'].include?("#{osname}-#{osmajor}")
+  if ['Amazon-2023', 'Debian-12', 'Ubuntu-24.04'].include?("#{osname}-#{osmajor}")
     ['3.1']
   elsif "#{osfamily}-#{osmajor}" == 'RedHat-7'
     ['3.0']
@@ -50,7 +50,7 @@ openondemand::ssl:
         '--cert-key-file /etc/pki/tls/private/localhost.key',
         '--ca-file /etc/pki/tls/certs/localhost.crt',
         '--dhparams-file /tmp/dhparams.pem --lifetime 365',
-        '--hostname $(hostname) --email root@$(hostname)'
+        '--hostname $(hostname) --email root@$(hostname)',
       ]
       on hosts, cert_bootstrap.join(' ')
     end

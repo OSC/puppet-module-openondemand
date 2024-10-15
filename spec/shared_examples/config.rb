@@ -9,8 +9,8 @@ shared_examples 'openondemand::config' do |_facts|
     let(:params) do
       {
         nginx_stage_passenger_options: {
-          'passenger_foobar' => 'baz'
-        }
+          'passenger_foobar' => 'baz',
+        },
       }
     end
 
@@ -28,7 +28,7 @@ shared_examples 'openondemand::config' do |_facts|
         'pinned_apps' => [
           'usr/*',
           'sys/jupyter',
-          { 'type' => 'dev', 'category' => 'system' }
+          { 'type' => 'dev', 'category' => 'system' },
         ],
         'pinned_apps_menu_length' => 10,
         'pinned_apps_group_by' => 'category',
@@ -37,11 +37,11 @@ shared_examples 'openondemand::config' do |_facts|
             {
               'columns' => [
                 { 'width' => 8, 'widgets' => ['pinned_apps', 'motd'] },
-                { 'width' => 4, 'widgets' => ['xdmod_widget_job_efficiency', 'xdmod_widget_jobs'] }
-              ]
-            }
-          ]
-        }
+                { 'width' => 4, 'widgets' => ['xdmod_widget_job_efficiency', 'xdmod_widget_jobs'] },
+              ],
+            },
+          ],
+        },
       }
     end
 
@@ -81,8 +81,8 @@ shared_examples 'openondemand::config' do |_facts|
             'IDP_ISSUER_URL' => 'https://idp.example.com/auth/realms/main/protocol/openid-connect/token',
             'IMAGE_PULL_SECRET' => 'private-docker-registry',
             'REGISTRY_DOCKER_CONFIG_JSON' => '/etc/docker-registry-auth/robot-ondemand-read.json',
-            'USE_JOB_POD_REAPER' => true
-          }
+            'USE_JOB_POD_REAPER' => true,
+          },
         }
       end
 
@@ -96,8 +96,8 @@ shared_examples 'openondemand::config' do |_facts|
                           'IDP_ISSUER_URL="https://idp.example.com/auth/realms/main/protocol/openid-connect/token"',
                           'IMAGE_PULL_SECRET="private-docker-registry"',
                           'REGISTRY_DOCKER_CONFIG_JSON="/etc/docker-registry-auth/robot-ondemand-read.json"',
-                          'USE_JOB_POD_REAPER="true"'
-                        ])
+                          'USE_JOB_POD_REAPER="true"',
+                        ],)
       end
     end
 
@@ -107,8 +107,8 @@ shared_examples 'openondemand::config' do |_facts|
           nginx_stage_configs: {
             'foo' => 'bar',
             'bar' => false,
-            'baz' => ['foo', 'bar']
-          }
+            'baz' => ['foo', 'bar'],
+          },
         }
       end
 

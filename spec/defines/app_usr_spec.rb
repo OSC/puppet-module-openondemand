@@ -21,7 +21,7 @@ describe 'openondemand::app::usr' do
         is_expected.to contain_file('/var/www/ood/apps/usr/test').with('ensure' => 'directory',
                                                                        'owner' => 'root',
                                                                        'group' => 'root',
-                                                                       'mode' => '0750')
+                                                                       'mode' => '0750',)
       end
     end
   end

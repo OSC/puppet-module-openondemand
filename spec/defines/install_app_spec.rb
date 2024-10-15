@@ -36,7 +36,7 @@ describe 'openondemand::install::app' do
       context 'when git repo' do
         let :params do
           {
-            'git_repo' => 'https://github.com/foo/test'
+            'git_repo' => 'https://github.com/foo/test',
           }
         end
 
@@ -58,7 +58,7 @@ describe 'openondemand::install::app' do
       context 'when source' do
         let(:params) do
           {
-            'source' => 'puppet:///modules/apps'
+            'source' => 'puppet:///modules/apps',
           }
         end
 

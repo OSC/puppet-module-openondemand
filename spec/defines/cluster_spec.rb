@@ -19,21 +19,21 @@ describe 'openondemand::cluster' do
             {
               'adapter' => 'group',
               'groups' => ['test-group'],
-              'type' => 'whitelist'
-            }
+              'type' => 'whitelist',
+            },
           ],
           rsv_query_acls: [
             {
               'adapter' => 'group',
               'groups' => ['test-group-rsv'],
-              'type' => 'blacklist'
-            }
+              'type' => 'blacklist',
+            },
           ],
           login_host: 'login.test',
           batch_connect: {
             'basic' => { 'script_wrapper' => 'module restore\n%s' },
-            'vnc' => { 'script_wrapper' => 'module restore\nmodule load ondemand-vnc\n%s' }
-          }
+            'vnc' => { 'script_wrapper' => 'module restore\nmodule load ondemand-vnc\n%s' },
+          },
         }
       end
 
@@ -43,7 +43,7 @@ describe 'openondemand::cluster' do
         is_expected.to contain_file('/etc/ood/config/clusters.d/test.yml').with('ensure' => 'file',
                                                                                 'owner' => 'root',
                                                                                 'group' => 'root',
-                                                                                'mode' => '0644')
+                                                                                'mode' => '0644',)
       end
 
       it do
@@ -62,10 +62,10 @@ describe 'openondemand::cluster' do
             job_username_prefix: 'dev',
             job_server: { 'endpoint' => 'https://k8dev.example.com:6443', 'cert_authority_file' => '/etc/k8dev.crt' },
             job_mounts: [
-              { 'name' => 'home', 'destination_path' => '/home', 'path' => '/home', 'host_type' => 'Directory', 'type' => 'host' }
+              { 'name' => 'home', 'destination_path' => '/home', 'path' => '/home', 'host_type' => 'Directory', 'type' => 'host' },
             ],
             job_auth: { 'type' => 'oidc' },
-            batch_connect: { 'ssh_allow' => false }
+            batch_connect: { 'ssh_allow' => false },
           }
         end
 
@@ -92,10 +92,10 @@ describe 'openondemand::cluster' do
                 jupyter: {
                   AI_BOOTCAMP_OSC: {
                     hours: 3,
-                    project: 'FOO'
-                  }
-                }
-              }
+                    project: 'FOO',
+                  },
+                },
+              },
             },
           )
         end
@@ -143,7 +143,7 @@ describe 'openondemand::cluster' do
               grafana_dashboard_name: 'test',
               grafana_dashboard_uid: 'foo',
               grafana_dashboard_panels: { 'cpu' => 1, 'memory' => 2 },
-              grafana_labels: { 'cluster' => 'cluster', 'host' => 'host' }
+              grafana_labels: { 'cluster' => 'cluster', 'host' => 'host' },
             }
           end
 
