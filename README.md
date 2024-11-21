@@ -120,6 +120,19 @@ openondemand::oidc_settings:
   OIDCStripCookies: 'mod_auth_openidc_session mod_auth_openidc_session_chunks mod_auth_openidc_session_0 mod_auth_openidc_session_1'
 ```
 
+Setup OnDemand to authenticate with SAML using apache Mellon. Puppet creates a script `/usr/local/bin/mellon_ood_metadata.sh` to generate certs and relevant metadata files. This script needs to be run (once) manually.
+
+```yaml
+openondemand::servername: ondemand.osc.edu
+openondemand::auth_type: 'mellon'
+openondemand::auth_configs:
+  - 'Require valid-user'
+openondemand::mellon_config:
+  MellonEndpointPath: '/mellon'
+  MellonEnable: 'auth'
+  MellonIdPMetadataFile: '/etc/httpd/mellon/idpmetadata.xml'
+```
+
 Configure OnDemand via git repo that contains app configs, locales, public, and annoucement files
 
 ```yaml

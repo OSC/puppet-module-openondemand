@@ -1,0 +1,8 @@
+<Location ~ "^/(?!public)">
+<% scope['openondemand::auth'].each do |k| -%>
+  <%= k %>
+<% end %>
+<% scope['openondemand::mellon_merged_config'].each do |k,v| -%>
+  <%= k %> <%= v %>
+<% end %>
+</Location>

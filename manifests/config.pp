@@ -288,6 +288,16 @@ class openondemand::config {
     }
   }
 
+  # deploy script to generate mellon metadata
+  if $openondemand::auth_type == 'mellon' {
+    file { '/usr/local/bin/mellon_ood_metadata.sh':
+      content => template('openondemand/generate_ood_mellon_metadata.sh.erb'),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+    }
+  }
+
   file { '/etc/ood/config/nginx_stage.yml':
     ensure  => 'file',
     owner   => 'root',
