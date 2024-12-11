@@ -140,6 +140,8 @@
 #   OIDC REMOTE_USER claim
 # @param oidc_scope
 #   OIDC scopes
+# @param oidc_crypto_passphrase
+#   OIDC crypto passphrase
 # @param oidc_session_inactivity_timeout
 #   OIDC session inactivity timeout, see OIDCSessionInactivityTimeout
 # @param oidc_session_max_duration
@@ -325,6 +327,7 @@ class openondemand (
   Optional[String] $oidc_client_secret = undef,
   String $oidc_remote_user_claim = 'preferred_username',
   String $oidc_scope = 'openid profile email',
+  Optional[String] $oidc_crypto_passphrase = undef,
   Integer $oidc_session_inactivity_timeout = 28800,
   Integer $oidc_session_max_duration = 28800,
   String $oidc_state_max_number_of_cookies = '10 true',
@@ -575,6 +578,7 @@ class openondemand (
     'oidc_client_secret'               => $oidc_client_secret,
     'oidc_remote_user_claim'           => $oidc_remote_user_claim,
     'oidc_scope'                       => $oidc_scope,
+    'oidc_crypto_passphrase'           => $oidc_crypto_passphrase,
     'oidc_session_inactivity_timeout'  => $oidc_session_inactivity_timeout,
     'oidc_session_max_duration'        => $oidc_session_max_duration,
     'oidc_state_max_number_of_cookies' => $oidc_state_max_number_of_cookies,
