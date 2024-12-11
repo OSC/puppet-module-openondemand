@@ -2,11 +2,7 @@
 
 shared_examples 'openondemand::repo::rpm' do |facts|
   let(:repo_release) do
-    if facts[:os]['release']['major'].to_i == 7
-      '3.0'
-    else
-      '3.1'
-    end
+    '4.0'
   end
   let(:dist) do
     if facts[:os]['name'] == 'Amazon'
@@ -60,36 +56,19 @@ shared_examples 'openondemand::repo::rpm' do |facts|
     )
   end
 
-  if facts[:os]['release']['major'].to_i != 7
-    it do
-      is_expected.to contain_exec('dnf makecache ondemand-web').with(
-        path: '/usr/bin:/bin:/usr/sbin:/sbin',
-        command: "dnf -q makecache -y --disablerepo='*' --enablerepo='ondemand-web'",
-        refreshonly: 'true',
-        subscribe: 'Yumrepo[ondemand-web]',
-      )
-    end
-  else
-    it { is_expected.not_to contain_exec('dnf makecache ondemand-web') }
-  end
-
-  if facts[:os]['release']['major'].to_i == 7
-    case facts[:os]['name']
-    when 'RedHat'
-      it { is_expected.to contain_rh_repo("rhel-server-rhscl-#{facts[:os]['release']['major']}-rpms").with_ensure('present') }
-    when 'CentOS'
-      it { is_expected.to contain_package('centos-release-scl').with_ensure('installed') }
-    end
-    it { is_expected.not_to contain_package('nodejs:14') }
-    it { is_expected.not_to contain_package('ruby:3.0') }
-    it { is_expected.not_to contain_package('nodejs:18') }
-    it { is_expected.not_to contain_package('ruby:3.1') }
+  it do
+    is_expected.to contain_exec('dnf makecache ondemand-web').with(
+      path: '/usr/bin:/bin:/usr/sbin:/sbin',
+      command: "dnf -q makecache -y --disablerepo='*' --enablerepo='ondemand-web'",
+      refreshonly: 'true',
+      subscribe: 'Yumrepo[ondemand-web]',
+    )
   end
 
   if facts[:os]['release']['major'].to_s =~ %r{^(8|9)$}
     it do
       is_expected.to contain_package('nodejs').with(
-        ensure: '18',
+        ensure: '20',
         enable_only: 'true',
         provider: 'dnfmodule',
         require: 'Exec[dnf makecache ondemand-web]',
@@ -98,22 +77,22 @@ shared_examples 'openondemand::repo::rpm' do |facts|
 
     it do
       is_expected.to contain_package('ruby').with(
-        ensure: '3.1',
+        ensure: '3.3',
         enable_only: 'true',
         provider: 'dnfmodule',
         require: 'Exec[dnf makecache ondemand-web]',
       )
     end
 
-    context 'when repo_release => 3.0' do
-      let(:params) { { repo_release: '3.0' } }
+    context 'when repo_release => 3.1' do
+      let(:params) { { repo_release: '3.1' } }
 
-      if facts[:os]['release']['major'].to_s == '9'
-        it { is_expected.to contain_package('nodejs').with_ensure('absent') }
-        it { is_expected.to contain_package('ruby').with_ensure('absent') }
+      if facts[:os]['release']['major'].to_s =~ %r{^(8|9)$}
+        it { is_expected.to contain_package('nodejs').with_ensure('18') }
+        it { is_expected.to contain_package('ruby').with_ensure('3.1') }
       else
-        it { is_expected.to contain_package('nodejs').with_ensure('14') }
-        it { is_expected.to contain_package('ruby').with_ensure('3.0') }
+        it { is_expected.not_to contain_package('nodejs') }
+        it { is_expected.not_to contain_package('ruby') }
       end
     end
   end
@@ -127,8 +106,6 @@ shared_examples 'openondemand::repo::rpm' do |facts|
   context 'when manage_dependency_repos => false' do
     let(:params) { { manage_dependency_repos: false } }
 
-    it { is_expected.not_to contain_rh_repo("rhel-server-rhscl-#{facts[:os]['release']['major']}-rpms").with_ensure('present') }
-    it { is_expected.not_to contain_package('centos-release-scl').with_ensure('installed') }
     it { is_expected.not_to contain_package('nodejs') }
     it { is_expected.not_to contain_package('ruby') }
   end

@@ -4,12 +4,6 @@ class openondemand::apache {
   assert_private()
 
   if $openondemand::declare_apache {
-    if $openondemand::scl_apache {
-      class { 'apache::version':
-        scl_httpd_version => '2.4',
-        scl_php_version   => '7.0',
-      }
-    }
     class { 'apache':
       default_vhost => false,
     }
@@ -17,16 +11,10 @@ class openondemand::apache {
     contain apache
   }
 
-  if $openondemand::scl_apache {
-    $package_prefix = 'httpd24-'
-  } else {
-    $package_prefix = ''
-  }
-
   if $facts['os']['family'] == 'RedHat' {
-    $session_package = "${package_prefix}mod_session"
-    $proxy_html_package = "${package_prefix}mod_proxy_html"
-    $openidc_package = "${package_prefix}mod_auth_openidc"
+    $session_package = 'mod_session'
+    $proxy_html_package = 'mod_proxy_html'
+    $openidc_package = 'mod_auth_openidc'
   } else {
     $session_package = undef
     $proxy_html_package = undef
@@ -68,16 +56,6 @@ class openondemand::apache {
     apache::mod { 'auth_openidc':
       package        => $openidc_package,
       package_ensure => $openondemand::mod_auth_openidc_ensure,
-    }
-  }
-
-  if $openondemand::scl_apache {
-    shellvar { 'HTTPD24_HTTPD_SCLS_ENABLED':
-      ensure  => 'present',
-      target  => '/opt/rh/httpd24/service-environment',
-      value   => $openondemand::apache_scls,
-      require => Package['httpd'],
-      notify  => Class['Apache::Service'],
     }
   }
 
