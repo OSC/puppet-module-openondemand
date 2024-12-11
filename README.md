@@ -19,6 +19,7 @@ Manage [Open OnDemand](http://openondemand.org/) installation and configuration.
 
 The following are the versions of this module and the supported versions of Open OnDemand:
 
+* Module 7.x supports OnDemand 4.0 and 3.1
 * Module 5.x and 6.x supports Open OnDemand 3.1 and 3.0
 * Module 3.x and 4.x supports Open OnDemand 3.0
 * Module 2.x supports Open OnDemand 2.x
@@ -34,12 +35,12 @@ All configuration can be done through the `openondemand` class. Example configur
 include openondemand
 ```
 
-Install specific versions of OnDemand from 3.0 repo with OpenID Connect support.
+Install specific versions of OnDemand from 3.1 repo with OpenID Connect support.
 
 ```yaml
-openondemand::repo_release: '3.0'
-openondemand::ondemand_package_ensure: "3.0.0-1.el7"
-openondemand::mod_auth_openidc_ensure: "3.4.5-1.el7"
+openondemand::repo_release: '3.1'
+openondemand::ondemand_package_ensure: "3.1.0-1.el9"
+openondemand::mod_auth_openidc_ensure: "3.4.5-1.el9"
 ```
 
 Configure OnDemand SSL certs

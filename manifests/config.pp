@@ -315,12 +315,12 @@ class openondemand::config {
     }
   }
 
+  # TODO: Add back once better way to customize this file
   file { '/etc/ood/profile':
-    ensure  => 'file',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => template('openondemand/profile.erb'),
+    ensure => 'absent',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
   }
 
   sudo::conf { 'ood':

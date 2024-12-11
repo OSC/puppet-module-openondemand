@@ -38,8 +38,6 @@
 #   Boolean that determines if apache is declared or included
 # @param apache_user
 #   Name of the Apache user
-# @param apache_scls
-#   SCLs to load when starting Apache service
 # @param generator_insecure
 #   Run ood-portal-generator with --insecure flag
 #   This is needed if you wish to use default ood@localhost user or
@@ -58,6 +56,8 @@
 #   ood_portal.yml logroot
 # @param use_rewrites
 #   ood_portal.yml use_rewrites
+# @param http_redirect_host
+#   ood_portal.yml http_redirect_host
 # @param use_maintenance
 #   ood_portal.yml use_maintenance
 # @param maintenance_ip_allowlist
@@ -167,8 +167,6 @@
 #   nginx_stage.yml pun_custom_env
 # @param nginx_stage_app_root
 #   nginx_stage.yml app_root
-# @param nginx_stage_scl_env
-#   nginx_stage.yml scl_env
 # @param nginx_stage_app_request_regex
 #   nginx_stage.yml app_request_regex
 # @param nginx_stage_min_uid
@@ -246,7 +244,7 @@
 #
 class openondemand (
   # repos
-  String $repo_release = '3.1',
+  String $repo_release = '4.0',
   Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl]
   $repo_baseurl_prefix = 'https://yum.osc.edu/ondemand',
   Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl, Stdlib::Absolutepath]
@@ -271,7 +269,6 @@ class openondemand (
   # Apache
   Boolean $declare_apache = true,
   String[1] $apache_user = 'apache',
-  String $apache_scls = 'httpd24',
 
   # ood_portal.yml
   Boolean $generator_insecure = false,
@@ -282,6 +279,7 @@ class openondemand (
   Boolean $disable_logs = false,
   String  $logroot = 'logs',
   Boolean $use_rewrites = true,
+  String $http_redirect_host = '%{HTTP_HOST}',
   Boolean $use_maintenance = true,
   Array $maintenance_ip_allowlist = [],
   Optional[String] $maintenance_source = undef,
@@ -344,7 +342,6 @@ class openondemand (
   Optional[String] $nginx_stage_ondemand_title  = undef,
   Hash $nginx_stage_pun_custom_env = {},
   Openondemand::Nginx_stage_namespace_config $nginx_stage_app_root  = {},
-  String $nginx_stage_scl_env = 'ondemand',
   Optional[Openondemand::Nginx_stage_namespace_config] $nginx_stage_app_request_regex = undef,
   Integer $nginx_stage_min_uid = 1000,
   Integer $nginx_stage_passenger_pool_idle_time = 300,
@@ -399,46 +396,23 @@ class openondemand (
   $osname = $facts.dig('os', 'name')
   $osmajor = $facts.dig('os', 'release', 'major')
 
-  $supported = ['RedHat-7','RedHat-8','RedHat-9','RedHat-2023','Debian-20.04','Debian-22.04','Debian-24.04','Debian-12']
+  $supported = ['RedHat-8','RedHat-9','RedHat-2023','Debian-20.04','Debian-22.04','Debian-24.04','Debian-12']
   $os = "${osfamily}-${osmajor}"
   if ! ($os in $supported) {
     fail("Unsupported OS: module ${module_name}. osfamily=${osfamily} osmajor=${osmajor} detected")
   }
 
-  # Handle unsupported distro and OnDemand combos
   if $repo_release == '3.1' {
-    if "${osfamily}-${osmajor}" == 'RedHat-7' {
-      fail('EL7 is not supported with OnDemand 3.1')
+    # Debian 12 and Ubuntu 24.04 in OnDemand 3.1 use OS NodeJS
+    if (String($openondemand::osmajor) in ['12', '24.04']) {
+      $nodejs = undef
+    } else {
+      $nodejs = '18'
     }
-  }
-  if $repo_release == '3.0' {
-    if "${osname}-${osmajor}" == 'Amazon-2023' {
-      fail('Amazon 2023 is not supported with OnDemand 3.0')
-    }
-    if "${osname}-${osmajor}" == 'Debian-12' {
-      fail('Debian 12 is not supported with OnDemand 3.0')
-    }
-    if "${osname}-${osmajor}" == 'Ubuntu-24.04' {
-      fail('Ubuntu 24.04 is not supported with OnDemand 3.0')
-    }
-  }
-
-  if versioncmp($osmajor, '7') <= 0 {
-    $scl_apache = true
-  } else {
-    $scl_apache = false
-  }
-
-  # EL9 only has these two versions at this time
-  if $repo_release == '3.0' and "${osfamily}-${osmajor}" == 'RedHat-9' {
-    $nodejs = 'absent'
-    $ruby = 'absent'
-  } elsif $repo_release == '3.0' {
-    $nodejs = '14'
-    $ruby = '3.0'
-  } else {
-    $nodejs = '18'
     $ruby = '3.1'
+  } else {
+    $nodejs = '20'
+    $ruby = '3.3'
   }
 
   if $selinux {
@@ -536,6 +510,7 @@ class openondemand (
     'disable_logs'                     => $disable_logs,
     'logroot'                          => $logroot,
     'use_rewrites'                     => $use_rewrites,
+    'http_redirect_host'               => $http_redirect_host,
     'use_maintenance'                  => $use_maintenance,
     'maintenance_ip_allowlist'         => $maintenance_ip_allowlist,
     'security_csp_frame_ancestors'     => $security_csp_frame_ancestors,

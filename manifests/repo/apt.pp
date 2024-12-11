@@ -25,8 +25,7 @@ class openondemand::repo::apt {
     },
   }
 
-  # Debian 12 has NodeJS 18 in OS repos
-  if ! (String($openondemand::osmajor) in ['12', '24.04']) and $openondemand::nodejs == '18' {
+  if $openondemand::nodejs == '18' {
     apt::source { 'nodesource':
       ensure   => 'present',
       location => 'https://deb.nodesource.com/node_18.x',
@@ -39,15 +38,15 @@ class openondemand::repo::apt {
     }
   }
 
-  if $openondemand::nodejs == '14' {
+  if $openondemand::nodejs == '20' {
     apt::source { 'nodesource':
       ensure   => 'present',
-      location => 'https://deb.nodesource.com/node_14.x',
+      location => 'https://deb.nodesource.com/node_20.x',
       repos    => 'main',
-      release  => $facts['os']['distro']['codename'],
+      release  => 'nodistro',
       key      => {
-        'id'     => '9FD3B784BC1C6FC31A8A0A1C1655A0AB68576280',
-        'source' => 'https://deb.nodesource.com/gpgkey/nodesource.gpg.key',
+        'id'     => '6F71F525282841EEDAF851B42F59B5F99B1BE0B4',
+        'source' => 'https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key',
       },
     }
   }
