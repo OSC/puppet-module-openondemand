@@ -557,7 +557,7 @@ class openondemand (
     'dex_uri'                          => $dex_uri,
     'dex'                              => $_dex_config,
   }.filter |$key, $value| { $value =~ NotUndef }
-  $ood_portal_yaml = stdlib::to_yaml($ood_portal_config)
+  $ood_portal_yaml = to_yaml($ood_portal_config)
   $base_apps = {
     'dashboard' => { 'package' => 'ondemand', 'manage_package' => false },
     'shell' => { 'package' => 'ondemand', 'manage_package' => false },

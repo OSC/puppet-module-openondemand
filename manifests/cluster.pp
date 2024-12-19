@@ -330,7 +330,7 @@ define openondemand::cluster (
   if $source {
     $content = undef
   } else {
-    $content = stdlib::to_yaml($config)
+    $content = to_yaml($config)
   }
 
   file { "/etc/ood/config/clusters.d/${name}.yml":
