@@ -5,8 +5,7 @@ install_module_from_forge('puppet-augeasproviders_core', '>= 3.0.0 < 4.0.0')
 on hosts, 'puppet config set strict warning'
 
 def supported_releases
-  # TODO: Switch to '4.0' once that repo is released
-  ['3.1', 'build/4.0']
+  ['3.1', '4.0']
 end
 
 RSpec.configure do |c|
