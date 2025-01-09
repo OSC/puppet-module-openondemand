@@ -66,6 +66,8 @@
 #   Source for maintenance index.html
 # @param maintenance_content
 #   Content for maintenance index.html
+# @param maintenance_enabled
+#   Enable maintenance mode in OOD
 # @param security_csp_frame_ancestors
 #   ood_portal.yml security_csp_frame_ancestors
 # @param security_strict_transport
@@ -286,6 +288,7 @@ class openondemand (
   Array $maintenance_ip_allowlist = [],
   Optional[String] $maintenance_source = undef,
   Optional[String] $maintenance_content = undef,
+  Optional[Boolean] $maintenance_enabled = undef,
   Optional[Variant[String, Boolean]] $security_csp_frame_ancestors = undef,
   Boolean $security_strict_transport = true,
   String $lua_root = '/opt/ood/mod_ood_proxy/lib',
