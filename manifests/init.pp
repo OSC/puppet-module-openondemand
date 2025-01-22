@@ -235,6 +235,10 @@
 #   Path in apps config Git repo for announcements
 # @param apps_config_source
 #   Source for apps config, not used if `apps_config_repo` is defined
+# @param apps_config_mode
+#   The mode for apps config repo
+# @param apps_config_source_permissions
+#   The source_permissions for apps config repo
 # @param locales_config_source
 #   Source for locales config, not used if `apps_config_repo` is defined
 # @param announcements_config_source
@@ -390,6 +394,8 @@ class openondemand (
   Optional[String] $announcements_config_repo_path = undef,
 
   Optional[String] $apps_config_source = undef,
+  Variant[Stdlib::Filemode, Undef] $apps_config_mode = '0644',
+  Optional[String[1]] $apps_config_source_permissions = undef,
   Optional[String] $locales_config_source = undef,
   Optional[String] $announcements_config_source = undef,
   Array $public_files_repo_paths = [],

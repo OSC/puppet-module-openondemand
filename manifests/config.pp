@@ -160,14 +160,15 @@ class openondemand::config {
     }
   }
   file { '/etc/ood/config/apps':
-    ensure  => 'directory',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    source  => $openondemand::_apps_config_source,
-    recurse => true,
-    purge   => true,
-    force   => true,
+    ensure             => 'directory',
+    owner              => 'root',
+    group              => 'root',
+    mode               => $openondemand::apps_config_mode,
+    source_permissions => $openondemand::apps_config_source_permissions,
+    source             => $openondemand::_apps_config_source,
+    recurse            => true,
+    purge              => true,
+    force              => true,
   }
   file { '/etc/ood/config/locales':
     ensure  => 'directory',
