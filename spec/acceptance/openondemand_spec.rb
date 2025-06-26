@@ -4,11 +4,11 @@ require 'spec_helper_acceptance'
 
 describe 'openondemand class:' do
   supported_releases.each do |release|
-    context "when repo_release => #{release}" do
+    context "when repo_release => 'staging/#{release}'" do
       it 'runs successfully' do
         pp = <<-PP
         class { 'openondemand':
-          repo_release       => '#{release}',
+          repo_release       => 'staging/#{release}',
           generator_insecure => true,
         }
         PP
