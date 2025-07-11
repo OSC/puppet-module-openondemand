@@ -3,18 +3,21 @@
 require 'spec_helper_acceptance'
 
 describe 'openondemand class:' do
-  supported_releases.each do |release|
-    context "when repo_release => 'staging/#{release}'" do
-      it 'runs successfully' do
-        pp = <<-PP
-        class { 'openondemand':
-          repo_release       => 'staging/#{release}',
-          generator_insecure => true,
-        }
-        PP
+  supported_releases.each_pair do |release, versions|
+    versions.each do |version|
+      context "when repo_release => 'staging/#{release}' ondemand_package_ensure => '#{version}'" do
+        it 'runs successfully' do
+          pp = <<-PP
+          class { 'openondemand':
+            repo_release            => 'staging/#{release}',
+            ondemand_package_ensure => '#{version}',
+            generator_insecure      => true,
+          }
+          PP
 
-        apply_manifest(pp, catch_failures: true)
-        apply_manifest(pp, catch_changes: true)
+          apply_manifest(pp, catch_failures: true)
+          apply_manifest(pp, catch_changes: true)
+        end
       end
     end
   end
