@@ -5,7 +5,10 @@ install_module_from_forge('puppet-augeasproviders_core', '>= 3.0.0 < 4.0.0')
 on hosts, 'puppet config set strict warning'
 
 def supported_releases
-  ['3.1', '4.0']
+  {
+    '3.1' => ['3.1.13', 'latest'],
+    '4.0' => ['4.0.5', 'latest'],
+  }
 end
 
 RSpec.configure do |c|

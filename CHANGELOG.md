@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v7.1.1](https://github.com/osc/puppet-module-openondemand/tree/v7.1.1) (2025-06-12)
+
+[Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v7.1.0...v7.1.1)
+
+### Fixed
+
+- Do not manage maintenance.enable if undef [\#174](https://github.com/OSC/puppet-module-openondemand/pull/174) ([treydock](https://github.com/treydock))
+
 ## [v7.1.0](https://github.com/osc/puppet-module-openondemand/tree/v7.1.0) (2025-01-21)
 
 [Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v7.0.0...v7.1.0)
@@ -172,7 +180,6 @@ All notable changes to this project will be documented in this file. The format 
 ### Changed
 
 - Switch to use OnDemand 3.0 [\#122](https://github.com/OSC/puppet-module-openondemand/pull/122) ([treydock](https://github.com/treydock))
-- OnDemand 3.0 support [\#70](https://github.com/OSC/puppet-module-openondemand/pull/70) ([treydock](https://github.com/treydock))
 
 ## [v2.15.0](https://github.com/osc/puppet-module-openondemand/tree/v2.15.0) (2022-11-15)
 

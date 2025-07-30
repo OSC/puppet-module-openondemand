@@ -425,7 +425,8 @@ class openondemand (
     fail("Unsupported OS: module ${module_name}. osfamily=${osfamily} osmajor=${osmajor} detected")
   }
 
-  if $repo_release == '3.1' {
+  $repo_version = split($repo_release, '/')[-1]
+  if $repo_version == '3.1' {
     # Debian 12 and Ubuntu 24.04 in OnDemand 3.1 use OS NodeJS
     if (String($openondemand::osmajor) in ['12', '24.04']) {
       $nodejs = undef
