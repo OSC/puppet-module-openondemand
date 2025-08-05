@@ -352,7 +352,7 @@ class openondemand (
 
   # Mellon Configs
   Stdlib::Absolutepath $mellon_dir = "${apache::httpd_dir}/mellon",
-  Boolean mellon_manage_metadata = true,
+  Boolean $mellon_manage_metadata = true,
   Optional[Hash] $mellon_config = {},
 
   # Misc configs
