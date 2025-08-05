@@ -305,7 +305,7 @@ class openondemand::config {
 
   # deploy script to generate mellon metadata
   if $openondemand::auth_type == 'mellon' {
-    file {"${openondemand::mellon_dir}/00-auth-mellon.conf":
+    file { "${openondemand::mellon_dir}/00-auth-mellon.conf":
       content => template('openondemand/auth_mellon.conf.erb'),
       owner   => 'root',
       group   => 'root',
