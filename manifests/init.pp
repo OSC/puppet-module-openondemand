@@ -245,6 +245,8 @@
 #   Path to the source for public files
 # @param manage_logrotate
 #   Boolean that allows disabling management of logrotate
+# @param git_proxy
+#   http proxy, if any, used to download git repos via vcsrepo
 #
 class openondemand (
   # repos
@@ -386,6 +388,7 @@ class openondemand (
   Optional[String] $apps_config_repo = undef,
   Optional[String] $apps_config_revision = undef,
   String $apps_config_repo_path = '', # lint:ignore:params_empty_string_assignment
+  Optional[String[1]] $git_proxy = undef,
   Optional[String] $locales_config_repo_path = undef,
   Optional[String] $announcements_config_repo_path = undef,
 
