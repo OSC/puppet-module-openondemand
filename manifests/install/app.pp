@@ -28,7 +28,7 @@
 #   File mode for app
 #
 define openondemand::install::app (
-  String $ensure = 'present',
+  String $ensure = 'latest',
   String $package = "ondemand-${name}",
   Boolean $manage_package = true,
   Optional[String] $git_repo = undef,
