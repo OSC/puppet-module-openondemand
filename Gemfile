@@ -24,12 +24,12 @@ group :development do
   gem "puppet-strings",             require: false
 end
 group :system_tests do
-  gem "beaker", *location_for(ENV['BEAKER_VERSION'] || '~> 4.29')
+  gem "beaker"
   gem "beaker-abs", *location_for(ENV['BEAKER_ABS_VERSION'] || '~> 0.1')
   gem "beaker-pe",                                                               require: false
   gem "beaker-hostgenerator"
   gem "beaker-rspec"
-  gem "beaker-docker",               git: 'https://github.com/treydock/beaker-docker.git', branch: 'amazon-2023'
+  gem "beaker-docker", '~> 2.2.0'
   gem "beaker-puppet",               git: 'https://github.com/puppetlabs/beaker-puppet.git', ref: '6063d22b6c4449df795731f5853c3c75241240c4'
   gem "beaker-puppet_install_helper",                                            require: false
   gem "beaker-module_install_helper",                                            require: false
