@@ -42,6 +42,7 @@ hiera_version = ENV['HIERA_GEM_VERSION']
 gems = {}
 
 gems['rake'] = [require: false]
+gems['puppetlabs_spec_helper'] = [require: false]
 gems['puppet'] = location_for(puppet_version)
 
 # If facter or hiera versions have been specified via the environment
