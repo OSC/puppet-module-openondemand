@@ -10,7 +10,8 @@ Rakefile:
       set:
         - el8
         - el9
-        - amazon2023
+        # Add back once able to get past container start stage
+        # - amazon2023
         - ubuntu-2004
         - ubuntu-2204
         - ubuntu-2404
