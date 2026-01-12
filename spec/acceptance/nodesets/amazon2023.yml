@@ -2,15 +2,15 @@ HOSTS:
   amazon-2023:
     roles:
       - agent
-    platform: amazon-2023-x86_64
+    platform: el-9-x86_64
     hypervisor: docker
-    image: amazonlinux:2023
+    image: amazonlinux:2023.8.20250908.0
     docker_preserve_image: true
-    docker_cmd:
-      - '/usr/sbin/init'
+    docker_cmd: '/usr/sbin/init'
     docker_image_commands:
       - 'dnf install -y dnf-utils'
       - 'dnf install -y wget which cronie iproute initscripts langpacks-en glibc-all-langpacks glibc-langpack-en cpio'
+      - 'cp /bin/true /sbin/agetty'
     docker_env:
       - LANG=en_US.UTF-8
       - LANGUAGE=en_US.UTF-8
