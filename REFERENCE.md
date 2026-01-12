@@ -175,6 +175,7 @@ The following parameters are available in the `openondemand` class:
 * [`public_files_repo_paths`](#-openondemand--public_files_repo_paths)
 * [`public_files_source_paths`](#-openondemand--public_files_source_paths)
 * [`manage_logrotate`](#-openondemand--manage_logrotate)
+* [`git_proxy`](#-openondemand--git_proxy)
 
 ##### <a name="-openondemand--repo_release"></a>`repo_release`
 
@@ -1140,6 +1141,14 @@ Data type: `Boolean`
 Boolean that allows disabling management of logrotate
 
 Default value: `true`
+
+##### <a name="-openondemand--git_proxy"></a>`git_proxy`
+
+Data type: `Optional[String[1]]`
+
+http proxy, if any, used to download git repos via vcsrepo
+
+Default value: `undef`
 
 ## Defined types
 

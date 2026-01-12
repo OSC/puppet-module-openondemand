@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v7.2.0](https://github.com/osc/puppet-module-openondemand/tree/v7.2.0) (2026-01-12)
+
+[Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v7.1.1...v7.2.0)
+
+### Added
+
+- add http proxy for vcsrepo as git\_proxy parameter [\#180](https://github.com/OSC/puppet-module-openondemand/pull/180) ([elawrence42](https://github.com/elawrence42))
+
 ## [v7.1.1](https://github.com/osc/puppet-module-openondemand/tree/v7.1.1) (2025-06-12)
 
 [Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v7.1.0...v7.1.1)
@@ -256,23 +264,14 @@ All notable changes to this project will be documented in this file. The format 
 - Use 2.0 repo for acceptance tests [\#80](https://github.com/OSC/puppet-module-openondemand/pull/80) ([treydock](https://github.com/treydock))
 - Fix when ood-portal-generator is triggered [\#79](https://github.com/OSC/puppet-module-openondemand/pull/79) ([treydock](https://github.com/treydock))
 - Ensure that validation errors for Apache config will not persist [\#78](https://github.com/OSC/puppet-module-openondemand/pull/78) ([treydock](https://github.com/treydock))
-- Skip nigntly tests until feature/ondemand-2.1 merged [\#74](https://github.com/OSC/puppet-module-openondemand/pull/74) ([treydock](https://github.com/treydock))
 
 ## [v2.8.2](https://github.com/osc/puppet-module-openondemand/tree/v2.8.2) (2021-10-14)
 
 [Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v2.8.1...v2.8.2)
 
-### Fixed
-
-- Further fix how custom configs are defined \(with tests\) [\#73](https://github.com/OSC/puppet-module-openondemand/pull/73) ([treydock](https://github.com/treydock))
-
 ## [v2.8.1](https://github.com/osc/puppet-module-openondemand/tree/v2.8.1) (2021-10-14)
 
 [Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v2.8.0...v2.8.1)
-
-### Fixed
-
-- Fix how custom cluster configs are defined [\#72](https://github.com/OSC/puppet-module-openondemand/pull/72) ([treydock](https://github.com/treydock))
 
 ## [v2.8.0](https://github.com/osc/puppet-module-openondemand/tree/v2.8.0) (2021-09-01)
 
