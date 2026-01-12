@@ -91,7 +91,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 7.0.0 < 9.0.0"
+      "version_requirement": ">= 8.0.0 < 9.0.0"
     }
   ],
   "tags": [
@@ -101,5 +101,5 @@
   ],
   "pdk-version": "3.4.0",
   "template-url": "https://github.com/treydock/pdk-templates.git#master",
-  "template-ref": "heads/master-0-g3c12381"
+  "template-ref": "heads/master-0-g2230aca"
 }
