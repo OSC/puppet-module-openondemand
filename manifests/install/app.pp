@@ -58,11 +58,12 @@ define openondemand::install::app (
 
   if $git_repo {
     vcsrepo { $_path:
-      ensure   => $ensure,
-      source   => $git_repo,
-      revision => $git_revision,
-      provider => 'git',
-      require  => Package['ondemand'],
+      ensure     => $ensure,
+      source     => $git_repo,
+      revision   => $git_revision,
+      provider   => 'git',
+      http_proxy => $openondemand::git_proxy,
+      require    => Package['ondemand'],
     }
   }
 
