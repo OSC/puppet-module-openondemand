@@ -42,7 +42,7 @@ jobs:
       - name: Run tests
         run: bundle exec rake parallel_spec
   acceptance:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
@@ -76,10 +76,10 @@ jobs:
       - name: Setup ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: '3.2'
           bundler-cache: true
-          cache-version: 2
-          bundler: '2.1.0'
+          cache-version: 3
+          bundler: '2.4.13'
       - name: Run tests
         run: bundle exec rake beaker
         env:
