@@ -49,7 +49,7 @@ jobs:
         set:
           - "el8"
           - "el9"
-          - "ubuntu-2004"
+          - "el10"
           - "ubuntu-2204"
           - "ubuntu-2404"
           - "debian-12"

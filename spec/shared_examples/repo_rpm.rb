@@ -2,7 +2,7 @@
 
 shared_examples 'openondemand::repo::rpm' do |facts|
   let(:repo_release) do
-    '4.0'
+    '4.1'
   end
   let(:dist) do
     if facts[:os]['name'] == 'Amazon'
@@ -68,7 +68,7 @@ shared_examples 'openondemand::repo::rpm' do |facts|
   if facts[:os]['release']['major'].to_s =~ %r{^(8|9)$}
     it do
       is_expected.to contain_package('nodejs').with(
-        ensure: '20',
+        ensure: '22',
         enable_only: 'true',
         provider: 'dnfmodule',
         require: 'Exec[dnf makecache ondemand-web]',
@@ -84,12 +84,12 @@ shared_examples 'openondemand::repo::rpm' do |facts|
       )
     end
 
-    context 'when repo_release => 3.1' do
-      let(:params) { { repo_release: '3.1' } }
+    context 'when repo_release => 4.0' do
+      let(:params) { { repo_release: '4.0' } }
 
       if facts[:os]['release']['major'].to_s =~ %r{^(8|9)$}
-        it { is_expected.to contain_package('nodejs').with_ensure('18') }
-        it { is_expected.to contain_package('ruby').with_ensure('3.1') }
+        it { is_expected.to contain_package('nodejs').with_ensure('20') }
+        it { is_expected.to contain_package('ruby').with_ensure('3.3') }
       else
         it { is_expected.not_to contain_package('nodejs') }
         it { is_expected.not_to contain_package('ruby') }
