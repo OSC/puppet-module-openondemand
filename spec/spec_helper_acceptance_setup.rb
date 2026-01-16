@@ -6,8 +6,8 @@ on hosts, 'puppet config set strict warning'
 
 def supported_releases
   {
-    '3.1' => ['3.1.13', 'latest'],
     '4.0' => ['4.0.5', 'latest'],
+    '4.1' => ['4.1.0', 'latest'],
   }
 end
 

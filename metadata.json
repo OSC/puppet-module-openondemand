@@ -42,7 +42,7 @@
     },
     {
       "name": "puppet/epel",
-      "version_requirement": ">= 4.1.0 <6.0.0"
+      "version_requirement": ">= 4.1.0 <7.0.0"
     }
   ],
   "operatingsystem_support": [
@@ -50,21 +50,24 @@
       "operatingsystem": "Rocky",
       "operatingsystemrelease": [
         "8",
-        "9"
+        "9",
+        "10"
       ]
     },
     {
       "operatingsystem": "AlmaLinux",
       "operatingsystemrelease": [
         "8",
-        "9"
+        "9",
+        "10"
       ]
     },
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
         "8",
-        "9"
+        "9",
+        "10"
       ]
     },
     {
@@ -76,7 +79,6 @@
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "20.04",
         "22.04",
         "24.04"
       ]
@@ -100,6 +102,6 @@
     "gateway"
   ],
   "pdk-version": "3.4.0",
-  "template-url": "https://github.com/treydock/pdk-templates.git#master",
-  "template-ref": "heads/master-0-g2230aca"
+  "template-url": "https://github.com/treydock/pdk-templates.git#el10",
+  "template-ref": "remotes/origin/el10-0-g7f231cc"
 }
