@@ -7,7 +7,8 @@ on hosts, 'puppet config set strict warning'
 def supported_releases
   {
     '4.0' => ['4.0.5', 'latest'],
-    '4.1' => ['4.1.0', 'latest'],
+    # TODO: Reset back to just 4.1.0 once that version is tagged
+    '4.1' => ['>=4.1.0', 'latest'],
   }
 end
 
