@@ -15,14 +15,12 @@ end
 def supported_releases
   if supports_41_only
     {
-      # TODO: Reset back to just 4.1.0 once that version is tagged
-      '4.1' => ['>=4.1.0', 'latest'],
+      '4.1' => ['4.1.0', 'latest'],
     }
   else
     {
       '4.0' => ['4.0.5', 'latest'],
-      # TODO: Reset back to just 4.1.0 once that version is tagged
-      '4.1' => ['>=4.1.0', 'latest'],
+      '4.1' => ['4.1.0', 'latest'],
     }
   end
 end
