@@ -4,11 +4,25 @@ install_module_from_forge('puppetlabs-concat', '>= 9.0.0 < 10.0.0')
 install_module_from_forge('puppet-augeasproviders_core', '>= 3.0.0 < 4.0.0')
 on hosts, 'puppet config set strict warning'
 
+def supports_41_only
+  if fact('os.release.major').to_i >= 10 && (fact('os.family') == 'RedHat' && fact('os.name') != 'Amazon')
+    true
+  else
+    false
+  end
+end
+
 def supported_releases
-  {
-    '3.1' => ['3.1.13', 'latest'],
-    '4.0' => ['4.0.5', 'latest'],
-  }
+  if supports_41_only
+    {
+      '4.1' => ['4.1.0', 'latest'],
+    }
+  else
+    {
+      '4.0' => ['4.0.5', 'latest'],
+      '4.1' => ['4.1.0', 'latest'],
+    }
+  end
 end
 
 RSpec.configure do |c|

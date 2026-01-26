@@ -66,6 +66,8 @@ class openondemand::apache {
         'KillSignal=SIGTERM',
         'KillMode=process',
         'PrivateTmp=false',
+        'ProtectHome=false',
+        'ProtectSystem=false',
         '',
     ], "\n"),
     notify  => Class['apache::service'],
