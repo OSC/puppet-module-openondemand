@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v8.0.0](https://github.com/osc/puppet-module-openondemand/tree/v8.0.0) (2026-02-02)
+
+[Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v7.3.0...v8.0.0)
+
+### Changed
+
+- Support OnDemand 4.1 [\#183](https://github.com/OSC/puppet-module-openondemand/pull/183) ([treydock](https://github.com/treydock))
+
 ## [v7.3.0](https://github.com/osc/puppet-module-openondemand/tree/v7.3.0) (2026-01-16)
 
 [Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v7.2.0...v7.3.0)
@@ -262,16 +270,6 @@ All notable changes to this project will be documented in this file. The format 
 ## [v2.9.0](https://github.com/osc/puppet-module-openondemand/tree/v2.9.0) (2022-03-04)
 
 [Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v2.8.2...v2.9.0)
-
-### Added
-
-- Add repo\_exclude parameter [\#81](https://github.com/OSC/puppet-module-openondemand/pull/81) ([treydock](https://github.com/treydock))
-
-### Fixed
-
-- Use 2.0 repo for acceptance tests [\#80](https://github.com/OSC/puppet-module-openondemand/pull/80) ([treydock](https://github.com/treydock))
-- Fix when ood-portal-generator is triggered [\#79](https://github.com/OSC/puppet-module-openondemand/pull/79) ([treydock](https://github.com/treydock))
-- Ensure that validation errors for Apache config will not persist [\#78](https://github.com/OSC/puppet-module-openondemand/pull/78) ([treydock](https://github.com/treydock))
 
 ## [v2.8.2](https://github.com/osc/puppet-module-openondemand/tree/v2.8.2) (2021-10-14)
 

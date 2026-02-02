@@ -183,7 +183,7 @@ Data type: `String`
 
 The release of OnDemand repo
 
-Default value: `'4.0'`
+Default value: `'4.1'`
 
 ##### <a name="-openondemand--repo_baseurl_prefix"></a>`repo_baseurl_prefix`
 
