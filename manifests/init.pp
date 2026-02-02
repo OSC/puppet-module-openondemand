@@ -250,7 +250,7 @@
 #
 class openondemand (
   # repos
-  String $repo_release = '4.0',
+  String $repo_release = '4.1',
   Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl]
   $repo_baseurl_prefix = 'https://yum.osc.edu/ondemand',
   Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl, Stdlib::Absolutepath]
@@ -405,24 +405,25 @@ class openondemand (
   $osname = $facts.dig('os', 'name')
   $osmajor = $facts.dig('os', 'release', 'major')
 
-  $supported = ['RedHat-8','RedHat-9','RedHat-2023','Debian-20.04','Debian-22.04','Debian-24.04','Debian-12']
+  $supported = ['RedHat-8','RedHat-9','RedHat-10','RedHat-2023','Debian-22.04','Debian-24.04','Debian-12']
   $os = "${osfamily}-${osmajor}"
   if ! ($os in $supported) {
     fail("Unsupported OS: module ${module_name}. osfamily=${osfamily} osmajor=${osmajor} detected")
   }
 
   $repo_version = split($repo_release, '/')[-1]
-  if $repo_version == '3.1' {
-    # Debian 12 and Ubuntu 24.04 in OnDemand 3.1 use OS NodeJS
-    if (String($openondemand::osmajor) in ['12', '24.04']) {
-      $nodejs = undef
-    } else {
-      $nodejs = '18'
-    }
-    $ruby = '3.1'
-  } else {
+  if $repo_version == '4.0' {
     $nodejs = '20'
     $ruby = '3.3'
+  } else {
+    # EL10 doesn't have nodejs or ruby modules yet
+    if $osfamily == 'RedHat' and (String($openondemand::osmajor) in ['10']) {
+      $nodejs = undef
+      $ruby = undef
+    } else {
+      $nodejs = '22'
+      $ruby = '3.3'
+    }
   }
 
   if $selinux {

@@ -10,9 +10,8 @@ Rakefile:
       set:
         - el8
         - el9
-        # Add back once able to get past container start stage
-        # - amazon2023
-        - ubuntu-2004
+        - el10
+        - amazon2023
         - ubuntu-2204
         - ubuntu-2404
         - debian-12
@@ -32,6 +31,10 @@ spec/acceptance/nodesets/el9.yml:
   default_module_install_opts:
     ignore-dependencies: ~
     force: ~
+spec/acceptance/nodesets/el10.yml:
+  default_module_install_opts:
+    ignore-dependencies: ~
+    force: ~
 spec/acceptance/nodesets/debian-9.yml:
   delete: true
 spec/acceptance/nodesets/debian-10.yml:
@@ -41,11 +44,7 @@ spec/acceptance/nodesets/debian-11.yml:
 spec/acceptance/nodesets/ubuntu-1804.yml:
   delete: true
 spec/acceptance/nodesets/ubuntu-2004.yml:
-  packages:
-    - cron
-  default_module_install_opts:
-    ignore-dependencies: ~
-    force: ~
+  delete: true
 spec/acceptance/nodesets/ubuntu-2204.yml:
   packages:
     - cron
