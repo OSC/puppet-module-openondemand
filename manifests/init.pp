@@ -577,7 +577,10 @@ class openondemand (
     'file-editor' => { 'package' => 'ondemand', 'manage_package' => false },
     'activejobs' => { 'package' => 'ondemand', 'manage_package' => false },
     'myjobs' => { 'package' => 'ondemand', 'manage_package' => false },
+    'projects' => { 'package' => 'ondemand', 'manage_package' => false },
     'bc_desktop' => { 'package' => 'ondemand', 'manage_package' => false },
+    'system-status' => { 'package' => 'ondemand', 'manage_package' => false },
+    'module-browser' => { 'package' => 'ondemand', 'manage_package' => false },
   }
 
   $ondemand_config = {
