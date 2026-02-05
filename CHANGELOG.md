@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v8.1.0](https://github.com/osc/puppet-module-openondemand/tree/v8.1.0) (2026-02-05)
+
+[Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v8.0.0...v8.1.0)
+
+### Added
+
+- Add defaults for projects, system-status and module-browser core apps [\#185](https://github.com/OSC/puppet-module-openondemand/pull/185) ([treydock](https://github.com/treydock))
+
 ## [v8.0.0](https://github.com/osc/puppet-module-openondemand/tree/v8.0.0) (2026-02-02)
 
 [Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v7.3.0...v8.0.0)
@@ -258,10 +266,6 @@ All notable changes to this project will be documented in this file. The format 
 ## [v2.10.0](https://github.com/osc/puppet-module-openondemand/tree/v2.10.0) (2022-04-11)
 
 [Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v2.9.0...v2.10.0)
-
-### Added
-
-- Allow setting cluster YAML permissions [\#82](https://github.com/OSC/puppet-module-openondemand/pull/82) ([treydock](https://github.com/treydock))
 
 ### Fixed
 
