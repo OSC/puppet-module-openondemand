@@ -3,8 +3,15 @@
 class openondemand::service {
   assert_private()
 
+  if $openondemand::osmajor == '22.04' {
+    $env = ['LANG=en_US.UTF-8', 'LANGUAGE=en_US.UTF-8', 'LC_ALL=en_US.UTF-8']
+  } else {
+    $env = undef
+  }
+
   exec { 'nginx_stage-app_clean':
     command     => '/opt/ood/nginx_stage/sbin/nginx_stage app_clean',
+    environment => $env,
     refreshonly => true,
     subscribe   => [
       File['/etc/ood/config/nginx_stage.yml'],
