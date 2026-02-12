@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v8.2.0](https://github.com/osc/puppet-module-openondemand/tree/v8.2.0) (2026-02-12)
+
+[Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v8.1.0...v8.2.0)
+
+### Added
+
+- Improve testing for acceptance and add back Ubuntu 20.04 [\#186](https://github.com/OSC/puppet-module-openondemand/pull/186) ([treydock](https://github.com/treydock))
+
 ## [v8.1.0](https://github.com/osc/puppet-module-openondemand/tree/v8.1.0) (2026-02-05)
 
 [Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v8.0.0...v8.1.0)
@@ -266,10 +274,6 @@ All notable changes to this project will be documented in this file. The format 
 ## [v2.10.0](https://github.com/osc/puppet-module-openondemand/tree/v2.10.0) (2022-04-11)
 
 [Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v2.9.0...v2.10.0)
-
-### Fixed
-
-- Actually use new owner/group/mode cluster parameters [\#83](https://github.com/OSC/puppet-module-openondemand/pull/83) ([treydock](https://github.com/treydock))
 
 ## [v2.9.0](https://github.com/osc/puppet-module-openondemand/tree/v2.9.0) (2022-03-04)
 
