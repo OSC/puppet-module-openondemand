@@ -85,7 +85,7 @@ shared_examples 'openondemand::repo::rpm' do |facts|
     end
 
     context 'when repo_release => 4.0' do
-      let(:params) { { repo_release: '4.0' } }
+      let(:param_override) { { repo_release: '4.0' } }
 
       if facts[:os]['release']['major'].to_s =~ %r{^(8|9)$}
         it { is_expected.to contain_package('nodejs').with_ensure('20') }
@@ -104,20 +104,20 @@ shared_examples 'openondemand::repo::rpm' do |facts|
   end
 
   context 'when manage_dependency_repos => false' do
-    let(:params) { { manage_dependency_repos: false } }
+    let(:param_override) { { manage_dependency_repos: false } }
 
     it { is_expected.not_to contain_package('nodejs') }
     it { is_expected.not_to contain_package('ruby') }
   end
 
   context 'when manage_epel => false' do
-    let(:params) { { manage_epel: false } }
+    let(:param_override) { { manage_epel: false } }
 
     it { is_expected.not_to contain_class('epel') }
   end
 
   context 'when repo_nightly => true' do
-    let(:params) { { repo_nightly: true } }
+    let(:param_override) { { repo_nightly: true } }
 
     it { is_expected.to contain_yumrepo('ondemand-web-nightly').with_ensure('present') }
   end

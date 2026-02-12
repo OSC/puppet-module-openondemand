@@ -404,14 +404,21 @@ class openondemand (
   $osfamily = $facts.dig('os', 'family')
   $osname = $facts.dig('os', 'name')
   $osmajor = $facts.dig('os', 'release', 'major')
+  $repo_version = split($repo_release, '/')[-1]
 
-  $supported = ['RedHat-8','RedHat-9','RedHat-10','RedHat-2023','Debian-22.04','Debian-24.04','Debian-12']
+  $supported = ['RedHat-8','RedHat-9','RedHat-10','RedHat-2023','Debian-20.04','Debian-22.04','Debian-24.04','Debian-12']
   $os = "${osfamily}-${osmajor}"
   if ! ($os in $supported) {
     fail("Unsupported OS: module ${module_name}. osfamily=${osfamily} osmajor=${osmajor} detected")
   }
 
-  $repo_version = split($repo_release, '/')[-1]
+  if $facts['os']['family'] == 'RedHat' and String($openondemand::osmajor) == '10' and $repo_version == '4.0' {
+    fail('EL10 is not supported for OnDemand 4.0')
+  }
+  if $facts['os']['name'] == 'Ubuntu' and String($openondemand::osmajor) == '20.04' and $repo_version == '4.1' {
+    fail('Ubuntu 20.04 is not supported for OnDemand 4.1')
+  }
+
   if $repo_version == '4.0' {
     $nodejs = '20'
     $ruby = '3.3'
