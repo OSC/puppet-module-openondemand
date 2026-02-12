@@ -4,28 +4,17 @@ install_module_from_forge('puppetlabs-concat', '>= 9.0.0 < 10.0.0')
 install_module_from_forge('puppet-augeasproviders_core', '>= 3.0.0 < 4.0.0')
 on hosts, 'puppet config set strict warning'
 
-def supports_41_only
-  if fact('os.release.major').to_i >= 10 && (fact('os.family') == 'RedHat' && fact('os.name') != 'Amazon')
-    true
+def versions(repo_release)
+  if repo_release =~ %r{4.0}
+    ['4.0.5', 'latest']
   else
-    false
-  end
-end
-
-def supported_releases
-  if supports_41_only
-    {
-      '4.1' => ['4.1.0', 'latest'],
-    }
-  else
-    {
-      '4.0' => ['4.0.5', 'latest'],
-      '4.1' => ['4.1.0', 'latest'],
-    }
+    ['4.1.0', 'latest']
   end
 end
 
 RSpec.configure do |c|
+  c.add_setting :repo_release
+  c.repo_release = ENV['BEAKER_repo_release'] || '4.1'
   c.before :suite do
     hiera_yaml = <<-HIERA
 ---

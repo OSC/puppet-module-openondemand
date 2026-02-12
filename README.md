@@ -358,10 +358,11 @@ openondemand::confs:
 
 This module has been tested on:
 
-* RedHat/CentOS 7 x86_64
 * RedHat/Rocky Linux/Alma Linux 8
 * RedHat/Rocky Linux/Alma Linux 9
+* RedHat/Rocky Linux/Alma Linux 10 (OnDemand 4.1 only)
 * Amazon Linux 2023
-* Ubuntu 20.04
+* Ubuntu 20.04 (OnDemand 4.0 only)
 * Ubuntu 22.04
+* Ubuntu 24.04
 * Debian 12

@@ -79,6 +79,7 @@
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
+        "20.04",
         "22.04",
         "24.04"
       ]
@@ -102,6 +103,6 @@
     "gateway"
   ],
   "pdk-version": "3.4.0",
-  "template-url": "https://github.com/treydock/pdk-templates.git#el10",
-  "template-ref": "remotes/origin/el10-0-g7f231cc"
+  "template-url": "https://github.com/treydock/pdk-templates.git#master",
+  "template-ref": "heads/master-0-g875588c"
 }

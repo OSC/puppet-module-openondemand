@@ -6,7 +6,7 @@ shared_examples 'openondemand::config' do |_facts|
   end
 
   context 'with nginx_stage options defined' do
-    let(:params) do
+    let(:param_override) do
       {
         nginx_stage_passenger_options: {
           'passenger_foobar' => 'baz',
@@ -23,7 +23,7 @@ shared_examples 'openondemand::config' do |_facts|
   end
 
   context 'with configurations defined' do
-    let(:params) do
+    let(:param_override) do
       {
         'pinned_apps' => [
           'usr/*',
@@ -50,12 +50,12 @@ shared_examples 'openondemand::config' do |_facts|
     it 'has valid config' do
       content = catalogue.resource('file', '/etc/ood/config/ondemand.d/ondemand.yml').send(:parameters)[:content]
       data = YAML.safe_load(content)
-      expect(data).to eq(params)
+      expect(data).to eq(param_override)
     end
   end
 
   context 'with hook.env' do
-    let(:params) { { pun_pre_hook_root_cmd: '/dne/hook.sh' } }
+    let(:param_override) { { pun_pre_hook_root_cmd: '/dne/hook.sh' } }
 
     it 'has default hook contents' do
       is_expected.to contain_file('/etc/ood/config/hook.env').with(
@@ -69,7 +69,7 @@ shared_examples 'openondemand::config' do |_facts|
     end
 
     context 'with hook config defined' do
-      let(:params) do
+      let(:param_override) do
         {
           pun_pre_hook_root_cmd: '/dne/hook.sh',
           oidc_client_id: 'ondemand',
@@ -102,7 +102,7 @@ shared_examples 'openondemand::config' do |_facts|
     end
 
     context 'with nginx_stage_configs options defined' do
-      let(:params) do
+      let(:param_override) do
         {
           nginx_stage_configs: {
             'foo' => 'bar',

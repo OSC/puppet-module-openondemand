@@ -8,6 +8,15 @@ describe 'openondemand' do
       let(:facts) do
         facts
       end
+      let(:default_params) do
+        if facts[:os]['name'] == 'Ubuntu' && facts[:os]['release']['major'] == '20.04'
+          { repo_release: '4.0' }
+        else
+          {}
+        end
+      end
+      let(:param_override) { {} }
+      let(:params) { default_params.merge(param_override) }
 
       it { is_expected.to compile.with_all_deps }
 
