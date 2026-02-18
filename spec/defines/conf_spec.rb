@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe 'openondemand::conf' do
-  on_supported_os(supported_os: [{ 'operatingsystem' => 'RedHat', 'operatingsystemrelease' => ['8'] }]).each do |os, facts|
+  on_supported_os(supported_os: [{ 'operatingsystem' => 'RedHat', 'operatingsystemrelease' => ['9'] }]).each do |os, facts|
     context "when #{os}" do
       let(:facts) do
         facts

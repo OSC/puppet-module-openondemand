@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe 'openondemand::cluster' do
-  on_supported_os(supported_os: [{ 'operatingsystem' => 'RedHat', 'operatingsystemrelease' => ['8'] }]).each do |os, facts|
+  on_supported_os(supported_os: [{ 'operatingsystem' => 'RedHat', 'operatingsystemrelease' => ['9'] }]).each do |os, facts|
     context "when #{os}" do
       let(:facts) do
         facts
@@ -129,6 +129,12 @@ describe 'openondemand::cluster' do
         end
 
         it { is_expected.to compile.with_all_deps }
+
+        it 'has grafana panels defined' do
+          content = catalogue.resource('file', '/etc/ood/config/clusters.d/test.yml').send(:parameters)[:content]
+          data = YAML.safe_load(content)
+          expect(data['v2']['custom']['grafana']['dashboard']['panels']).to eq({ 'cpu' => 1, 'memory' => 2 })
+        end
 
         context 'with slurm' do
           let :params do
