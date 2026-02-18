@@ -1823,6 +1823,8 @@ Data type:
 Optional[Struct[{
         'cpu' => Integer,
         'memory' => Integer,
+        'gpu-util' => Optional[Integer],
+        'gpu-memory' => Optional[Integer],
   }]]
 ```
 
