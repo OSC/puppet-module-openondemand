@@ -134,6 +134,8 @@ define openondemand::cluster (
   Optional[Struct[{
         'cpu' => Integer,
         'memory' => Integer,
+        'gpu-util' => Optional[Integer],
+        'gpu-memory' => Optional[Integer],
   }]] $grafana_dashboard_panels = undef,
   Optional[Struct[{
         'cluster' => String,
