@@ -303,6 +303,34 @@ class openondemand::config {
     }
   }
 
+  # deploy script to generate mellon metadata
+  if $openondemand::auth_type == 'mellon' {
+    file { "${openondemand::mellon_dir}/00-auth-mellon.conf":
+      content => template('openondemand/auth_mellon.conf.erb'),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+    }
+    file { '/usr/local/bin/mellon_ood_metadata.sh':
+      content => template('openondemand/generate_ood_mellon_metadata.sh.erb'),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+    }
+    if $openondemand::mellon_manage_metadata == true {
+      # Run Metadata creation script if files doesn't exist
+      exec { '/usr/local/bin/mellon_ood_metadata.sh':
+        creates => [
+          "${openondemand::mellon_dir}/mellon.cert",
+          "${openondemand::mellon_dir}/mellon.key",
+          "${openondemand::mellon_dir}/mellon_metadata.xml",
+        ],
+        require => File['/usr/local/bin/mellon_ood_metadata.sh'],
+        notify  => Class['apache::service'],
+      }
+    }
+  }
+
   file { '/etc/ood/config/nginx_stage.yml':
     ensure  => 'file',
     owner   => 'root',

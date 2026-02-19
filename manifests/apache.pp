@@ -45,18 +45,27 @@ class openondemand::apache {
   include apache::mod::proxy_http
   include apache::mod::proxy_connect
   include apache::mod::proxy_wstunnel
-  if $openondemand::auth_type == 'CAS' {
-    include apache::mod::auth_cas
-  }
   apache::mod { 'lua': }
   include apache::mod::headers
   include apache::mod::rewrite
 
-  if $openondemand::auth_type in ['dex','openid-connect'] {
-    apache::mod { 'auth_openidc':
-      package        => $openidc_package,
-      package_ensure => $openondemand::mod_auth_openidc_ensure,
+  case $openondemand::auth_type {
+    'CAS': {
+      include apache::mod::auth_cas
     }
+    '(dex|openid-connect)': {
+      apache::mod { 'auth_openidc':
+        package        => $openidc_package,
+        package_ensure => $openondemand::mod_auth_openidc_ensure,
+      }
+    }
+    'mellon': {
+      apache::mod { 'auth_mellon':
+        package        => $auth_mellon_package,
+        package_ensure => $openondemand::mod_auth_mellon_ensure,
+      }
+    }
+    default: {}
   }
 
   systemd::dropin_file { 'ood.conf':
