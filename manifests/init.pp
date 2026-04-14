@@ -466,6 +466,13 @@ class openondemand (
     $repo_nightly_baseurl = "${repo_baseurl_prefix}/nightly/web/apt"
   }
 
+  # Ubuntu 26.04 uses sudo-rs which does not include 'requiretty'
+  if $facts['os']['name'] == 'Ubuntu' and String($openondemand::osmajor) == '26.04' {
+    $sudo_user_default_options = '!authenticate'
+  } else {
+    $sudo_user_default_options = '!requiretty, !authenticate'
+  }
+
   if $ssl {
     $port = '443'
     $listen_ports = ['443', '80']
