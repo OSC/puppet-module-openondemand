@@ -9,8 +9,10 @@ describe 'openondemand' do
         facts
       end
       let(:default_params) do
-        if facts[:os]['name'] == 'Ubuntu' && facts[:os]['release']['major'] == '20.04'
-          { repo_release: '4.0' }
+        if facts[:os]['name'] == 'Ubuntu' && facts[:os]['release']['major'] == '22.04'
+          { repo_release: '4.1' }
+        elsif ['Ubuntu', 'Debian'].include?(facts[:os]['name']) && ['26.04', '13'].include?(facts[:os]['release']['major'])
+          { repo_release: '4.2' }
         else
           {}
         end

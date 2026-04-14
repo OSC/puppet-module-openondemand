@@ -9,8 +9,8 @@ class openondemand::repo::apt {
     repos    => 'main',
     release  => $facts['os']['distro']['codename'],
     key      => {
-      'id'     => 'FE143EA1CB378B569BBF7C544B72FE2B92D31755',
-      'source' => $openondemand::repo_gpgkey,
+      'name'   => 'ondemand-web.gpg',
+      'source' => $openondemand::_repo_gpgkey,
     },
   }
 
@@ -20,7 +20,7 @@ class openondemand::repo::apt {
     repos    => 'main',
     release  => $facts['os']['distro']['codename'],
     key      => {
-      'id'     => 'FE143EA1CB378B569BBF7C544B72FE2B92D31755',
+      'name'   => 'ondemand-web-nightly.gpg',
       'source' => $openondemand::repo_gpgkey,
     },
   }
@@ -31,7 +31,7 @@ class openondemand::repo::apt {
     repos    => 'main',
     release  => 'nodistro',
     key      => {
-      'id'     => '6F71F525282841EEDAF851B42F59B5F99B1BE0B4',
+      'name'   => 'nodesource.gpg',
       'source' => 'https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key',
     },
   }

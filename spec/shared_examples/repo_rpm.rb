@@ -2,7 +2,7 @@
 
 shared_examples 'openondemand::repo::rpm' do |facts|
   let(:repo_release) do
-    '4.1'
+    '4.2'
   end
   let(:dist) do
     if facts[:os]['name'] == 'Amazon'
@@ -83,17 +83,20 @@ shared_examples 'openondemand::repo::rpm' do |facts|
         require: 'Exec[dnf makecache ondemand-web]',
       )
     end
+  else
+    it { is_expected.not_to contain_package('nodejs') }
+    it { is_expected.not_to contain_package('ruby') }
+  end
 
-    context 'when repo_release => 4.0' do
-      let(:param_override) { { repo_release: '4.0' } }
+  context 'when repo_release => 4.1' do
+    let(:param_override) { { repo_release: '4.1' } }
 
-      if facts[:os]['release']['major'].to_s =~ %r{^(8|9)$}
-        it { is_expected.to contain_package('nodejs').with_ensure('20') }
-        it { is_expected.to contain_package('ruby').with_ensure('3.3') }
-      else
-        it { is_expected.not_to contain_package('nodejs') }
-        it { is_expected.not_to contain_package('ruby') }
-      end
+    if facts[:os]['release']['major'].to_s =~ %r{^(8|9)$}
+      it { is_expected.to contain_package('nodejs').with_ensure('22') }
+      it { is_expected.to contain_package('ruby').with_ensure('3.3') }
+    else
+      it { is_expected.not_to contain_package('nodejs') }
+      it { is_expected.not_to contain_package('ruby') }
     end
   end
 
