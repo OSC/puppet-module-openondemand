@@ -9,7 +9,7 @@ shared_examples 'openondemand::repo::apt' do |facts|
         repos: 'main',
         release: facts[:os]['distro']['codename'],
         key: {
-          'name' => 'ondemand-web.gpg',
+          'name' => 'ondemand-web.asc',
           'source' => 'https://apt.osc.edu/ondemand/DEB-GPG-KEY-ondemand-SHA512',
         },
       )
@@ -22,7 +22,7 @@ shared_examples 'openondemand::repo::apt' do |facts|
         repos: 'main',
         release: facts[:os]['distro']['codename'],
         key: {
-          'name' => 'ondemand-web-nightly.gpg',
+          'name' => 'ondemand-web-nightly.asc',
           'source' => 'https://apt.osc.edu/ondemand/DEB-GPG-KEY-ondemand-SHA512',
         },
       )
@@ -35,7 +35,7 @@ shared_examples 'openondemand::repo::apt' do |facts|
         repos: 'main',
         release: 'nodistro',
         key: {
-          'name' => 'nodesource.gpg',
+          'name' => 'nodesource.asc',
           'source' => 'https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key',
         },
       )
@@ -52,7 +52,7 @@ shared_examples 'openondemand::repo::apt' do |facts|
         repos: 'main',
         release: facts[:os]['distro']['codename'],
         key: {
-          'name' => 'ondemand-web.gpg',
+          'name' => 'ondemand-web.asc',
           'source' => 'https://apt.osc.edu/ondemand/DEB-GPG-KEY-ondemand',
         },
       )
@@ -65,7 +65,7 @@ shared_examples 'openondemand::repo::apt' do |facts|
         repos: 'main',
         release: 'nodistro',
         key: {
-          'name' => 'nodesource.gpg',
+          'name' => 'nodesource.asc',
           'source' => 'https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key',
         },
       )
@@ -82,7 +82,7 @@ shared_examples 'openondemand::repo::apt' do |facts|
         repos: 'main',
         release: facts[:os]['distro']['codename'],
         key: {
-          'name' => 'ondemand-web.gpg',
+          'name' => 'ondemand-web.asc',
           'source' => 'https://apt.osc.edu/ondemand/DEB-GPG-KEY-ondemand',
         },
       )
