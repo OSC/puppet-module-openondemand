@@ -72,6 +72,23 @@ shared_examples 'openondemand::repo::apt' do |facts|
     end
   end
 
+  context 'when repo_release => staging/4.1', skip: (['Ubuntu', 'Debian'].include?(facts[:os]['name']) && ['26.04', '13'].include?(facts[:os]['release']['major'])) do
+    let(:param_override) { { repo_release: 'staging/4.1' } }
+
+    it do
+      is_expected.to contain_apt__source('ondemand-web').with(
+        ensure: 'present',
+        location: 'https://apt.osc.edu/ondemand/staging/4.1/web/apt',
+        repos: 'main',
+        release: facts[:os]['distro']['codename'],
+        key: {
+          'name' => 'ondemand-web.gpg',
+          'source' => 'https://apt.osc.edu/ondemand/DEB-GPG-KEY-ondemand',
+        },
+      )
+    end
+  end
+
   context 'when repo_nightly => true' do
     let(:param_override) { { repo_nightly: true } }
 
