@@ -422,7 +422,7 @@ class openondemand (
     fail('Ubuntu 22.04 is not supported for OnDemand 4.2')
   }
 
-  if $repo_version == '4.1' {
+  if $repo_version =~ /4.1/ {
     # EL10 doesn't have nodejs or ruby modules yet
     if $osfamily == 'RedHat' and (String($openondemand::osmajor) in ['10']) {
       $nodejs = undef
