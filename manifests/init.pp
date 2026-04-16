@@ -468,9 +468,11 @@ class openondemand (
 
   # Ubuntu 26.04 uses sudo-rs which does not include 'requiretty'
   if $facts['os']['name'] == 'Ubuntu' and String($openondemand::osmajor) == '26.04' {
-    $sudo_user_default_options = '!authenticate'
+    $sudo_rs = true
+    $apache_inaccessible_paths = true
   } else {
-    $sudo_user_default_options = '!requiretty, !authenticate'
+    $sudo_rs = false
+    $apache_inaccessible_paths = false
   }
 
   if $ssl {

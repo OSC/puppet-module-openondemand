@@ -59,17 +59,30 @@ class openondemand::apache {
     }
   }
 
+  $dropin_base = [
+    '[Service]',
+    'KillSignal=SIGTERM',
+    'KillMode=process',
+    'PrivateTmp=false',
+    'ProtectHome=false',
+    'ProtectSystem=false',
+  ]
+  if $openondemand::apache_inaccessible_paths {
+    $inaccisble_paths = [
+      'InaccessiblePaths=',
+      'InaccessiblePaths=/boot',
+      'InaccessiblePaths=/root',
+      'InaccessiblePaths=-/etc/ssh',
+      'InaccessiblePaths=-/etc/apt',
+      'InaccessiblePaths=-/etc/.git',
+      'InaccessiblePaths=-/etc/.svn',
+    ]
+  } else {
+    $inaccisble_paths = []
+  }
   systemd::dropin_file { 'ood.conf':
     unit    => "${apache::service_name}.service",
-    content => join([
-        '[Service]',
-        'KillSignal=SIGTERM',
-        'KillMode=process',
-        'PrivateTmp=false',
-        'ProtectHome=false',
-        'ProtectSystem=false',
-        '',
-    ], "\n"),
+    content => join($dropin_base + $inaccisble_paths + [''], "\n"),
     notify  => Class['apache::service'],
   }
   systemd::dropin_file { 'ood-portal.conf':
