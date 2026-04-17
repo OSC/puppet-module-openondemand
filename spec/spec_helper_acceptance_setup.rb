@@ -6,7 +6,7 @@ def versions(repo_release)
   if repo_release =~ %r{4.1}
     ['4.1.3', 'latest']
   else
-    ['4.2.0', 'latest']
+    ['4.2.1', 'latest']
   end
 end
 
