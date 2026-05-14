@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 shared_examples 'openondemand::repo::apt' do |facts|
-  context 'with repo release default', skip: (facts[:os]['name'] == 'Ubuntu' && facts[:os]['release']['major'] == '20.04') do
+  context 'with repo release default', skip: (facts[:os]['name'] == 'Ubuntu' && facts[:os]['release']['major'] == '22.04') do
     it do
       is_expected.to contain_apt__source('ondemand-web').with(
         ensure: 'present',
-        location: 'https://apt.osc.edu/ondemand/4.1/web/apt',
+        location: 'https://apt.osc.edu/ondemand/4.2/web/apt',
         repos: 'main',
         release: facts[:os]['distro']['codename'],
         key: {
-          'id' => 'FE143EA1CB378B569BBF7C544B72FE2B92D31755',
-          'source' => 'https://apt.osc.edu/ondemand/DEB-GPG-KEY-ondemand',
+          'name' => 'ondemand-web.asc',
+          'source' => 'https://apt.osc.edu/ondemand/DEB-GPG-KEY-ondemand-SHA512',
         },
       )
     end
@@ -22,7 +22,37 @@ shared_examples 'openondemand::repo::apt' do |facts|
         repos: 'main',
         release: facts[:os]['distro']['codename'],
         key: {
-          'id' => 'FE143EA1CB378B569BBF7C544B72FE2B92D31755',
+          'name' => 'ondemand-web-nightly.asc',
+          'source' => 'https://apt.osc.edu/ondemand/DEB-GPG-KEY-ondemand-SHA512',
+        },
+      )
+    end
+
+    it do
+      is_expected.to contain_apt__source('nodesource').with(
+        ensure: 'present',
+        location: 'https://deb.nodesource.com/node_22.x',
+        repos: 'main',
+        release: 'nodistro',
+        key: {
+          'name' => 'nodesource.asc',
+          'source' => 'https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key',
+        },
+      )
+    end
+  end
+
+  context 'when repo_release => 4.1', skip: (['Ubuntu', 'Debian'].include?(facts[:os]['name']) && ['26.04', '13'].include?(facts[:os]['release']['major'])) do
+    let(:param_override) { { repo_release: '4.1' } }
+
+    it do
+      is_expected.to contain_apt__source('ondemand-web').with(
+        ensure: 'present',
+        location: 'https://apt.osc.edu/ondemand/4.1/web/apt',
+        repos: 'main',
+        release: facts[:os]['distro']['codename'],
+        key: {
+          'name' => 'ondemand-web.asc',
           'source' => 'https://apt.osc.edu/ondemand/DEB-GPG-KEY-ondemand',
         },
       )
@@ -35,25 +65,25 @@ shared_examples 'openondemand::repo::apt' do |facts|
         repos: 'main',
         release: 'nodistro',
         key: {
-          'id' => '6F71F525282841EEDAF851B42F59B5F99B1BE0B4',
+          'name' => 'nodesource.asc',
           'source' => 'https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key',
         },
       )
     end
   end
 
-  context 'when repo_release => 4.0' do
-    let(:param_override) { { repo_release: '4.0' } }
+  context 'when repo_release => staging/4.1', skip: (['Ubuntu', 'Debian'].include?(facts[:os]['name']) && ['26.04', '13'].include?(facts[:os]['release']['major'])) do
+    let(:param_override) { { repo_release: 'staging/4.1' } }
 
     it do
-      is_expected.to contain_apt__source('nodesource').with(
+      is_expected.to contain_apt__source('ondemand-web').with(
         ensure: 'present',
-        location: 'https://deb.nodesource.com/node_20.x',
+        location: 'https://apt.osc.edu/ondemand/staging/4.1/web/apt',
         repos: 'main',
-        release: 'nodistro',
+        release: facts[:os]['distro']['codename'],
         key: {
-          'id' => '6F71F525282841EEDAF851B42F59B5F99B1BE0B4',
-          'source' => 'https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key',
+          'name' => 'ondemand-web.asc',
+          'source' => 'https://apt.osc.edu/ondemand/DEB-GPG-KEY-ondemand',
         },
       )
     end

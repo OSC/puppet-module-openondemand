@@ -1,5 +1,11 @@
+<% if scope['openondemand::sudo_rs'] -%>
+Defaults:<%= scope['openondemand::apache_user'] %> !pwfeedback, !use_pty
+<% else -%>
 Defaults:<%= scope['openondemand::apache_user'] %> !requiretty, !authenticate
+<% end -%>
 Defaults:<%= scope['openondemand::apache_user'] %> env_keep += "NGINX_STAGE_* OOD_*"
 <%= scope['openondemand::apache_user'] %> ALL=(ALL) NOPASSWD: <%= scope['openondemand::nginx_stage_cmd'] %>
 Cmnd_Alias KUBECTL = <%= scope['openondemand::kubectl_path'] %>
+<% if !scope['openondemand::sudo_rs'] -%>
 Defaults!KUBECTL !syslog
+<% end -%>
