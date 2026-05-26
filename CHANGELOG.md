@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v9.1.0](https://github.com/osc/puppet-module-openondemand/tree/v9.1.0) (2026-05-26)
+
+[Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v9.0.0...v9.1.0)
+
+### Added
+
+- vcsrepo: change `< 7.0.0` to `< 8.0.0` [\#194](https://github.com/OSC/puppet-module-openondemand/pull/194) ([langsjo](https://github.com/langsjo))
+
 ## [v9.0.0](https://github.com/osc/puppet-module-openondemand/tree/v9.0.0) (2026-05-14)
 
 [Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v8.4.0...v9.0.0)
