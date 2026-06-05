@@ -169,6 +169,9 @@ The following parameters are available in the `openondemand` class:
 * [`apps_config_repo_path`](#-openondemand--apps_config_repo_path)
 * [`locales_config_repo_path`](#-openondemand--locales_config_repo_path)
 * [`announcements_config_repo_path`](#-openondemand--announcements_config_repo_path)
+* [`ondemand_confs_repo`](#-openondemand--ondemand_confs_repo)
+* [`ondemand_confs_revision`](#-openondemand--ondemand_confs_revision)
+* [`ondemand_confs_repo_path`](#-openondemand--ondemand_confs_repo_path)
 * [`apps_config_source`](#-openondemand--apps_config_source)
 * [`locales_config_source`](#-openondemand--locales_config_source)
 * [`announcements_config_source`](#-openondemand--announcements_config_source)
@@ -1093,6 +1096,30 @@ Data type: `Optional[String]`
 Path in apps config Git repo for announcements
 
 Default value: `undef`
+
+##### <a name="-openondemand--ondemand_confs_repo"></a>`ondemand_confs_repo`
+
+Data type: `Optional[String]`
+
+Git repo URL for ondemand.d configs
+
+Default value: `undef`
+
+##### <a name="-openondemand--ondemand_confs_revision"></a>`ondemand_confs_revision`
+
+Data type: `Optional[String]`
+
+Revision for ondemand.d config Git repo
+
+Default value: `undef`
+
+##### <a name="-openondemand--ondemand_confs_repo_path"></a>`ondemand_confs_repo_path`
+
+Data type: `String`
+
+Path in ondemand.d config Git repo for configs
+
+Default value: `''`
 
 ##### <a name="-openondemand--apps_config_source"></a>`apps_config_source`
 

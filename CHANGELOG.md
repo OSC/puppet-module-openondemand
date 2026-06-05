@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v9.2.0](https://github.com/osc/puppet-module-openondemand/tree/v9.2.0) (2026-06-05)
+
+[Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v9.1.0...v9.2.0)
+
+### Added
+
+- Allow using git repo for ondemand.d files [\#195](https://github.com/OSC/puppet-module-openondemand/pull/195) ([treydock](https://github.com/treydock))
+
 ## [v9.1.0](https://github.com/osc/puppet-module-openondemand/tree/v9.1.0) (2026-05-26)
 
 [Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v9.0.0...v9.1.0)
@@ -289,10 +297,6 @@ All notable changes to this project will be documented in this file. The format 
 ## [v2.12.0](https://github.com/osc/puppet-module-openondemand/tree/v2.12.0) (2022-05-20)
 
 [Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v2.11.0...v2.12.0)
-
-### Added
-
-- Avoid latest repo by default, not a stable repo [\#91](https://github.com/OSC/puppet-module-openondemand/pull/91) ([treydock](https://github.com/treydock))
 
 ## [v2.11.0](https://github.com/osc/puppet-module-openondemand/tree/v2.11.0) (2022-05-06)
 
