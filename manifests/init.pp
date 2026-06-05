@@ -233,6 +233,12 @@
 #   Path in apps config Git repo for locales configs
 # @param announcements_config_repo_path
 #   Path in apps config Git repo for announcements
+# @param ondemand_confs_repo
+#   Git repo URL for ondemand.d configs
+# @param ondemand_confs_revision
+#   Revision for ondemand.d config Git repo
+# @param ondemand_confs_repo_path
+#   Path in ondemand.d config Git repo for configs
 # @param apps_config_source
 #   Source for apps config, not used if `apps_config_repo` is defined
 # @param locales_config_source
@@ -392,6 +398,11 @@ class openondemand (
   Optional[String] $locales_config_repo_path = undef,
   Optional[String] $announcements_config_repo_path = undef,
 
+  # ondemand.d configs
+  Optional[String] $ondemand_confs_repo = undef,
+  Optional[String] $ondemand_confs_revision = undef,
+  String $ondemand_confs_repo_path = '', # lint:ignore:params_empty_string_assignment
+
   Optional[String] $apps_config_source = undef,
   Optional[String] $locales_config_source = undef,
   Optional[String] $announcements_config_source = undef,
@@ -513,6 +524,12 @@ class openondemand (
     $_apps_config_source = "/opt/ood-apps-config/${apps_config_repo_path}"
   } else {
     $_apps_config_source = $apps_config_source
+  }
+
+  if $ondemand_confs_repo and $ondemand_confs_repo_path {
+    $_ondemand_confs_source = "/opt/ood-ondemand-confs/${ondemand_confs_repo_path}"
+  } else {
+    $_ondemand_confs_source = undef
   }
 
   if $apps_config_repo and $locales_config_repo_path {

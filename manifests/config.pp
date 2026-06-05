@@ -121,6 +121,7 @@ class openondemand::config {
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
+    source  => $openondemand::_ondemand_confs_source,
     recurse => $openondemand::config_dir_purge,
     force   => $openondemand::config_dir_purge,
     purge   => $openondemand::config_dir_purge,
@@ -145,6 +146,19 @@ class openondemand::config {
       source  => $config_source,
       content => $config_content,
       data    => $config_data,
+    }
+  }
+
+  if $openondemand::ondemand_confs_repo {
+    vcsrepo { '/opt/ood-ondemand-confs':
+      ensure   => 'latest',
+      provider => 'git',
+      source   => $openondemand::ondemand_confs_repo,
+      revision => $openondemand::ondemand_confs_revision,
+      user     => 'root',
+      before   => [
+        File['/etc/ood/config/ondemand.d'],
+      ],
     }
   }
 
