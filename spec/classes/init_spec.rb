@@ -10,11 +10,11 @@ describe 'openondemand' do
       end
       let(:default_params) do
         if facts[:os]['name'] == 'Ubuntu' && facts[:os]['release']['major'] == '22.04'
-          { repo_release: '4.1' }
+          { repo_release: '4.1', oidc_crypto_passphrase: 'supersecret' }
         elsif ['Ubuntu', 'Debian'].include?(facts[:os]['name']) && ['26.04', '13'].include?(facts[:os]['release']['major'])
-          { repo_release: '4.2' }
+          { repo_release: '4.2', oidc_crypto_passphrase: 'supersecret' }
         else
-          {}
+          { oidc_crypto_passphrase: 'supersecret' }
         end
       end
       let(:param_override) { {} }
