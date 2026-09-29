@@ -75,6 +75,7 @@ Setup OnDemand to use default Dex authentication against LDAP.
 ```yaml
 openondemand::servername: ondemand.example.org
 openondemand::auth_type: dex
+openondemand::oidc_crypto_passphrase: <secret>
 openondemand::dex_config:
   connectors:
     - type: ldap
@@ -116,6 +117,7 @@ openondemand::oidc_provider_metadata_url: 'https://idp.osc.edu/auth/realms/osc/.
 openondemand::oidc_scope: 'openid profile email groups'
 openondemand::oidc_client_id: ondemand.osc.edu
 openondemand::oidc_client_secret: 'SUPERSECRET'
+openondemand::oidc_crypto_passphrase: <secret>
 openondemand::oidc_settings:
   OIDCPassIDTokenAs: 'serialized'
   OIDCPassRefreshToken: 'On'
