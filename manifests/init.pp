@@ -505,6 +505,10 @@ class openondemand (
   $nginx_stage_cmd = '/opt/ood/nginx_stage/sbin/nginx_stage'
   $pun_stage_cmd = "sudo ${nginx_stage_cmd}"
 
+  if ($auth_type in ['dex', 'openid-connect']) and $oidc_crypto_passphrase =~ Undef {
+    fail("oidc_crypto_passphrase is required for auth_type=${auth_type}")
+  }
+
   case $auth_type {
     'dex': {
       $auth = undef

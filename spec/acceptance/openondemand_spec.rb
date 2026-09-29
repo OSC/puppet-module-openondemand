@@ -11,6 +11,7 @@ describe 'openondemand class:' do
           repo_release            => '#{RSpec.configuration.repo_release}',
           ondemand_package_ensure => '#{version}',
           generator_insecure      => true,
+          oidc_crypto_passphrase  => fqdn_rand_string(32),
         }
         PP
 
@@ -27,6 +28,7 @@ describe 'openondemand class:' do
         repo_nightly            => true,
         ondemand_package_ensure => 'latest',
         generator_insecure      => true,
+        oidc_crypto_passphrase  => fqdn_rand_string(32),
       }
       PP
 
