@@ -39,6 +39,36 @@ describe 'openondemand::cluster' do
 
       let(:params) { default_params }
 
+      context 'with wayvnc batch_connect' do
+        let :params do
+          default_params.merge(
+            batch_connect: {
+              'wayvnc' => {
+                'script_wrapper' => 'module restore\nmodule load wayvnc\n%s',
+                'wayvnc_cmd' => '/usr/bin/wayvnc',
+                'wayvnc_log_level' => 'debug',
+                'wayland_socket' => 'wayland-1',
+                'wayvnc_attach_timeout_seconds' => 60,
+              },
+            },
+          )
+        end
+
+        it { is_expected.to compile.with_all_deps }
+
+        it do
+          content = catalogue.resource('file', '/etc/ood/config/clusters.d/test.yml').send(:parameters)[:content]
+          data = YAML.safe_load(content)
+          expect(data['v2']['batch_connect']['wayvnc']).to eq(
+            'script_wrapper' => 'module restore\nmodule load wayvnc\n%s',
+            'wayvnc_cmd' => '/usr/bin/wayvnc',
+            'wayvnc_log_level' => 'debug',
+            'wayland_socket' => 'wayland-1',
+            'wayvnc_attach_timeout_seconds' => 60,
+          )
+        end
+      end
+
       it do
         is_expected.to contain_file('/etc/ood/config/clusters.d/test.yml').with('ensure' => 'file',
                                                                                 'owner' => 'root',

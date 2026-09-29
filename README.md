@@ -181,6 +181,11 @@ openondemand::clusters:
           module restore
           module load ondemand-vnc
           %s
+      wayvnc:
+        script_wrapper: |
+          module restore
+          module load wayvnc
+          %s
 ```
 
 Define a Linux Host Adapter cluster:
