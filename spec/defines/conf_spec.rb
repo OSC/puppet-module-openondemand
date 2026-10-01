@@ -9,6 +9,8 @@ describe 'openondemand::conf' do
         facts
       end
 
+      let(:pre_condition) { "class { 'openondemand': oidc_crypto_passphrase => 'supersecret' }" }
+
       let :title do
         'test'
       end
