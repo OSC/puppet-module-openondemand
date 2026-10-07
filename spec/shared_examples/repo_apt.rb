@@ -17,6 +17,8 @@ shared_examples 'openondemand::repo::apt' do |facts|
       )
     end
 
+    it { is_expected.to contain_apt__source('ondemand-apps').with_ensure('absent') }
+
     it do
       is_expected.to contain_apt__source('ondemand-web-nightly').with(
         ensure: 'absent',
@@ -106,6 +108,40 @@ shared_examples 'openondemand::repo::apt' do |facts|
         machine: 'apt.osc.edu',
         login: 'test',
         password: 'secret',
+      )
+    end
+  end
+
+  context 'when apps_repo defined', skip: (facts[:os]['name'] == 'Ubuntu' && facts[:os]['release']['major'] == '22.04') do
+    let(:param_override) { { apps_repo: 'osc-apps' } }
+
+    it do
+      is_expected.to contain_apt__source('ondemand-apps').with(
+        ensure: 'present',
+        location: 'https://apt.osc.edu/ondemand/osc-apps/web/apt',
+        repos: 'main',
+        release: facts[:os]['distro']['codename'],
+        key: {
+          'name' => 'ondemand-apps.asc',
+          'source' => 'https://apt.osc.edu/ondemand/DEB-GPG-KEY-ondemand-SHA512',
+        },
+      )
+    end
+  end
+
+  context 'when apps_repo_baseurl defined', skip: (facts[:os]['name'] == 'Ubuntu' && facts[:os]['release']['major'] == '22.04') do
+    let(:param_override) { { apps_repo_baseurl: 'https://apt.osc.edu/ondemand/osc-apps/web/apt' } }
+
+    it do
+      is_expected.to contain_apt__source('ondemand-apps').with(
+        ensure: 'present',
+        location: 'https://apt.osc.edu/ondemand/osc-apps/web/apt',
+        repos: 'main',
+        release: facts[:os]['distro']['codename'],
+        key: {
+          'name' => 'ondemand-apps.asc',
+          'source' => 'https://apt.osc.edu/ondemand/DEB-GPG-KEY-ondemand-SHA512',
+        },
       )
     end
   end

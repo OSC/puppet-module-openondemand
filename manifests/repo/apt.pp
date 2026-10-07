@@ -30,6 +30,17 @@ class openondemand::repo::apt {
     },
   }
 
+  apt::source { 'ondemand-apps':
+    ensure   => $openondemand::apps_repo_ensure,
+    location => $openondemand::_apps_repo_baseurl,
+    repos    => 'main',
+    release  => $facts['os']['distro']['codename'],
+    key      => {
+      'name'   => 'ondemand-apps.asc',
+      'source' => $openondemand::_repo_gpgkey,
+    },
+  }
+
   apt::source { 'ondemand-web-nightly':
     ensure   => $openondemand::nightly_ensure,
     location => $openondemand::repo_nightly_baseurl,

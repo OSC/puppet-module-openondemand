@@ -22,6 +22,10 @@
 #   OnDemand repo username
 # @param repo_password
 #   OnDemand repo password
+# @param apps_repo
+#   Name of the apps repo
+# @param apps_repo_baseurl
+#   The URL to apps repo
 # @param manage_dependency_repos
 #   Boolean that determines if managing repos for package dependencies
 # @param manage_epel
@@ -273,6 +277,8 @@ class openondemand (
   String $repo_exclude = 'absent',
   String[1] $repo_username = 'absent',
   String[1] $repo_password = 'absent',
+  Optional[String[1]] $apps_repo = undef,
+  Optional[Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl]] $apps_repo_baseurl = undef,
   Boolean $manage_dependency_repos = true,
   Boolean $manage_epel = true,
   Boolean $repo_nightly = false,
@@ -461,6 +467,12 @@ class openondemand (
     $_repo_gpgkey = $repo_gpgkey
   }
 
+  if $apps_repo_baseurl or $apps_repo {
+    $apps_repo_ensure = 'present'
+  } else {
+    $apps_repo_ensure = 'absent'
+  }
+
   if $selinux {
     $selinux_package_ensure = $ondemand_package_ensure
   } else {
@@ -477,9 +489,11 @@ class openondemand (
 
   if $osfamily == 'RedHat' {
     $repo_baseurl = "${repo_baseurl_prefix}/${repo_release}/web/${dist}${osmajor}/\$basearch"
+    $_apps_repo_baseurl = pick($apps_repo_baseurl, "${repo_baseurl_prefix}/${apps_repo}/web/${dist}${osmajor}/\$basearch")
     $repo_nightly_baseurl = "${repo_baseurl_prefix}/nightly/web/${dist}${osmajor}/\$basearch"
   } elsif $osfamily == 'Debian' {
     $repo_baseurl = "${repo_baseurl_prefix}/${repo_release}/web/apt"
+    $_apps_repo_baseurl = pick($apps_repo_baseurl, "${repo_baseurl_prefix}/${apps_repo}/web/apt")
     $repo_nightly_baseurl = "${repo_baseurl_prefix}/nightly/web/apt"
   }
 

@@ -28,6 +28,21 @@ class openondemand::repo::rpm {
     password        => $openondemand::repo_password,
   }
 
+  yumrepo { 'ondemand-apps':
+    ensure          => $openondemand::apps_repo_ensure,
+    descr           => 'Open OnDemand Apps',
+    baseurl         => $openondemand::_apps_repo_baseurl,
+    enabled         => '1',
+    gpgcheck        => $openondemand::repo_gpgcheck,
+    repo_gpgcheck   => $openondemand::repo_repogpgcheck,
+    gpgkey          => $openondemand::repo_gpgkey,
+    metadata_expire => '1',
+    priority        => $openondemand::repo_priority,
+    proxy           => $openondemand::repo_proxy,
+    username        => $openondemand::repo_username,
+    password        => $openondemand::repo_password,
+  }
+
   yumrepo { 'ondemand-web-nightly':
     ensure          => $openondemand::nightly_ensure,
     descr           => 'Open OnDemand Web Repo - Nightly',
