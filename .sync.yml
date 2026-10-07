@@ -52,15 +52,6 @@ appveyor.yml:
   delete: true
 spec/acceptance/nodesets/el7.yml:
   delete: true
-spec/acceptance/nodesets/el8.yml:
-  default_module_install_opts:
-    force: ~
-spec/acceptance/nodesets/el9.yml:
-  default_module_install_opts:
-    force: ~
-spec/acceptance/nodesets/el10.yml:
-  default_module_install_opts:
-    force: ~
 spec/acceptance/nodesets/debian-9.yml:
   delete: true
 spec/acceptance/nodesets/debian-10.yml:
@@ -74,25 +65,15 @@ spec/acceptance/nodesets/ubuntu-2004.yml:
 spec/acceptance/nodesets/ubuntu-2204.yml:
   packages:
     - cron
-  default_module_install_opts:
-    force: ~
 spec/acceptance/nodesets/ubuntu-2404.yml:
   packages:
     - cron
-  default_module_install_opts:
-    force: ~
 spec/acceptance/nodesets/ubuntu-2604.yml:
   packages:
     - cron
-  default_module_install_opts:
-    force: ~
 spec/acceptance/nodesets/debian-12.yml:
   packages:
     - cron
-  default_module_install_opts:
-    force: ~
 spec/acceptance/nodesets/debian-13.yml:
   packages:
     - cron
-  default_module_install_opts:
-    force: ~
