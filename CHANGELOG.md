@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v9.3.0](https://github.com/osc/puppet-module-openondemand/tree/v9.3.0) (2026-10-07)
+
+[Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v9.2.0...v9.3.0)
+
+### Added
+
+- Support early-access and apps repo [\#199](https://github.com/OSC/puppet-module-openondemand/pull/199) ([treydock](https://github.com/treydock))
+
+### Fixed
+
+- Ensure oidc\_crypto\_passphrase is required [\#197](https://github.com/OSC/puppet-module-openondemand/pull/197) ([treydock](https://github.com/treydock))
+
 ## [v9.2.0](https://github.com/osc/puppet-module-openondemand/tree/v9.2.0) (2026-06-05)
 
 [Full Changelog](https://github.com/osc/puppet-module-openondemand/compare/v9.1.0...v9.2.0)

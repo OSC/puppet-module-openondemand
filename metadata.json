@@ -1,6 +1,6 @@
 {
   "name": "osc-openondemand",
-  "version": "9.2.0",
+  "version": "9.3.0",
   "author": "osc",
   "summary": "Open OnDemand Puppet module",
   "license": "Apache-2.0",

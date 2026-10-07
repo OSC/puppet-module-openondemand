@@ -64,6 +64,10 @@ The following parameters are available in the `openondemand` class:
 * [`repo_priority`](#-openondemand--repo_priority)
 * [`repo_module_hotfixes`](#-openondemand--repo_module_hotfixes)
 * [`repo_exclude`](#-openondemand--repo_exclude)
+* [`repo_username`](#-openondemand--repo_username)
+* [`repo_password`](#-openondemand--repo_password)
+* [`apps_repo`](#-openondemand--apps_repo)
+* [`apps_repo_baseurl`](#-openondemand--apps_repo_baseurl)
 * [`manage_dependency_repos`](#-openondemand--manage_dependency_repos)
 * [`manage_epel`](#-openondemand--manage_epel)
 * [`repo_nightly`](#-openondemand--repo_nightly)
@@ -251,6 +255,38 @@ Data type: `String`
 Exclusion for OnDemand repo
 
 Default value: `'absent'`
+
+##### <a name="-openondemand--repo_username"></a>`repo_username`
+
+Data type: `String[1]`
+
+OnDemand repo username
+
+Default value: `'absent'`
+
+##### <a name="-openondemand--repo_password"></a>`repo_password`
+
+Data type: `String[1]`
+
+OnDemand repo password
+
+Default value: `'absent'`
+
+##### <a name="-openondemand--apps_repo"></a>`apps_repo`
+
+Data type: `Optional[String[1]]`
+
+Name of the apps repo
+
+Default value: `undef`
+
+##### <a name="-openondemand--apps_repo_baseurl"></a>`apps_repo_baseurl`
+
+Data type: `Optional[Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl]]`
+
+The URL to apps repo
+
+Default value: `undef`
 
 ##### <a name="-openondemand--manage_dependency_repos"></a>`manage_dependency_repos`
 
