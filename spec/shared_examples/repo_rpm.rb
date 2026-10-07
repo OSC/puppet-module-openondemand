@@ -38,8 +38,12 @@ shared_examples 'openondemand::repo::rpm' do |facts|
       priority: '99',
       exclude: 'absent',
       module_hotfixes: module_hotfixes,
+      username: 'absent',
+      password: 'absent',
     )
   end
+
+  it { is_expected.to contain_yumrepo('ondemand-apps').with_ensure('absent') }
 
   it do
     is_expected.to contain_yumrepo('ondemand-web-nightly').only_with(
@@ -53,6 +57,8 @@ shared_examples 'openondemand::repo::rpm' do |facts|
       metadata_expire: '1',
       priority: '99',
       module_hotfixes: module_hotfixes,
+      username: 'absent',
+      password: 'absent',
     )
   end
 
@@ -123,5 +129,51 @@ shared_examples 'openondemand::repo::rpm' do |facts|
     let(:param_override) { { repo_nightly: true } }
 
     it { is_expected.to contain_yumrepo('ondemand-web-nightly').with_ensure('present') }
+  end
+
+  context 'when auth is enabled' do
+    let(:param_override) { { repo_username: 'test', repo_password: 'secret' } }
+
+    it { is_expected.to contain_yumrepo('ondemand-web').with_username('test').with_password('secret') }
+  end
+
+  context 'when apps_repo defined' do
+    let(:param_override) { { apps_repo: 'osc-apps' } }
+
+    it do
+      is_expected.to contain_yumrepo('ondemand-apps').only_with(
+        ensure: 'present',
+        descr: 'Open OnDemand Apps',
+        baseurl: "https://yum.osc.edu/ondemand/osc-apps/web/#{dist}/$basearch",
+        enabled: '1',
+        gpgcheck: '1',
+        repo_gpgcheck: '1',
+        gpgkey: gpgkey,
+        metadata_expire: '1',
+        priority: '99',
+        username: 'absent',
+        password: 'absent',
+      )
+    end
+  end
+
+  context 'when apps_repo_baseurl defined' do
+    let(:param_override) { { apps_repo_baseurl: "https://yum.osc.edu/ondemand/osc-apps/web/#{dist}/$basearch" } }
+
+    it do
+      is_expected.to contain_yumrepo('ondemand-apps').only_with(
+        ensure: 'present',
+        descr: 'Open OnDemand Apps',
+        baseurl: "https://yum.osc.edu/ondemand/osc-apps/web/#{dist}/$basearch",
+        enabled: '1',
+        gpgcheck: '1',
+        repo_gpgcheck: '1',
+        gpgkey: gpgkey,
+        metadata_expire: '1',
+        priority: '99',
+        username: 'absent',
+        password: 'absent',
+      )
+    end
   end
 end

@@ -24,6 +24,23 @@ class openondemand::repo::rpm {
     exclude         => $openondemand::repo_exclude,
     proxy           => $openondemand::repo_proxy,
     module_hotfixes => $openondemand::repo_module_hotfixes,
+    username        => $openondemand::repo_username,
+    password        => $openondemand::repo_password,
+  }
+
+  yumrepo { 'ondemand-apps':
+    ensure          => $openondemand::apps_repo_ensure,
+    descr           => 'Open OnDemand Apps',
+    baseurl         => $openondemand::_apps_repo_baseurl,
+    enabled         => '1',
+    gpgcheck        => $openondemand::repo_gpgcheck,
+    repo_gpgcheck   => $openondemand::repo_repogpgcheck,
+    gpgkey          => $openondemand::repo_gpgkey,
+    metadata_expire => '1',
+    priority        => $openondemand::repo_priority,
+    proxy           => $openondemand::repo_proxy,
+    username        => $openondemand::repo_username,
+    password        => $openondemand::repo_password,
   }
 
   yumrepo { 'ondemand-web-nightly':
@@ -38,6 +55,8 @@ class openondemand::repo::rpm {
     priority        => $openondemand::repo_priority,
     proxy           => $openondemand::repo_proxy,
     module_hotfixes => $openondemand::repo_module_hotfixes,
+    username        => $openondemand::repo_username,
+    password        => $openondemand::repo_password,
   }
 
   # Work around a bug where 'dnf module list' is not executed with -y

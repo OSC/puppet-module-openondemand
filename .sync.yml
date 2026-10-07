@@ -44,24 +44,14 @@ Rakefile:
     - set: ubuntu-2604
       puppet: puppet8
       repo_release: '4.1'
+  acceptance_env_vars:
+    OOD_REPO_PASSWORD: '${{ secrets.OOD_OSC_EARLY_ACCESS_PASSWORD }}'
 .gitlab-ci.yml:
   delete: true
 appveyor.yml:
   delete: true
 spec/acceptance/nodesets/el7.yml:
   delete: true
-spec/acceptance/nodesets/el8.yml:
-  default_module_install_opts:
-    ignore-dependencies: ~
-    force: ~
-spec/acceptance/nodesets/el9.yml:
-  default_module_install_opts:
-    ignore-dependencies: ~
-    force: ~
-spec/acceptance/nodesets/el10.yml:
-  default_module_install_opts:
-    ignore-dependencies: ~
-    force: ~
 spec/acceptance/nodesets/debian-9.yml:
   delete: true
 spec/acceptance/nodesets/debian-10.yml:
@@ -75,18 +65,15 @@ spec/acceptance/nodesets/ubuntu-2004.yml:
 spec/acceptance/nodesets/ubuntu-2204.yml:
   packages:
     - cron
-  default_module_install_opts:
-    ignore-dependencies: ~
-    force: ~
 spec/acceptance/nodesets/ubuntu-2404.yml:
   packages:
     - cron
-  default_module_install_opts:
-    ignore-dependencies: ~
-    force: ~
+spec/acceptance/nodesets/ubuntu-2604.yml:
+  packages:
+    - cron
 spec/acceptance/nodesets/debian-12.yml:
   packages:
     - cron
-  default_module_install_opts:
-    ignore-dependencies: ~
-    force: ~
+spec/acceptance/nodesets/debian-13.yml:
+  packages:
+    - cron

@@ -114,3 +114,4 @@ jobs:
           BEAKER_PUPPET_COLLECTION: ${{ matrix.puppet }}
           BEAKER_set: ${{ matrix.set }}
           BEAKER_repo_release: ${{ matrix.repo_release }}
+          OOD_REPO_PASSWORD: ${{ secrets.OOD_OSC_EARLY_ACCESS_PASSWORD }}

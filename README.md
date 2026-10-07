@@ -45,6 +45,14 @@ openondemand::ondemand_package_ensure: "4.1.0-1.el9"
 openondemand::mod_auth_openidc_ensure: "3.4.5-1.el9"
 ```
 
+To access early-access configure the early-access repo and set the OSC provided username and password:
+
+```yaml
+openondemand::repo_release: early-access/4.2
+openondemand::repo_username: <username>
+openondemand::repo_password: <password>
+```
+
 Configure OnDemand SSL certs
 
 ```yaml
