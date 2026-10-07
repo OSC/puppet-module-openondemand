@@ -97,7 +97,7 @@ shared_examples 'openondemand::repo::apt' do |facts|
     it { is_expected.to contain_apt__source('ondemand-web-nightly').with_ensure('present') }
   end
 
-   context 'when auth is enabled' do
+  context 'when auth is enabled' do
     let(:param_override) { { repo_username: 'test', repo_password: 'secret' } }
 
     it do

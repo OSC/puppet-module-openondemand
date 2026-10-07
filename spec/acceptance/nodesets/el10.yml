@@ -18,7 +18,6 @@ HOSTS:
       - LC_ALL=en_US.UTF-8
     docker_container_name: 'openondemand-el10'
     default_module_install_opts:
-      ignore-dependencies: 
       force: 
 CONFIG:
   log_level: debug
