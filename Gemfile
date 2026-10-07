@@ -24,7 +24,7 @@ group :development do
   gem "puppet-strings",             require: false
 end
 group :system_tests do
-  gem 'voxpupuli-acceptance', '~> 4.4.0', require: false
+  gem "voxpupuli-acceptance", '~> 4.4.0', require: false
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']

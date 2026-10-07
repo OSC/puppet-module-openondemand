@@ -2,6 +2,8 @@
 
 shared_examples 'openondemand::repo::apt' do |facts|
   context 'with repo release default', skip: (facts[:os]['name'] == 'Ubuntu' && facts[:os]['release']['major'] == '22.04') do
+    it { is_expected.to contain_apt__auth('ondemand').with_ensure('absent') }
+
     it do
       is_expected.to contain_apt__source('ondemand-web').with(
         ensure: 'present',
@@ -93,5 +95,18 @@ shared_examples 'openondemand::repo::apt' do |facts|
     let(:param_override) { { repo_nightly: true } }
 
     it { is_expected.to contain_apt__source('ondemand-web-nightly').with_ensure('present') }
+  end
+
+   context 'when auth is enabled' do
+    let(:param_override) { { repo_username: 'test', repo_password: 'secret' } }
+
+    it do
+      is_expected.to contain_apt__auth('ondemand').with(
+        ensure: 'present',
+        machine: 'apt.osc.edu',
+        login: 'test',
+        password: 'secret',
+      )
+    end
   end
 end

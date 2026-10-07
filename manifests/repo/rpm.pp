@@ -24,6 +24,8 @@ class openondemand::repo::rpm {
     exclude         => $openondemand::repo_exclude,
     proxy           => $openondemand::repo_proxy,
     module_hotfixes => $openondemand::repo_module_hotfixes,
+    username        => $openondemand::repo_username,
+    password        => $openondemand::repo_password,
   }
 
   yumrepo { 'ondemand-web-nightly':
@@ -38,6 +40,8 @@ class openondemand::repo::rpm {
     priority        => $openondemand::repo_priority,
     proxy           => $openondemand::repo_proxy,
     module_hotfixes => $openondemand::repo_module_hotfixes,
+    username        => $openondemand::repo_username,
+    password        => $openondemand::repo_password,
   }
 
   # Work around a bug where 'dnf module list' is not executed with -y

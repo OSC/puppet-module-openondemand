@@ -18,6 +18,10 @@
 #   The module_hotfixes of the OnDemand repo
 # @param repo_exclude
 #   Exclusion for OnDemand repo
+# @param repo_username
+#   OnDemand repo username
+# @param repo_password
+#   OnDemand repo password
 # @param manage_dependency_repos
 #   Boolean that determines if managing repos for package dependencies
 # @param manage_epel
@@ -267,6 +271,8 @@ class openondemand (
   Integer[1,99] $repo_priority = 99,
   Optional[Boolean] $repo_module_hotfixes = undef,
   String $repo_exclude = 'absent',
+  String[1] $repo_username = 'absent',
+  String[1] $repo_password = 'absent',
   Boolean $manage_dependency_repos = true,
   Boolean $manage_epel = true,
   Boolean $repo_nightly = false,

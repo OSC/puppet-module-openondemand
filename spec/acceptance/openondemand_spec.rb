@@ -9,6 +9,8 @@ describe 'openondemand class:' do
         pp = <<-PP
         class { 'openondemand':
           repo_release            => '#{RSpec.configuration.repo_release}',
+          repo_username           => 'osc',
+          repo_password           => '#{ENV['OOD_REPO_PASSWORD']}',
           ondemand_package_ensure => '#{version}',
           generator_insecure      => true,
         }
